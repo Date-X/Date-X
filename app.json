@@ -1,11 +1,28 @@
 {
   "pages":[
-    "pages/register/register"
+    "pages/register/register",
+    "pages/profile/profile"
   ],
   "window":{
     "backgroundTextStyle":"light",
     "navigationBarBackgroundColor": "#fff",
     "navigationBarTitleText": "Date-X",
     "navigationBarTextStyle":"black"
+  },
+  "tabBar": {
+    "list": [
+      {
+        "pagePath": "pages/register/register",
+        "text": "register",
+        "iconPath":"images/home.png",
+        "selectedIconPath":"images/home_selected.png"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "profile",
+        "iconPath": "images/profile.png",
+        "selectedIconPath": "images/profile_selected.png"
+      }
+    ]
   }
 }
