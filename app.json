@@ -1,7 +1,8 @@
 {
   "pages":[
     "pages/register/register",
-    "pages/profile/profile"
+    "pages/profile/profile",
+    "pages/section/section"
   ],
   "window":{
     "backgroundTextStyle":"light",
@@ -16,6 +17,12 @@
         "text": "register",
         "iconPath":"images/home.png",
         "selectedIconPath":"images/home_selected.png"
+      },
+      {
+        "pagePath": "pages/section/section",
+        "text": "section",
+        "iconPath": "images/section.png",
+        "selectedIconPath": "images/section_selected.png"
       },
       {
         "pagePath": "pages/profile/profile",
