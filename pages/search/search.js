@@ -5,9 +5,17 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    showsearch: false,   //显示搜索按钮
   },
 
+  inputSearch: function (e) {  //输入搜索文字
+    this.setData({
+      showsearch: e.detail.cursor > 0,
+      searchtext: e.detail.value
+    })
+  },
+
+  submitSearch: function(){},
   /**
    * 生命周期函数--监听页面加载
    */

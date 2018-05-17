@@ -1,2 +1,7 @@
 <!--pages/search/search.wxml-->
-<text>pages/search/search.wxml</text>
+<view class="weui-cells">
+		<view class="weui-search-bar">
+			<input type="text" maxlength="12" placeholder="请输入关键字查询" bindinput="inputSearch"></input>
+			<button class="search-btn" bindtap="submitSearch" wx:if="{{showsearch}}">搜索</button>
+		</view>     
+	</view>

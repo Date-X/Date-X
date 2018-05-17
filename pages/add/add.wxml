@@ -1,5 +1,5 @@
 <!--pages/add/add.wxml-->
-<view class="container">
+<view class="weui-cells">
   <view class="group">
     <view class="group-header">房间信息</view>
     <view class="group-body"> 	
