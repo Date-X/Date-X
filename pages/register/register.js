@@ -30,14 +30,14 @@ Page({
       return;
     } else {
       util.clearError(that);
-      app.ajax.req('/register/checkLoginName', {
+      /*app.ajax.req('/register/checkLoginName', {
         "loginName": account
       }, function (res) {
         if (!res) {
           util.isError("账号已经被注册过", that);
           return;
         }
-      });
+      });*/
     }
     // 判断密码是否为空  
     if ("" == util.trim(password)) {
@@ -54,7 +54,7 @@ Page({
       util.clearError(that);
     }
     // 验证都通过了执行注册方法  
-    app.ajax.req('/itdragon/register', {
+    /*app.ajax.req('/itdragon/register', {
       "account": account,
       "password": password
     }, function (res) {
@@ -80,6 +80,20 @@ Page({
           duration: 2000
         })
       }
-    });
+    });*/
+    wx.request({
+      url: 'http://localhost:5000/signup', //仅为示例，并非真实的接口地址
+      data: {
+        'usrid': account,
+        'password': password
+      },
+      header: {
+        'content-type': 'application/x-www-form-urlencoded' // 默认值
+      },
+      method: 'POST',
+      success: function (res) {
+        console.log(res.data)
+      }
+    })
   }
 })  

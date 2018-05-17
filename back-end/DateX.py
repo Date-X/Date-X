@@ -17,7 +17,7 @@ def check_usr_exists(usrid):
 
 
 # 注册成功返回True，错误返回False
-@app.route('/sginup', methods=['POST'])
+@app.route('/signup', methods=['POST'])
 def sgin_up():
     if request.method == 'POST':
         usrid = request.form['usrid']
