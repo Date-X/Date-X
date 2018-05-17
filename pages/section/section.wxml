@@ -3,7 +3,7 @@
 </view>
 <view class="container">
   <view class="section-menu">
-		<navigator class="section-menu-item" wx:for="{{sectionmenu}}" wx:key="{{item.url}}" url="../{{item.url}}/{{item.url}}">
+		<navigator class="section-menu-item" wx:for="{{sectionmenu}}" wx:key="{{item.url}}" url="{{item.url}}">
 			<image src="{{item.icon}}"></image>
 			<text>{{item.text}}</text>
 		</navigator>

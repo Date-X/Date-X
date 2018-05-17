@@ -4,7 +4,9 @@
     "pages/profile/profile",
     "pages/section/section",
     "pages/search/search",
-    "pages/add/add"
+    "pages/add/add",
+    "pages/room/room",
+    "pages/rooms/rooms"
   ],
   "window":{
     "backgroundTextStyle":"light",
