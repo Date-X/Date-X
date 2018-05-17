@@ -5,7 +5,8 @@ Page({
    * 页面的初始数据
    */
   data: {
-  
+    section_array: ['选择分区','王者荣耀', '吃鸡', '英雄联盟', '狼人杀'],
+    section_index: 0
   },
 
   /**

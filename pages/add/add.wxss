@@ -1,1 +1,22 @@
 /* pages/add/add.wxss */
+.group{
+	display: block;
+	width: 100%;
+}
+.group-header{
+	line-height: 70rpx;
+	display: flex;
+	padding: 0 20rpx;
+	background: #f9f9f9;
+  text-align: center;
+}
+.group-body{
+	background: #fff;
+	border-top: 1rpx solid #ddd;
+	border-bottom: 1rpx solid #ddd;
+}
+.group-body .input-list{
+	margin: 0;
+	border: none;
+}
+

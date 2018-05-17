@@ -1,2 +1,37 @@
 <!--pages/add/add.wxml-->
-<text>pages/add/add.wxml</text>
+<view class="container">
+  <view class="group">
+    <view class="group-header">房间信息</view>
+    <view class="group-body"> 	
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-label">房间名称</view>
+        <view class="weui-input">
+          <input type="text" placeholder="请输入房间名称"></input>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_picker">
+        <view class="weui-label">房间分区</view>
+        <picker bindchange="bindPickerChange" value="{{section_index}}" range="{{section_array}}">
+        <view class="picker">
+          {{section_array[section_index]}}
+        </view>
+        </picker>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-label">房间人数</view>
+        <view class="weui-input">
+          <input type="text" placeholder="请输入房间人数"></input>
+        </view>
+      </view>  
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-label">房间描述</view>
+        <view class="weui-textarea">
+          <textarea placeholder="你开房要干什么！" maxlength="50"></textarea>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="btn-submit">
+		<button class="weui-button" type="primary" formType="submit">提交</button>
+	</view>
+</view>
