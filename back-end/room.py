@@ -2,6 +2,7 @@
 from usr import Usr
 from preference import available_pre
 from room_request import Room_request
+from flask_pymongo import  PyMongo
 
 '''
 ver 1.0
@@ -117,7 +118,8 @@ class Room(object):
 
 
 class Room_manager(object):
-    def __init__(self):
+    def __init__(self, db):
+        self.db = db
         self.next_id = 0
         self.rooms = []
         self.subareas2num = {}  # 每个分区的房间人数
@@ -167,7 +169,7 @@ class Room_manager(object):
             print("room usrs:", room.getUsrs())
             count += 1
         
-    def addRoombyreq(self, request):
+    def addRoombyreq(self, request, db):
         #根据request创建房间，成功返回房间id，失败返回False
         if not isinstance(request, Room_request):
             print("error: request type is wrong!")
@@ -175,6 +177,8 @@ class Room_manager(object):
         if not request.checkReq():
             print("error: can not establish room with your request!")
             return False
+        room_tb = db.room
+        print(room_tb.insert_one(request).insert_id)
         room_id = self.next_id
         self.addRoom()
         self.setName(room_id, request.getName())
