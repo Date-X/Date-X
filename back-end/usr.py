@@ -131,7 +131,7 @@ class Usr_manager(object):
 
     #下面这些函数是对usr对应函数的封装，使得所有操作都在usr manager中进行
     def getId(self, usrid):
-        res = self.db.User.find({'id':usrid})['id']
+        res = self.db.User.find_one({'id':usrid})['id']
         if res is not None:
             return res
         print("error: usr", usrid, "does not exist!")
@@ -142,7 +142,7 @@ class Usr_manager(object):
         return False
 
     def getPassword(self, usrid):
-        res = self.db.User.find({'id': usrid})['password']
+        res = self.db.User.find_one({'id': usrid})['password']
         if res is not None:
             return res
         print("error: usr", usrid, "does not exist!")
@@ -153,7 +153,7 @@ class Usr_manager(object):
         return False
 
     def getPre(self, usrid):
-        res = self.db.User.find({'id': usrid})['pre']
+        res = self.db.User.find_one({'id': usrid})['pre']
         if res is not None:
             return res
         print("error: usr", usrid, "does not exist!")
@@ -164,7 +164,7 @@ class Usr_manager(object):
         return False
 
     def resetPassword(self, usrid, old_password, new_password):
-        res = self.db.User.find({'id': usrid})['password']
+        res = self.db.User.find_one({'id': usrid})['password']
         if res is None:
             print("error: usr", usrid, "does not exist!")
             return False
@@ -176,29 +176,46 @@ class Usr_manager(object):
         return False
 
     def addPre(self, usrid, new_pre):
-        res = self.db.User.find({'id': usrid})['pre']
-        if res is not None:
-            return res
-        print("error: usr", usrid, "does not exist!")
-        return False
+        res = self.db.User.find_one({'id': usrid})['pre']
+        if res is None:
+            print("error: usr", usrid, "does not exist!")
+            return False
+        self.db.User.update({'id': usrid}, {"$set": {'pre': res + new_pre}})
+        return True
         if usrid in self.usrid2id:
             return self.usrs[self.usrid2id[usrid]].addPre(new_pre)
         print("error: usr", usrid, "does not exist!")
         return False
 
     def setPre(self, usrid, preferences):
+        res = self.db.User.find_one({'id': usrid})['pre']
+        if res is None:
+            print("error: usr", usrid, "does not exist!")
+            return False
+        self.db.User.update({'id': usrid}, {"$set": {'pre': preferences}})
+        return True
         if usrid in self.usrid2id:
             return self.usrs[self.usrid2id[usrid]].setPre(preferences)
         print("error: usr", usrid, "does not exist!")
         return False
 
     def deletePre(self, usrid, del_pre):
+        res = self.db.User.find_one({'id': usrid})['pre']
+        if res is None:
+            print("error: usr", usrid, "does not exist!")
+            return False
+        if del_pre not in res:
+            print("error: pre", del_pre, "does not exist!")
+            return False
+        self.db.User.update({'id': usrid}, {"$set": {'pre': res.remove(del_pre)}})
+        return True
         if usrid in self.usrid2id:
             return self.usrs[self.usrid2id[usrid]].deletePre(del_pre)
         print("error: usr", usrid, "does not exist!")
         return False
     
     def checkPassword(self, usrid, password):
+        return True
         if usrid in self.usrid2id:
             return self.usrs[self.usrid2id[usrid]].checkPassword(password)
         print("error: usr", usrid, "does not exist!")
