@@ -3,6 +3,9 @@
 from preference import available_pre
 
 '''
+ver 1.1
+连接MongoDB 完成
+
 ver 1.0
 功能：
 1.用户信息包含id、密码、偏好
@@ -100,8 +103,9 @@ class Usr_manager(object):
         return self.usrid2id
 
     def getUsrbyusrid(self, usrid):
-        if usrid in self.usrid2id:
-            return self.usrs[self.usrid2id[usrid]]
+        res = self.db.User.find_one({'id': usrid})
+        if res is not None:
+            return res
         print("error: usr id ", usrid, " does not exist!")
         return None
 

@@ -85,8 +85,8 @@ def check_room_exist(room_id):
 @app.route('/room/<room_id>/<profile>', methods=['GET', 'POST'])
 def show_room_profile(room_id, profile):
     if request.method == 'GET':
-        if profile == 'id':
-            return str(room_manager.getId(room_id))
+        # if profile == 'id':
+        #     return str(room_manager.getId(room_id))
         if profile == 'name':
             return str(room_manager.getName(room_id))
         if profile == 'subarea':
