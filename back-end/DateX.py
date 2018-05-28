@@ -3,12 +3,20 @@ from usr import Usr_manager
 from room_request import Room_request
 from room import Room_manager
 from flask import Flask, request
-
-usr_manager = Usr_manager()
-room_manager = Room_manager()
+from flask_pymongo import PyMongo
 
 app = Flask(__name__)
+mongo = PyMongo(app)
 
+usr_manager = Usr_manager(None)
+room_manager = Room_manager(None)
+
+@app.before_request
+def initial():
+    global usr_manager,room_manager
+    db = mongo.db
+    usr_manager = Usr_manager(db)
+    room_manager = Room_manager(db)
 
 # 不存在的用户会返回False，用于检测用户是否存在
 @app.route('/usr/<usrid>')
@@ -19,6 +27,8 @@ def check_usr_exists(usrid):
 # 注册成功返回True，错误返回False
 @app.route('/signup', methods=['POST'])
 def sgin_up():
+
+    db = mongo.db
     if request.method == 'POST':
         usrid = request.form['usrid']
         password = request.form['password']
@@ -48,6 +58,7 @@ def show_usr_preference(usrid):
 # 成功返回房间id，失败返回False
 @app.route('/create', methods = ['POST'])
 def create_room():
+    db = mongo.db
     if request.method == 'POST':
         room_owner_id = request.form['usrid']
         name = request.form['name']     #room name
@@ -61,7 +72,7 @@ def create_room():
             room_request.setSubarea(subarea)
             room_request.setDescription(description)
 
-            return str(room_manager.addRoombyreq(room_request))
+            return str(room_manager.addRoombyreq(room_request,db))
 
 
 # 不存在的房间会返回False，用于检测房间是否存在
@@ -74,8 +85,8 @@ def check_room_exist(room_id):
 @app.route('/room/<room_id>/<profile>', methods=['GET', 'POST'])
 def show_room_profile(room_id, profile):
     if request.method == 'GET':
-        if profile == 'id':
-            return str(room_manager.getId(room_id))
+        # if profile == 'id':
+        #     return str(room_manager.getId(room_id))
         if profile == 'name':
             return str(room_manager.getName(room_id))
         if profile == 'subarea':
@@ -121,4 +132,4 @@ def myprint():
     
 
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')

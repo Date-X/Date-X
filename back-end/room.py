@@ -2,8 +2,12 @@
 from usr import Usr
 from preference import available_pre
 from room_request import Room_request
+from flask_pymongo import  PyMongo
 
 '''
+ver 1.1
+连接MongoDB 完成
+
 ver 1.0
 功能：
 1.房间加人、设置房主
@@ -117,7 +121,8 @@ class Room(object):
 
 
 class Room_manager(object):
-    def __init__(self):
+    def __init__(self, db):
+        self.db = db
         self.next_id = 0
         self.rooms = []
         self.subareas2num = {}  # 每个分区的房间人数
@@ -138,36 +143,42 @@ class Room_manager(object):
     def getRoom_id2id(self):
         return self.room_id2id
 
+    ##不应该使用
     def addRoom(self):
+
+        room = self.db.Room
+        room.insert_one({})
         # 自动分配房间id，总是返回true
-        self.rooms.append(Room(self.next_id))
-        self.room_id2id[self.next_id] = self.next_id
-        self.next_id += 1
+        # self.rooms.append(Room(self.next_id))
+        # self.room_id2id[self.next_id] = self.next_id
+        # self.next_id += 1
         return True
 
     def deleteRoom(self, room_id):
-        if room_id not in self.room_id2id:
+        res = self.db.Room.find_one({"_id":room_id})
+        if res is None:
             print("error: room ", room_id, " does not exist!")
             return False
-        self.room_id2id.pop(room_id)
+        self.db.Room.delete_one({"_id":room_id})
         return True
 
     def printRooms(self):
         count = 0
-        for room in self.rooms:
-            print("===================Room ", count, "===================")
-            print("id:", room.getId())
-            if room.getState() == 0:
+        cursor = self.db.Room.find({})
+        for room in cursor:
+            print("===================Room ", room['_id'], "===================")
+            print("id:", room['_id'])
+            if room['active'] == 0:
                 print("state: Unactivated")
-            if room.getState() == 1:
+            if room['active'] == 1:
                 print("state: Acticated")
-            print("name:", room.getName())
-            print("subarea:", room.getSubarea())
-            print("room owner:", room.getRoom_owner())
-            print("room usrs:", room.getUsrs())
-            count += 1
-        
-    def addRoombyreq(self, request):
+            print("name:", room['name'])
+            print("subarea:", room['area'])
+            print("room owner:", room['owner'])
+            print("room usrs:", room['users'])
+            # count += 1
+
+    def addRoombyreq(self, request, db):
         #根据request创建房间，成功返回房间id，失败返回False
         if not isinstance(request, Room_request):
             print("error: request type is wrong!")
@@ -175,83 +186,136 @@ class Room_manager(object):
         if not request.checkReq():
             print("error: can not establish room with your request!")
             return False
-        room_id = self.next_id
-        self.addRoom()
-        self.setName(room_id, request.getName())
-        self.setSubarea(room_id,request.getSubarea())
-        self.setDescription(room_id,request.getDescription())
-        self.setRoom_owner(room_id,request.getRoom_owner())
-        if self.active(room_id):
-            return room_id
+        room = db.Room
+        room_id = room.insert_one({"name":request.getName(),"area":request.getSubarea(),
+                                  "description":request.getDescription(),"owner":request.getRoom_owner(),
+                                   "active":1,"users":[]}).inserted_id
+        # room_id = self.next_id
+        # self.addRoom()
+        # self.setName(room_id, request.getName())
+        # self.setSubarea(room_id,request.getSubarea())
+        # self.setDescription(room_id,request.getDescription())
+        # self.setRoom_owner(room_id,request.getRoom_owner())
+        # if self.active(room_id):
+        return room_id
     
     def searchRoom(self, request):
         #根据request搜索房间，返回符合条件的房间id的list
         #暂不支持按description搜索
+
         if not isinstance(request, Room_request):
             print("error: request type is wrong!")
             return False
-        res = []
-        for room in self.rooms:
-            if request.name != "" and request.name != room.name:
-                continue
-            if request.subarea != "" and request.subarea != room.subarea:
-                continue
-            if request.room_owner_id != "" and request.room_owner_id != room.room_owner_id:
-                continue
-            res.append(room.getId())
+
+        room = db.Room
+        query = {}
+        if request.getName() != "":
+            query['name'] = request.getName()
+        if request.getSubarea() != "":
+            query['area'] = request.getSubarea()
+        if request.getRoom_owner() != "":
+            query['owner'] = request.getRoom_owner()
+        res = room.find(query)
+        res = [x['_id'] for x in res]
+        # for room in self.rooms:
+        #     if request.name != "" and request.name != room.name:
+        #         continue
+        #     if request.subarea != "" and request.subarea != room.subarea:
+        #         continue
+        #     if request.room_owner_id != "" and request.room_owner_id != room.room_owner_id:
+        #         continue
+        #     res.append(room.getId())
         return res
 
 
     #下面这些函数是对room对应函数的封装，使得所有操作都在room manager中进行
-    def getId(self, room_id):
-        if room_id in self.room_id2id:
-            return self.rooms[room_id].getId()
-        print("error: room ", room_id, " does not exist!")
-        return False
+    # def getId(self, room_id):
+    #     res = self.db.Room.find_one({"_id": room_id})
+    #     if res is None:
+    #         print("error: room ", room_id, " does not exist!")
+    #         return False
+    #     return res['_id']
 
     def getName(self, room_id):
+        res = self.db.Room.find_one({"_id": room_id})
+        if res is None:
+            print("error: room ", room_id, " does not exist!")
+            return False
+        return res['name']
+        old_usr = self.db.Room.find_one({"_id": room_id})['users']
         if room_id in self.room_id2id:
             return self.rooms[room_id].getName()
         print("error: room ", room_id, " does not exist!")
         return False
 
     def getSubarea(self, room_id):
+        res = self.db.Room.find_one({"_id": room_id})
+        if res is None:
+            print("error: room ", room_id, " does not exist!")
+            return False
+        return res['area']
         if room_id in self.room_id2id:
             return self.rooms[room_id].getSubarea()
         print("error: room ", room_id, " does not exist!")
         return False
 
     def getDescription(self, room_id):
+        res = self.db.Room.find_one({"_id": room_id})
+        if res is None:
+            print("error: room ", room_id, " does not exist!")
+            return False
+        return res['description']
         if room_id in self.room_id2id:
             return self.rooms[room_id].getDescription()
         print("error: room ", room_id, " does not exist!")
         return False
 
     def getRoom_owner(self, room_id):
+        res = self.db.Room.find_one({"_id": room_id})
+        if res is None:
+            print("error: room ", room_id, " does not exist!")
+            return False
+        return res['owner']
         if room_id in self.room_id2id:
             return self.rooms[room_id].getRoom_owner()
         print("error: room ", room_id, " does not exist!")
         return False
 
     def getUsrs(self, room_id):
+        res = self.db.Room.find_one({"_id": room_id})
+        if res is None:
+            print("error: room ", room_id, " does not exist!")
+            return False
+        return res['users']
         if room_id in self.room_id2id:
             return self.rooms[room_id].getUsrs()
         print("error: room ", room_id, " does not exist!")
         return False
 
     def getState(self, room_id):
+        res = self.db.Room.find_one({"_id": room_id})
+        if res is None:
+            print("error: room ", room_id, " does not exist!")
+            return False
+        return res['active']
         if room_id in self.room_id2id:
             return self.rooms[room_id].getState()
         print("error: room ", room_id, " does not exist!")
         return False
 
     def setName(self, room_id, name):
-        if room_id in self.room_id2id:
-            return self.rooms[room_id].setName(name)
-        print("error: room ", room_id, " does not exist!")
-        return False
+        res = self.db.Room.update_one({"_id": room_id},{"name":name})
+        if res.matched_count is 0:
+            print("error: room ", room_id, " does not exist!")
+            return False
+        return True
     
     def setSubarea(self, room_id, subarea):
+        res = self.db.Room.update_one({"_id": room_id}, {"subarea": subarea})
+        if res.matched_count is 0:
+            print("error: room ", room_id, " does not exist!")
+            return False
+        return True
         if room_id in self.room_id2id:
             old_subarea = self.rooms[room_id].getSubarea()
             new_subarea = subarea
@@ -264,24 +328,46 @@ class Room_manager(object):
         return False
     
     def setDescription(self, room_id, description):
+        res = self.db.Room.update_one({"_id": room_id}, {"descriptioin": description})
+        if res.matched_count is 0:
+            print("error: room ", room_id, " does not exist!")
+            return False
+        return True
         if room_id in self.room_id2id:
             return self.rooms[room_id].setDescription(description)
         print("error: room ", room_id, " does not exist!")
         return False
 
     def addUsr(self, room_id, usrid):
+        old_usr = self.db.Room.find_one({"_id":room_id})['users']
+        res = self.db.Room.update_one({"_id": room_id}, {"users": old_usr + usrid})
+        if res.matched_count is 0:
+            print("error: room ", room_id, " does not exist!")
+            return False
+        return True
         if room_id in self.room_id2id:
             return self.rooms[room_id].addUsr(usrid)
         print("error: room ", room_id, " does not exist!")
         return False
     
     def setRoom_owner(self, room_id, usrid):
+        old_usr = self.db.Room.find_one({"_id": room_id})['owner']
+        res = self.db.Room.update_one({"_id": room_id}, {"owner": usrid})
+        if res.matched_count is 0:
+            print("error: room ", room_id, " does not exist!")
+            return False
+        return True
         if room_id in self.room_id2id:
             return self.rooms[room_id].setRoom_owner(usrid)
         print("error: room ", room_id, " does not exist!")
         return False
     
     def active(self, room_id):
+        res = self.db.Room.update_one({"_id": room_id}, {"active": 1})
+        if res.matched_count is 0:
+            print("error: room ", room_id, " does not exist!")
+            return False
+        return True
         if room_id in self.room_id2id:
             return self.rooms[room_id].active()
         print("error: room ", room_id, " does not exist!")
