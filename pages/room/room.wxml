@@ -1,2 +1,8 @@
 <!--pages/room/room.wxml-->
 <text>这是房间内页面</text>
+<button bindtap='tap_it'>
+  tap it!
+</button>
+<view>
+  {{str}}
+</view>

@@ -20,7 +20,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    console.log(options.id)
   },
 
   /**
@@ -72,7 +72,9 @@ Page({
   
   },
 
-  enter_room: function () {
+  enter_room: function (event) {
+    console.log(event);
+
     wx.navigateTo({
       url: '../room/room',
     })

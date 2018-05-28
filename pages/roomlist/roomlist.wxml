@@ -1,7 +1,7 @@
 <!--pages/rooms/rooms.wxml-->
 <text>pages/rooms/rooms.wxml</text>
 <view wx:for="{{imgUrls}}">
-  <button bindtap='enter_room'>
+  <button bindtap='enter_room' data-uid='{{index}}'>
     <image src="{{item}}" style="width: 100%; height: 100px;" />
   </button>
 </view>

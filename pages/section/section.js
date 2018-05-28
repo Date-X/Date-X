@@ -20,22 +20,22 @@ Page({
         {
           'icon': './../../images/王者荣耀.jpg',
           'text': '王者荣耀',
-          'url': '../rooms/rooms'
+          'url': '../roomlist/roomlist?id=1'
         },
         {
           'icon': './../../images/吃鸡.jpg',
           'text': '吃鸡',
-          'url': '../rooms/rooms'
+          'url': '../roomlist/roomlist?id=2'
         },
         {
           'icon': './../../images/英雄联盟.jpg',
           'text': '英雄联盟',
-          'url': '../rooms/rooms'
+          'url': '../roomlist/roomlist?id=3'
         },
         {
           'icon': './../../images/狼人杀.jpg',
           'text': '狼人杀',
-          'url': '../rooms/rooms'
+          'url': '../roomlist/roomlist?id=4'
         }
       ]
     })
