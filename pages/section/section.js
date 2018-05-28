@@ -18,22 +18,22 @@ Page({
     this.setData({
       sectionmenu: [
         {
-          'icon': './../../images/王者荣耀.jpg',
+          'icon': '../images/王者荣耀.jpg',
           'text': '王者荣耀',
           'url': '../roomlist/roomlist?id=1'
         },
         {
-          'icon': './../../images/吃鸡.jpg',
+          'icon': '../images/吃鸡.jpg',
           'text': '吃鸡',
           'url': '../roomlist/roomlist?id=2'
         },
         {
-          'icon': './../../images/英雄联盟.jpg',
+          'icon': '../images/英雄联盟.jpg',
           'text': '英雄联盟',
           'url': '../roomlist/roomlist?id=3'
         },
         {
-          'icon': './../../images/狼人杀.jpg',
+          'icon': '../images/狼人杀.jpg',
           'text': '狼人杀',
           'url': '../roomlist/roomlist?id=4'
         }

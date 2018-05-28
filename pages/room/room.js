@@ -87,6 +87,11 @@ Page({
         that.setData({
           'str': res.data
         })
+      },
+      fail: function(){
+        that.setData({
+          'str':'fail'
+        })
       }
     })
   }
