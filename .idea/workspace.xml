@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="c2a50c79-ee78-4ed8-ac65-020678853d27" name="Default" comment="mongoDB ver 1.1 finished">
+    <list default="true" id="c2a50c79-ee78-4ed8-ac65-020678853d27" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/back-end/DateX.py" afterPath="$PROJECT_DIR$/back-end/DateX.py" />
     </list>
@@ -20,8 +20,8 @@
       <file leaf-file-name="DateX.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/back-end/DateX.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="279">
-              <caret line="27" column="34" lean-forward="false" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
+            <state relative-caret-position="1983">
+              <caret line="138" column="14" lean-forward="false" selection-start-line="138" selection-start-column="14" selection-end-line="138" selection-end-column="14" />
               <folding>
                 <element signature="e#24#51#0" expanded="true" />
               </folding>
@@ -268,7 +268,14 @@
       <option name="project" value="LOCAL" />
       <updated>1527598174226</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="Tiny changed">
+      <created>1527598566211</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1527598566211</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="TodoView">
@@ -317,7 +324,8 @@
     <MESSAGE value="mongoDB ver 1.1 finished" />
     <MESSAGE value="Json data added" />
     <MESSAGE value="json data support" />
-    <option name="LAST_COMMIT_MESSAGE" value="json data support" />
+    <MESSAGE value="Tiny changed" />
+    <option name="LAST_COMMIT_MESSAGE" value="Tiny changed" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -489,8 +497,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/back-end/DateX.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="279">
-          <caret line="27" column="34" lean-forward="false" selection-start-line="27" selection-start-column="34" selection-end-line="27" selection-end-column="34" />
+        <state relative-caret-position="1983">
+          <caret line="138" column="14" lean-forward="false" selection-start-line="138" selection-start-column="14" selection-end-line="138" selection-end-column="14" />
           <folding>
             <element signature="e#24#51#0" expanded="true" />
           </folding>
