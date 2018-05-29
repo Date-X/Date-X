@@ -1,4 +1,7 @@
 // pages/rooms/rooms.js
+var app = getApp();
+var Util = require('../../utils/util.js');
+
 Page({
 
   /**
@@ -14,6 +17,9 @@ Page({
       '../../images/roomlist.png',
       '../../images/roomlist.png'
     ],
+    roomlist: [],
+    section: -1,
+    hidden:false
   },
 
   /**
@@ -21,6 +27,14 @@ Page({
    */
   onLoad: function (options) {
     console.log(options.id)
+    var that = this;
+    this.data.section = options.id;
+    that.fetchData();
+    setTimeout(function(){
+      that.setData({
+        hidden:true
+      })
+    }, 1000);
   },
 
   /**
@@ -69,14 +83,45 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
+
   },
 
   enter_room: function (event) {
     console.log(event);
+    console.log(event.currentTarget.dataset.room_id)
 
     wx.navigateTo({
-      url: '../room/room',
+      url: '../room/room?room_id=' + event.currentTarget.dataset.room_id,
+    });
+  },
+
+  fetchData: function(){
+    var that = this;
+    wx.request({
+      url: 'http://www.eximple.me:5000/room/section',
+      data: {
+        section: that.data.section
+        //name:'1'
+      },
+      method: 'POST',
+      dataType: 'json',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        console.log('success')
+        console.log(res.data);
+        if(res.data.response_code != 0)
+        {
+          that.setData({
+            roomlist: res.data[1]
+          })
+        }
+        console.log('success')
+      },
+      fail: function () {
+        console.log('fail');
+      }
     })
   }
 })

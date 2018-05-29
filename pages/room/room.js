@@ -1,26 +1,29 @@
+var timer;
+
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    'imgUrls': [
-      '../../images/roomlist.png',
-      '../../images/roomlist.png',
-      '../../images/roomlist.png',
-      '../../images/roomlist.png',
-      '../../images/roomlist.png',
-      '../../images/roomlist.png',
-      '../../images/roomlist.png'
-    ],
-    'str': '123'
+    str: '123',
+    room_id: -1,
+    name: '',
+    section: -1,
+    description: '',
+    room_owner_id: -1,
+    users_id: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    console.log(options.room_id);
+    this.setData({
+      room_id:options.room_id
+    })
+    //this.Countdown();
   },
 
   /**
@@ -34,21 +37,21 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    this.Countdown();
   },
 
   /**
    * 生命周期函数--监听页面隐藏
    */
   onHide: function () {
-  
+    clearTimeout(timer);
   },
 
   /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-  
+    clearTimeout(timer);
   },
 
   /**
@@ -73,16 +76,13 @@ Page({
 
   tap_it: function(event){
     var that = this
-
-    event
-
     wx.request({
-      url: 'http://www.eximple.me:5000/print',
+      url: 'http://www.eximple.me:5000/search',
       data: {
-         
+         key: that.data.room_id
       },
-      dataType: 'json',
-      method: 'GET',
+      dataType: 'form',
+      method: 'POST',
       success: function(res){
         that.setData({
           'str': res.data
@@ -94,6 +94,41 @@ Page({
         })
       }
     })
-  }
+  },
+
+  f: function(){
+    Countdown();
+  },
+
+  Countdown: function() {
+    var that = this;
+    timer = setTimeout(function () {
+      console.log("----Countdown----");
+      wx.request({
+        url: 'http://www.eximple.me:5000/search',
+        data: {
+          key: that.data.room_id
+        },
+        method: 'POST',
+        dataType: 'json',
+        header: {
+          'Content-Type': 'application/json'
+        },
+        success: function (res) {
+          console.log('success')
+          console.log(res.data);
+          // that.setData({
+          //   roomlist: res.data.roomlist
+          // })
+          console.log('success')
+        },
+        fail: function () {
+          console.log('fail');
+        }
+      });
+      that.Countdown();
+    }, 1000);
+  },
 
 })
+
