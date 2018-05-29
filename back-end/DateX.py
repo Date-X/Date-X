@@ -25,7 +25,7 @@ def complete_user():
 
     data = request.data
     j_data = json.loads(data)
-    j_data = yaml.safe_load(j_data,encoding='utf-8')
+    j_data = yaml.safe_load(j_data)
 
     usr_id = data['open_id']
     sex = data['sex']
