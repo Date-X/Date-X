@@ -22,9 +22,13 @@ def initial():
 # 完善信息
 @app.route('/usr/complete',methods = ['POST'])
 def complete_user():
-    usr_id = request.form['open_id']
-    sex = request.form['sex']
-    pre = request.form['preference']
+
+    data = request.data
+    j_data = json.loads(data)
+
+    usr_id = data['open_id']
+    sex = data['sex']
+    pre = data['preference']
     res = usr_manager.setPre(usr_id,pre) and usr_manager.setSex(usr_id,sex)
     return json.dumps({'response_code':int(res)})
     # if usr_id in usr_manager.usrid2id:
@@ -34,12 +38,20 @@ def complete_user():
 # 查看信息
 @app.route('/usr/info',methods = ['POST'])
 def user_info():
-    usr_id = request.form['open_id']
+
+    data = request.data
+    j_data = json.loads(data)
+
+    usr_id = j_data['open_id']
     return usr_manager.getUsrbyusrid(usr_id)
 
 @app.route('/usr/roomlist1',methods = ['POST'])
 def room_info1():
-    usr_id = request.form['open_id']
+
+    data = request.data
+    j_data = json.loads(data)
+
+    usr_id = j_data['open_id']
     return room_manager.getRoomByID(usr_id)
 
 @app.route('/room/section',methods = ['POST'])
@@ -58,7 +70,7 @@ def room_add():
 
     name = j_data['name']
     subarea = j_data['section']
-    description = j_data['des']
+    description = j_data['description']
     room_owner_id = j_data['room_owner_id']
 
     room_request = Room_request()
@@ -71,38 +83,60 @@ def room_add():
 
 @app.route('/room/kick',methods = ['POST'])
 def room_kick():
-    room_id = request.form['room_id']
-    openid = request.form['openid']
+    data = request.data
+    j_data = json.loads(data)
+
+    room_id = j_data['room_id']
+    openid = j_data['openid']
 
     return room_manager.deleteByID(room_id,openid)
 
 @app.route('/room/delete',methods = ['POST'])
 def room_delete():
-    room_id = request.form['room_id']
+
+    data = request.data
+    j_data = json.loads(data)
+
+    room_id = j_data['room_id']
     return room_manager.deleteRoom(room_id)
 
 @app.route('/room/get_message',methods = ['POST'])
 def room_get_message():
-    room_id = request.form['room_id']
+
+    data = request.data
+    j_data = json.loads(data)
+
+    room_id = j_data['room_id']
     return room_manager.getMessage(room_id)
 
 @app.route('/room/send_message',methods = ['POST'])
 def room_send_message():
-    room_id = request.form['room_id']
-    openid = request.form['openid']
-    message = request.form['message']
+
+    data = request.data
+    j_data = json.loads(data)
+
+    room_id = j_data['room_id']
+    openid = j_data['openid']
+    message = j_data['message']
     return room_manager.addMessage(room_id,openid,message)
 
 @app.route('/search',methods = ['POST'])
 def room_search():
-    room_id = request.form.get('room_id')
-    if room_id is not None:
+
+    data = request.data
+    j_data = json.loads(data)
+
+    if 'room_id' in j_data:
+        room_id = j_data['room_id']
         return room_manager.getRoombyroomid(room_id)
 
+    subarea = None
+    description = None
     # name = request.form['name']
-    subarea = request.form.get('section')
-    description = request.form.get('description')
-    # room_owner_id = request.form['room_owner_id']
+    if 'section' in j_data:
+        subarea = j_data['section']
+    if 'description' in j_data:
+        description = j_data['description']
 
     room_request = Room_request()
     if subarea is not None:
