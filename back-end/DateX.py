@@ -175,7 +175,7 @@ def room_search():
         room_request.setSubarea(subarea)
     if description is not None:
         room_request.setDescription(description)
-    return room_manager.searchRoom(room_id,room_request)
+    return room_manager.searchRoom(room_request)
 
 # 不存在的用户会返回False，用于检测用户是否存在
 @app.route('/usr/<usrid>')
