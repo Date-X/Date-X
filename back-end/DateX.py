@@ -93,7 +93,7 @@ def room_add():
 
     data = request.data
     
-    j_data = yaml.safe_load(j_data)
+    j_data = yaml.safe_load(data)
 
     name = j_data['name']
     subarea = j_data['section']
@@ -112,7 +112,7 @@ def room_add():
 def room_kick():
     data = request.data
     
-    j_data = yaml.safe_load(j_data)
+    j_data = yaml.safe_load(data)
 
     room_id = j_data['room_id']
     openid = j_data['openid']
