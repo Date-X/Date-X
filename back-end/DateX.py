@@ -79,7 +79,7 @@ def room_add():
     room_request.setSubarea(subarea)
     room_request.setDescription(description)
 
-    return room_manager.addRoombyreq(sec)
+    return room_manager.addRoombyreq(room_request)
 
 @app.route('/room/kick',methods = ['POST'])
 def room_kick():
