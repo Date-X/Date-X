@@ -203,6 +203,18 @@ class Usr_manager(object):
         print("error: usr", usrid, "does not exist!")
         return False
 
+    def setSex(self, usrid, sex):
+        res = self.db.User.find_one({'id': usrid})['sex']
+        if res is None:
+            print("error: usr", usrid, "does not exist!")
+            return False
+        self.db.User.update({'id': usrid}, {"$set": {'sex': sex}})
+        return True
+        if usrid in self.usrid2id:
+            return self.usrs[self.usrid2id[usrid]].setPre(preferences)
+        print("error: usr", usrid, "does not exist!")
+        return False
+
     def deletePre(self, usrid, del_pre):
         res = self.db.User.find_one({'id': usrid})['pre']
         if res is None:

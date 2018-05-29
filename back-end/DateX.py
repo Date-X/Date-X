@@ -4,6 +4,7 @@ from room_request import Room_request
 from room import Room_manager
 from flask import Flask, request
 from flask_pymongo import PyMongo
+import json
 
 app = Flask(__name__)
 mongo = PyMongo(app)
@@ -17,6 +18,92 @@ def initial():
     db = mongo.db
     usr_manager = Usr_manager(db)
     room_manager = Room_manager(db)
+
+# 完善信息
+@app.route('/usr/complete',methods = ['POST'])
+def complete_user():
+    usr_id = request.form['open_id']
+    sex = request.form['sex']
+    pre = request.form['preference']
+    res = usr_manager.setPre(usr_id,pre) and usr_manager.setSex(usr_id,sex)
+    return json.dumps({'response_code':int(res)})
+    # if usr_id in usr_manager.usrid2id:
+    #     return str(room_manager.addUsr(room_id, usr_id))
+    # return str(False)
+
+# 查看信息
+@app.route('/usr/info',methods = ['POST'])
+def user_info():
+    usr_id = request.form['open_id']
+    return usr_manager.getUsrbyusrid(usr_id)
+
+@app.route('/usr/roomlist1',methods = ['POST'])
+def room_info1():
+    usr_id = request.form['open_id']
+    return room_manager.getRoomByID(usr_id)
+
+@app.route('/room/section',methods = ['POST'])
+def room_sec():
+    sec = request.form['section']
+    return room_manager.getRoomBySection(sec)
+
+@app.route('/room/add',methods = ['POST'])
+def room_add():
+    if request.method == 'POST':
+        name = request.form['name']
+        subarea = request.form['section']
+        description = request.form['des']
+        room_owner_id = request.form['room_owner_id']
+
+        room_request = Room_request()
+        room_request.setRoomowner(room_owner_id)
+        room_request.setName(name)
+        room_request.setSubarea(subarea)
+        room_request.setDescription(description)
+
+        return room_manager.addRoombyreq(sec)
+
+@app.route('/room/kick',methods = ['POST'])
+def room_kick():
+    room_id = request.form['room_id']
+    openid = request.form['openid']
+
+    return room_manager.deleteByID(room_id,openid)
+
+@app.route('/room/delete',methods = ['POST'])
+def room_delete():
+    room_id = request.form['room_id']
+    return room_manager.deleteRoom(room_id)
+
+@app.route('/room/get_message',methods = ['POST'])
+def room_get_message():
+    room_id = request.form['room_id']
+    return room_manager.getMessage(room_id)
+
+@app.route('/room/send_message',methods = ['POST'])
+def room_send_message():
+    room_id = request.form['room_id']
+    openid = request.form['openid']
+    message = request.form['message']
+    return room_manager.addMessage(room_id,openid,message)
+
+@app.route('/search',methods = ['POST'])
+def room_search():
+    room_id = request.form.get('room_id')
+    if room_id is not None:
+        return room_manager.getRoombyroomid(room_id)
+
+    # name = request.form['name']
+    subarea = request.form.get('section')
+    description = request.form.get('description')
+    # room_owner_id = request.form['room_owner_id']
+
+    room_request = Room_request()
+    if subarea is not None:
+        room_request.setSubarea(subarea)
+    if description is not None:
+        room_request.setDescription(description)
+    return room_manager.searchRoom(room_id,room_request)
 
 # 不存在的用户会返回False，用于检测用户是否存在
 @app.route('/usr/<usrid>')
@@ -132,4 +219,4 @@ def myprint():
     
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0')
+    app.run(host='0.0.0.0',)

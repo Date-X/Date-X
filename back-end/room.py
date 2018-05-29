@@ -3,6 +3,8 @@ from usr import Usr
 from preference import available_pre
 from room_request import Room_request
 from flask_pymongo import  PyMongo
+import datetime
+import json
 
 '''
 ver 1.1
@@ -135,10 +137,10 @@ class Room_manager(object):
         return self.rooms
 
     def getRoombyroomid(self, room_id):
-        if room_id in self.room_id2id:  # 这里发现room_id2id是有必要的，它可以用来表示id为i的房间是否存在
-            return self.rooms[self.room_id2id[room_id]]
-        print("error: room id ", room_id, "does not exists!")
-        return None
+        res = self.db.Room.find_one({"_id": room_id})
+        if res is None:
+            return json.dumps({"response_code": 0})
+        return json.dumps([{"response_code": 1}, res])
 
     def getRoom_id2id(self):
         return self.room_id2id
@@ -158,9 +160,16 @@ class Room_manager(object):
         res = self.db.Room.find_one({"_id":room_id})
         if res is None:
             print("error: room ", room_id, " does not exist!")
-            return False
+            return json.dumps({"response_code":0})
         self.db.Room.delete_one({"_id":room_id})
-        return True
+        return json.dumps({"response_code":1})
+
+    def deleteByID(self, room_id, usrid):
+        res = self.db.Room.update_one({"_id":room_id},{"$pull":{"users":usrid}})
+        if res.matched_count == 0:
+            print("error: room ", room_id, " does not exist!")
+            return json.dumps({"response_code":0})
+        return json.dumps({"response_code":1})
 
     def printRooms(self):
         count = 0
@@ -178,26 +187,19 @@ class Room_manager(object):
             print("room usrs:", room['users'])
             # count += 1
 
-    def addRoombyreq(self, request, db):
+    def addRoombyreq(self, request):
         #根据request创建房间，成功返回房间id，失败返回False
         if not isinstance(request, Room_request):
             print("error: request type is wrong!")
-            return False
+            return json.dumps({"response_code": 0})
         if not request.checkReq():
             print("error: can not establish room with your request!")
-            return False
-        room = db.Room
+            return json.dumps({"response_code": 0})
+        room = self.db.Room
         room_id = room.insert_one({"name":request.getName(),"area":request.getSubarea(),
                                   "description":request.getDescription(),"owner":request.getRoom_owner(),
-                                   "active":1,"users":[]}).inserted_id
-        # room_id = self.next_id
-        # self.addRoom()
-        # self.setName(room_id, request.getName())
-        # self.setSubarea(room_id,request.getSubarea())
-        # self.setDescription(room_id,request.getDescription())
-        # self.setRoom_owner(room_id,request.getRoom_owner())
-        # if self.active(room_id):
-        return room_id
+                                   "active":1,"users":[],"messages":[]}).inserted_id
+        return json.dumps({"response_code":1,"room_id":room_id})
     
     def searchRoom(self, request):
         #根据request搜索房间，返回符合条件的房间id的list
@@ -205,18 +207,18 @@ class Room_manager(object):
 
         if not isinstance(request, Room_request):
             print("error: request type is wrong!")
-            return False
+            json.dumps({"response_code": 0})
 
         room = db.Room
         query = {}
-        if request.getName() != "":
-            query['name'] = request.getName()
+        # if request.getName() != "":
+        #     query['name'] = request.getName()
         if request.getSubarea() != "":
             query['area'] = request.getSubarea()
-        if request.getRoom_owner() != "":
-            query['owner'] = request.getRoom_owner()
+        if request.getDescription() != "":
+            query['description'] = request.getDescription()
         res = room.find(query)
-        res = [x['_id'] for x in res]
+        # res = [x['_id'] for x in res]
         # for room in self.rooms:
         #     if request.name != "" and request.name != room.name:
         #         continue
@@ -225,7 +227,7 @@ class Room_manager(object):
         #     if request.room_owner_id != "" and request.room_owner_id != room.room_owner_id:
         #         continue
         #     res.append(room.getId())
-        return res
+        return json.dumps([{"response_code": len(list(res)) != 0},list(res)])
 
 
     #下面这些函数是对room对应函数的封装，使得所有操作都在room manager中进行
@@ -258,6 +260,19 @@ class Room_manager(object):
             return self.rooms[room_id].getSubarea()
         print("error: room ", room_id, " does not exist!")
         return False
+
+
+    def getRoomByID(self, usrid):
+        cur = self.db.Room.find({"usr": {"$all": [usrid]}})
+        if cur.count() == 0:
+            return json.dumps({"response_code":0})
+        return json.dumps([{"response_code":1},list(cur)])
+
+    def getRoomBySection(self, sec):
+        cur = self.db.Room.find({"area": sec})
+        if cur.count() == 0:
+            return json.dumps({"response_code":0})
+        return json.dumps([{"response_code":1},list(cur)])
 
     def getDescription(self, room_id):
         res = self.db.Room.find_one({"_id": room_id})
@@ -372,3 +387,20 @@ class Room_manager(object):
             return self.rooms[room_id].active()
         print("error: room ", room_id, " does not exist!")
         return False
+
+    def addMessage(self,room_id,usrid,content):
+        entry = {"user":usrid,"content":content,"time":datetime.datetime.utcnow()}
+        res = self.db.Room.update_one({"_id": room_id}, {"$push": {"messages":entry}})
+        if res.matched_count is 0:
+            print("error: room ", room_id, " or ", usrid," does not exist!")
+            return json.dumps({"response_code": 0})
+        return json.dumps({"response_code": 1})
+
+    def getMessage(self,room_id):
+        res = self.db.Room.find_one({"_id": room_id})
+        if res is None:
+            print("error: room ", room_id, " does not exist!")
+            return json.dumps({"response_code":0})
+        if len(res['messages']) == 0:
+            return json.dumps({"response_code": 0})
+        return json.dumps([{"response_code": 1},res['messages']])
