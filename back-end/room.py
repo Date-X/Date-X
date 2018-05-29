@@ -192,9 +192,9 @@ class Room_manager(object):
         if not isinstance(request, Room_request):
             print("error: request type is wrong!")
             return json.dumps({"response_code": 0})
-        if not request.checkReq():
-            print("error: can not establish room with your request!")
-            return json.dumps({"response_code": 0})
+        # if not request.checkReq():
+        #     print("error: can not establish room with your request!")
+        #     return json.dumps({"response_code": 0})
         room = self.db.Room
         room_id = room.insert_one({"name":request.getName(),"area":request.getSubarea(),
                                   "description":request.getDescription(),"owner":request.getRoom_owner(),

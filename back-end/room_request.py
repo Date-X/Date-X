@@ -32,25 +32,25 @@ class Room_request(object):
         return True
     
     def setName(self, name):
-        if isinstance(name, str):
-            self.name = name
-            return True
-        print("error: ", name, " is not a string!")
-        return False
+        # if isinstance(name, str):
+        self.name = name
+        return True
+        # print("error: ", name, " is not a string!")
+        # return False
 
     def setSubarea(self, subarea):
-        if Usr.checkPre(subarea):
-            self.subarea = subarea
-            return True
-        print("error: ", subarea, " is not an available subarea!")
-        return False
+        # if Usr.checkPre(subarea):
+        self.subarea = subarea
+        return True
+        # print("error: ", subarea, " is not an available subarea!")
+        # return False
     
     def setDescription(self,description):
-        if isinstance(description, str):
-            self.description = description
-            return True
-        print("error: description must be str!")
-        return False
+        # if isinstance(description, str):
+        self.description = description
+        return True
+        # print("error: description must be str!")
+        # return False
 
     def setRoomowner(self, room_owner_id):
         self.room_owner_id = room_owner_id
