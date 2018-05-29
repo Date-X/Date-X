@@ -10,6 +10,28 @@ App({
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
+        if (res.code) {
+          console.log(res.code)
+          //发起网络请求
+          wx.request({
+            url: 'http://www.eximple.me:5000/login',
+            data: {
+              code: res.code
+            },
+            method: 'POST',
+            header: {
+              'content-type': 'application/json' // 默认值
+            },
+            success: function (res) {
+              console.log(openid)
+              console.log(res.data)
+              openid = res.data.openid
+              console.log(openid)
+            }
+          })
+        } else {
+          console.log('登录失败！' + res.errMsg)
+        }
       }
     })
     // 获取用户信息
@@ -34,6 +56,7 @@ App({
     })
   },
   globalData: {
-    userInfo: null
+    userInfo: null,
+    openid: null
   }
 })
