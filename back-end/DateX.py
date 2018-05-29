@@ -44,24 +44,30 @@ def room_info1():
 
 @app.route('/room/section',methods = ['POST'])
 def room_sec():
-    sec = request.form['section']
+    data = request.data
+    j_data = json.loads(data)
+
+    sec = j_data['section']
     return room_manager.getRoomBySection(sec)
 
 @app.route('/room/add',methods = ['POST'])
 def room_add():
-    if request.method == 'POST':
-        name = request.form['name']
-        subarea = request.form['section']
-        description = request.form['des']
-        room_owner_id = request.form['room_owner_id']
 
-        room_request = Room_request()
-        room_request.setRoomowner(room_owner_id)
-        room_request.setName(name)
-        room_request.setSubarea(subarea)
-        room_request.setDescription(description)
+    data = request.data
+    j_data = json.loads(data)
 
-        return room_manager.addRoombyreq(sec)
+    name = j_data['name']
+    subarea = j_data['section']
+    description = j_data['des']
+    room_owner_id = j_data['room_owner_id']
+
+    room_request = Room_request()
+    room_request.setRoomowner(room_owner_id)
+    room_request.setName(name)
+    room_request.setSubarea(subarea)
+    room_request.setDescription(description)
+
+    return room_manager.addRoombyreq(sec)
 
 @app.route('/room/kick',methods = ['POST'])
 def room_kick():
