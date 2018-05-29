@@ -1,8 +1,8 @@
 {
   "pages":[
+    "pages/index/index",
     "pages/register/register",
     "pages/profile/profile",
-    "pages/section/section",
     "pages/search/search",
     "pages/add/add",
     "pages/room/room",
@@ -17,8 +17,8 @@
   "tabBar": {
     "list": [
       {
-        "pagePath": "pages/register/register",
-        "text": "register",
+        "pagePath":"pages/index/index",
+        "text":"homepage",
         "iconPath":"images/home.png",
         "selectedIconPath":"images/home_selected.png"
       },
@@ -35,8 +35,8 @@
         "selectedIconPath": "images/add_selected.png"
       },
       {
-          "pagePath": "pages/section/section",
-          "text": "section",
+        "pagePath":"pages/room/room",
+        "text":"room",
           "iconPath": "images/section.png",
           "selectedIconPath": "images/section_selected.png"
       },
