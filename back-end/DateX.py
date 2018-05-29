@@ -23,7 +23,7 @@ def initial():
 @app.route('/login', methods=['POST'])
 def get_openid():
     data = request.data
-    j_data = json.loads(data)
+    
     j_data = yaml.safe_load(j_data)
     
     code = data.form['code']
@@ -46,7 +46,7 @@ def get_openid():
 def complete_user():
 
     data = request.data
-    j_data = json.loads(data)
+    
     j_data = yaml.safe_load(j_data)
 
     usr_id = data['open_id']
@@ -63,7 +63,7 @@ def complete_user():
 def user_info():
 
     data = request.data
-    j_data = json.loads(data)
+    
     j_data = yaml.safe_load(j_data)
 
     usr_id = j_data['open_id']
@@ -73,7 +73,7 @@ def user_info():
 def room_info1():
 
     data = request.data
-    j_data = json.loads(data)
+    
     j_data = yaml.safe_load(j_data)
 
     usr_id = j_data['open_id']
@@ -82,7 +82,7 @@ def room_info1():
 @app.route('/room/section',methods = ['POST'])
 def room_sec():
     data = request.data
-    j_data = json.loads(data)
+    
     j_data = yaml.safe_load(j_data)
 
     sec = j_data['section']
@@ -92,7 +92,7 @@ def room_sec():
 def room_add():
 
     data = request.data
-    j_data = json.loads(data)
+    
     j_data = yaml.safe_load(j_data)
 
     name = j_data['name']
@@ -111,7 +111,7 @@ def room_add():
 @app.route('/room/kick',methods = ['POST'])
 def room_kick():
     data = request.data
-    j_data = json.loads(data)
+    
     j_data = yaml.safe_load(j_data)
 
     room_id = j_data['room_id']
@@ -123,7 +123,7 @@ def room_kick():
 def room_delete():
 
     data = request.data
-    j_data = json.loads(data)
+    
     j_data = yaml.safe_load(j_data)
 
     room_id = j_data['room_id']
@@ -133,7 +133,7 @@ def room_delete():
 def room_get_message():
 
     data = request.data
-    j_data = json.loads(data)
+    
     j_data = yaml.safe_load(j_data)
 
     room_id = j_data['room_id']
@@ -155,7 +155,7 @@ def room_send_message():
 def room_search():
 
     data = request.data
-    j_data = json.loads(data)
+    
     j_data = yaml.safe_load(j_data)
 
     if 'room_id' in j_data:
