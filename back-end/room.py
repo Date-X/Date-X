@@ -199,7 +199,7 @@ class Room_manager(object):
         room_id = room.insert_one({"name":request.getName(),"area":request.getSubarea(),
                                   "description":request.getDescription(),"owner":request.getRoom_owner(),
                                    "active":1,"users":[],"messages":[]}).inserted_id
-        return json.dumps({"response_code":1,"room_id":room_id})
+        return json.dumps({"response_code":1,"room_id":str(room_id)})
     
     def searchRoom(self, request):
         #根据request搜索房间，返回符合条件的房间id的list
