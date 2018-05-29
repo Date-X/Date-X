@@ -1,11 +1,12 @@
 // pages/add/add.js
+const app = getApp()
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-    section_array: ['选择分区','王者荣耀', '吃鸡', '英雄联盟', '狼人杀'],
+    section_array: ['选择分区','王者荣耀', '吃鸡', '英雄联盟', '狼人杀','其他'],
     section_index: 0
   },
   bindPickerChange: function (e) {
@@ -14,15 +15,18 @@ Page({
     })
   },
   formSubmit: function (e) {
-    console.log('submit：name=', e.detail.value["name"])
     wx.request({
-      url: '/room/add', //仅为示例，并非真实的接口地址
+      url: 'http://www.eximple.me:5000/room/add', //仅为示例，并非真实的接口地址
+      
       data: {
         name: e.detail.value["name"],
-        sectoin: e.detail.value["section"],
+        section: e.detail.value["section"],
         room_number: e.detail.value["room_number"],
-        description: e.detail.value["description"] 
+        description: e.detail.value["description"],
+        room_owner_id: 0
+        //room_owner_id: app.globalData.openid
       },
+      method:'POST',
       header: {
         'content-type': 'application/json' // 默认值
       },
@@ -30,9 +34,22 @@ Page({
         wx.showToast({
           title: '创建成功',
           icon: 'success',
-          duration: 3000
+          duration: 2000
+        })
+        console.log(res.data)
+        var room_url='../room/room?room_id='+res.data['room_id']
+        console.log(room_url)
+        wx.redirectTo({
+          url: room_url,
         })
         //跳转到房间内页面
+      },
+      fail: function(){
+        wx.showToast({
+          title: 'error',
+          icon: 'none',
+          duration: 2000
+        })
       }
     })
   },

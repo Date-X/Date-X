@@ -32,6 +32,6 @@
     </view>
   </view>
   <view class="btn-submit">
-		<button class="weui-button" type="primary" formType="submit">提交</button>
+		<button class="weui-button" type="primary" formType="submit">创建房间</button>
 	</view>
 </form>

@@ -10,9 +10,6 @@
       <view class="flex-item weui-label">个人信息</view>
     </view>
     <view class="weui-cell">
-      <view class="flex-item weui-label">我的房间</view>
-    </view>
-    <view class="weui-cell">
       <view class="flex-item weui-label">设置</view>
     </view>
   </view>
