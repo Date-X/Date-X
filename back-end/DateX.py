@@ -26,7 +26,7 @@ def get_openid():
     
     j_data = yaml.safe_load(data)
     
-    code = data.form['code']
+    code = j_data['code']
     appid = 'wx88191e14844f68ad'
     secret = 'f8ad952cef6e1266f1f58d107c6eaed4'
     wxurl = 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code' % (appid, secret, code)
