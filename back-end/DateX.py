@@ -24,7 +24,7 @@ def initial():
 def get_openid():
     data = request.data
     
-    j_data = yaml.safe_load(j_data)
+    j_data = yaml.safe_load(data)
     
     code = data.form['code']
     appid = 'wx88191e14844f68ad'
@@ -47,7 +47,7 @@ def complete_user():
 
     data = request.data
     
-    j_data = yaml.safe_load(j_data)
+    j_data = yaml.safe_load(data)
 
     usr_id = data['open_id']
     sex = data['sex']
@@ -64,7 +64,7 @@ def user_info():
 
     data = request.data
     
-    j_data = yaml.safe_load(j_data)
+    j_data = yaml.safe_load(data)
 
     usr_id = j_data['open_id']
     return usr_manager.getUsrbyusrid(usr_id)
@@ -74,7 +74,7 @@ def room_info1():
 
     data = request.data
     
-    j_data = yaml.safe_load(j_data)
+    j_data = yaml.safe_load(data)
 
     usr_id = j_data['open_id']
     return room_manager.getRoomByID(usr_id)
@@ -83,7 +83,7 @@ def room_info1():
 def room_sec():
     data = request.data
     
-    j_data = yaml.safe_load(j_data)
+    j_data = yaml.safe_load(data)
 
     sec = j_data['section']
     return room_manager.getRoomBySection(sec)
@@ -124,7 +124,7 @@ def room_delete():
 
     data = request.data
     
-    j_data = yaml.safe_load(j_data)
+    j_data = yaml.safe_load(data)
 
     room_id = j_data['room_id']
     return room_manager.deleteRoom(room_id)
@@ -134,7 +134,7 @@ def room_get_message():
 
     data = request.data
     
-    j_data = yaml.safe_load(j_data)
+    j_data = yaml.safe_load(data)
 
     room_id = j_data['room_id']
     return room_manager.getMessage(room_id)
@@ -144,7 +144,7 @@ def room_send_message():
 
     data = request.data
     
-    j_data = yaml.safe_load(j_data)
+    j_data = yaml.safe_load(data)
 
     room_id = j_data['room_id']
     openid = j_data['openid']
@@ -156,7 +156,7 @@ def room_search():
 
     data = request.data
     
-    j_data = yaml.safe_load(j_data)
+    j_data = yaml.safe_load(data)
 
     if 'room_id' in j_data:
         room_id = j_data['room_id']
