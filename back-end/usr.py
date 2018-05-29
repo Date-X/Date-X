@@ -240,6 +240,7 @@ class Usr_manager(object):
 
 
 if __name__ == "__main__":
+    '''
     # test add usr
     usr_manager = Usr_manager()
     usr_manager.addUsr(7, 123)
@@ -256,3 +257,4 @@ if __name__ == "__main__":
     usr3.printUsr()
 
     # test preference
+    '''

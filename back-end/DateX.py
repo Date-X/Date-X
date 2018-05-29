@@ -32,7 +32,12 @@ def get_openid():
     wxurl = 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code' % (appid, secret, code)
     response = requests.get(wxurl)
     res = {}
-    res['openid'] = json.loads(response.text)['openid']
+    openid = json.loads(response.text)['openid']
+    res['openid'] = openid
+    exist = 0
+    if usr_manager.getId(openid):
+        exist = 1   #用户存在
+    res['exist'] = exist
     return jsonify(res)
 
 
