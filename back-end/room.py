@@ -209,7 +209,7 @@ class Room_manager(object):
             print("error: request type is wrong!")
             json.dumps({"response_code": 0})
 
-        room = db.Room
+        room = self.db.Room
         query = {}
         # if request.getName() != "":
         #     query['name'] = request.getName()
