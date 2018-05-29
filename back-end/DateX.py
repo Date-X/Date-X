@@ -2,9 +2,9 @@
 from usr import Usr_manager
 from room_request import Room_request
 from room import Room_manager
-from flask import Flask, request
+from flask import Flask, request, jsonify
 from flask_pymongo import PyMongo
-import json,yaml
+import json,yaml,requests
 
 app = Flask(__name__)
 mongo = PyMongo(app)
@@ -18,6 +18,28 @@ def initial():
     db = mongo.db
     usr_manager = Usr_manager(db)
     room_manager = Room_manager(db)
+
+# 获得openid
+@app.route('/login', methods=['POST'])
+def get_openid():
+    data = request.data
+    j_data = json.loads(data)
+    j_data = yaml.safe_load(j_data)
+    
+    code = data.form['code']
+    appid = 'wx88191e14844f68ad'
+    secret = 'f8ad952cef6e1266f1f58d107c6eaed4'
+    wxurl = 'https://api.weixin.qq.com/sns/jscode2session?appid=%s&secret=%s&js_code=%s&grant_type=authorization_code' % (appid, secret, code)
+    response = requests.get(wxurl)
+    res = {}
+    openid = json.loads(response.text)['openid']
+    res['openid'] = openid
+    exist = 0
+    if usr_manager.getId(openid):
+        exist = 1   #用户存在
+    res['exist'] = exist
+    return jsonify(res)
+
 
 # 完善信息
 @app.route('/usr/complete',methods = ['POST'])
