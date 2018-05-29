@@ -1,7 +1,7 @@
 # -*- coding: UTF-8 -*-
 
 from preference import available_pre
-
+import json
 '''
 ver 1.1
 连接MongoDB 完成
@@ -105,9 +105,9 @@ class Usr_manager(object):
     def getUsrbyusrid(self, usrid):
         res = self.db.User.find_one({'id': usrid})
         if res is not None:
-            return res
+            return json.dumps([{'response_code':1},res])
         print("error: usr id ", usrid, " does not exist!")
-        return None
+        return json.dumps({'response_code':0})
 
     def addUsr(self, id, password):
         if id in self.usrid2id:
