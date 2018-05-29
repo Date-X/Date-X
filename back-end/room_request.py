@@ -1,6 +1,6 @@
 # -*- coding: UTF-8 -*-
 import datetime
-from usr import Usr
+# from usr import Usr
 
 
 class Room_request(object):
@@ -10,7 +10,7 @@ class Room_request(object):
         self.subarea = ""
         self.description = ""
         self.room_owner_id = -1
-    
+
     def getTime(self):
         return self.time
 
@@ -19,7 +19,7 @@ class Room_request(object):
 
     def getSubarea(self):
         return self.subarea
-    
+
     def getDescription(self):
         return self.description
 
@@ -30,7 +30,7 @@ class Room_request(object):
         #将时间更改为当前时间，总是返回True
         self.time = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
         return True
-    
+
     def setName(self, name):
         # if isinstance(name, str):
         self.name = name
@@ -44,7 +44,7 @@ class Room_request(object):
         return True
         # print("error: ", subarea, " is not an available subarea!")
         # return False
-    
+
     def setDescription(self,description):
         # if isinstance(description, str):
         self.description = description
@@ -55,7 +55,7 @@ class Room_request(object):
     def setRoomowner(self, room_owner_id):
         self.room_owner_id = room_owner_id
 
-    
+
     def checkReq(self):
         #查看该request实例是否满足创建房间的需求
         if not isinstance(self.name, str) or self.name == "":
