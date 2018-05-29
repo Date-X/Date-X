@@ -9,9 +9,31 @@ Page({
     section_index: 0
   },
   bindPickerChange: function (e) {
-    //console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       section_index: e.detail.value
+    })
+  },
+  formSubmit: function (e) {
+    console.log('submit：name=', e.detail.value["name"])
+    wx.request({
+      url: '/room/add', //仅为示例，并非真实的接口地址
+      data: {
+        name: e.detail.value["name"],
+        sectoin: e.detail.value["section"],
+        room_number: e.detail.value["room_number"],
+        description: e.detail.value["description"] 
+      },
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        wx.showToast({
+          title: '创建成功',
+          icon: 'success',
+          duration: 3000
+        })
+        //跳转到房间内页面
+      }
     })
   },
   /**
