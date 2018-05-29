@@ -121,7 +121,7 @@ def room_get_message():
 def room_send_message():
 
     data = request.data
-    j_data = json.loads(data)
+    
     j_data = yaml.safe_load(j_data)
 
     room_id = j_data['room_id']
