@@ -4,7 +4,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    imgUrls: [
+    'imgUrls': [
       '../../images/roomlist.png',
       '../../images/roomlist.png',
       '../../images/roomlist.png',
@@ -13,6 +13,7 @@ Page({
       '../../images/roomlist.png',
       '../../images/roomlist.png'
     ],
+    'str': '123'
   },
 
   /**
@@ -68,8 +69,31 @@ Page({
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
-  
   },
 
-  
+  tap_it: function(event){
+    var that = this
+
+    event
+
+    wx.request({
+      url: 'http://www.eximple.me:5000/print',
+      data: {
+         
+      },
+      dataType: 'json',
+      method: 'GET',
+      success: function(res){
+        that.setData({
+          'str': res.data
+        })
+      },
+      fail: function(){
+        that.setData({
+          'str':'fail'
+        })
+      }
+    })
+  }
+
 })
