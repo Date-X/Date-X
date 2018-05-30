@@ -6,7 +6,9 @@
     "pages/search/search",
     "pages/add/add",
     "pages/room/room",
-    "pages/roomlist/roomlist"
+    "pages/roomlist/roomlist",
+    "pages/myroom/myroom",
+    "pages/roomdetail/roomdetail"
   ],
   "window":{
     "backgroundTextStyle":"light",

@@ -19,7 +19,7 @@ Page({
     ],
     roomlist: [],
     section: -1,
-    hidden:false
+    hidden:true
   },
 
   /**
@@ -29,12 +29,6 @@ Page({
     console.log(options.id)
     var that = this;
     this.data.section = options.id;
-    that.fetchData();
-    setTimeout(function(){
-      that.setData({
-        hidden:true
-      })
-    }, 1000);
   },
 
   /**
@@ -48,7 +42,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    this.setData({
+      hidden: false,
+    })
+    this.fetchData();
   },
 
   /**
@@ -69,7 +66,10 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    this.setData({
+      hidden:false,
+    })
+    this.fetchData();
   },
 
   /**
@@ -115,8 +115,13 @@ Page({
         {
           that.setData({
             roomlist: res.data[1]
-          })
+          });
         }
+        setTimeout(function () {
+          that.setData({
+            hidden: true
+          })
+        }, 1000);
         console.log('success')
       },
       fail: function () {

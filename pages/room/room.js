@@ -117,9 +117,16 @@ Page({
         success: function (res) {
           console.log('success')
           console.log(res.data);
-          // that.setData({
-          //   roomlist: res.data.roomlist
-          // })
+          if(res.data.response_code != 0){
+            that.setData({
+              room_id: res.data[1][0].room_id,
+              name: res.data[1][0].name,
+              section: res.data[1][0].area,
+              description: res.data[1][0].description,
+              room_owner_id: res.data[1][0].owner,
+              users_id: res.data[1][0].users,
+            });
+          }
           console.log('success')
         },
         fail: function () {
