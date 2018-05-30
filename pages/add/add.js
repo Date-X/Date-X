@@ -40,7 +40,7 @@ Page({
         var room_url='../room/room?room_id='+res.data['room_id']
         console.log(room_url)
         wx.redirectTo({
-          url: room_url,
+          url: room_url
         })
         //跳转到房间内页面
       },
