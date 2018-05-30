@@ -115,7 +115,7 @@ class Usr_manager(object):
         if res is None:
             print("error: usr", usrid, "does not exist!")
             return False
-        self.db.User.update({'id': usrid}, {"$set": {'avatar': sex}})
+        self.db.User.update({'id': usrid}, {"$set": {'avatar': avatar}})
         return True
         if usrid in self.usrid2id:
             return self.usrs[self.usrid2id[usrid]].setPre(preferences)
