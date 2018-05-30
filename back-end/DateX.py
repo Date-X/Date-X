@@ -49,10 +49,15 @@ def complete_user():
 
     j_data = yaml.safe_load(data)
 
-    usr_id = data['open_id']
-    sex = data['sex']
-    pre = data['preference']
-    res = usr_manager.setPre(usr_id,pre) and usr_manager.setSex(usr_id,sex)
+    usr_id = j_data['open_id']
+    sex = j_data['sex']
+    pre = j_data['preference']
+    db = mongo.db
+    res = db.User.find_one({'id': usr_id})
+    if res is not None:
+        res = usr_manager.setPre(usr_id,pre) and usr_manager.setSex(usr_id,sex)
+    else:
+        res = usr_manager.addUsr(usr_id,sex,pre)
     return json.dumps({'response_code':int(res)})
     # if usr_id in usr_manager.usrid2id:
     #     return str(room_manager.addUsr(room_id, usr_id))

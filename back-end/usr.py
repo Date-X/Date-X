@@ -33,30 +33,18 @@ class Usr_manager(object):
         print("error: usr id ", usrid, " does not exist!")
         return json.dumps({'response_code':0})
 
-    def addUsr(self, id, password):
+    def addUsr(self, id, sex, pre):
         # if id in self.usrid2id:
         #     print("error: usr id ", id, " already exists!")
         #     return False
         # self.usrs.append(Usr(id, password))
         user = self.db.User
 
-        self.usrid2id = user.insert_one({"id":id, "password":password, "pre":[]}).inserted_id
+        self.usrid2id = user.insert_one({"id":id, "sex":sex, "pre":pre}).inserted_id
         # self.usrid2id[id] = self.next_id
         # self.next_id += 1
         # print(user.insert_one({"id":id, "password":password}).inserted_id)
         return True
-
-    def printUsrs(self):
-        count = 0
-        cursor = self.db.User.find({})
-        for usr in cursor:
-            # usr = Usr(usr_item['id'], usr_item['password'])
-            # for usr in self.usrs:
-            print("===================Usr ", usr["_id"], "===================")
-            print("id:", usr['id'])
-            print("password:", usr['password'])
-            print("preference:", usr['pre'])
-            # count += 1
 
     #下面这些函数是对usr对应函数的封装，使得所有操作都在usr manager中进行
     def getId(self, usrid):
@@ -67,9 +55,9 @@ class Usr_manager(object):
         return False
 
     def getPre(self, usrid):
-        res = self.db.User.find_one({'id': usrid})['pre']
+        res = self.db.User.find_one({'id': usrid})
         if res is not None:
-            return res
+            return res['pre']
         print("error: usr", usrid, "does not exist!")
         return False
         if usrid in self.usrid2id:
