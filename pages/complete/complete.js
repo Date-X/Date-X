@@ -54,7 +54,7 @@ Page({
     wx.request({
       url: 'http://www.eximple.me:5000/usr/complete',
       data: {
-        open_id: null,
+        open_id: openid,
         sex : sex,
         preference: section,
       },
@@ -68,11 +68,13 @@ Page({
           wx.showToast({
             title: '成功',
             icon:'success',
-            duration: 2000,
+            duration: 1500,
           });
-          setTimeout(wx.navigateBack({
-            delta: 1
-          }), 3000)
+          setTimeout(function () {
+            wx.navigateBack({
+              delta: 1
+            })
+          }, 1500);
         }
         else {
           wx.showToast({
