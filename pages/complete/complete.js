@@ -1,6 +1,7 @@
 var sex = '0'
 var section = []
 var openid = ''
+var avatarurl = ''
 
 wx.getStorage({
   key: 'openid',
@@ -50,6 +51,7 @@ Page({
           wx.getUserInfo({
             success: function (res) {
               console(res.userInfo)
+              avatarurl = res.userInfo.avatarUrl
             }
           })
         }
@@ -58,6 +60,7 @@ Page({
   },
   bindGetUserInfo: function (e) {
     console.log(e.detail.userInfo)
+    avatarurl = e.detail.userInfo.avatarUrl
   },
    
   radioChange: function (e) {
@@ -72,40 +75,50 @@ Page({
   formSubmit: function (e) {
     console.log(sex)
     console.log(section)
-    wx.request({
-      url: 'http://www.eximple.me:5000/usr/complete',
-      data: {
-        open_id: openid,
-        sex : sex,
-        preference: section,
-      },
-      method: 'POST',
-      header: {
-        'content-type': 'application/json' // 默认值
-      },
-      success: function (res) {
-        console.log(res.data)
-        if (res.data.response_code == 1) {
-          wx.showToast({
-            title: '成功',
-            icon:'success',
-            duration: 1500,
-          });
-          setTimeout(function () {
-            wx.navigateBack({
-              delta: 1
+    if (avatarurl == '') {
+      wx.showToast({
+        title: '请先授权',
+        icon:'none',
+        duration: 1000,
+      })
+    }
+    else {
+      wx.request({
+        url: 'http://www.eximple.me:5000/usr/complete',
+        data: {
+          open_id: openid,
+          sex: sex,
+          preference: section,
+          avatar: avatarurl,
+        },
+        method: 'POST',
+        header: {
+          'content-type': 'application/json' // 默认值
+        },
+        success: function (res) {
+          console.log(res.data)
+          if (res.data.response_code == 1) {
+            wx.showToast({
+              title: '成功',
+              icon: 'success',
+              duration: 1500,
+            });
+            setTimeout(function () {
+              wx.navigateBack({
+                delta: 1
+              })
+            }, 1500);
+          }
+          else {
+            wx.showToast({
+              title: '设置失败',
+              icon: 'none'
             })
-          }, 1500);
-        }
-        else {
-          wx.showToast({
-            title: '设置失败',
-            icon: 'none'
-          })
-        }
+          }
         }
       }
-    )
+      )
+    }
   },
 
   check:function(e) {
