@@ -51,12 +51,13 @@ def complete_user():
     usr_id = j_data['open_id']
     sex = j_data['sex']
     pre = j_data['preference']
+    avatar = j_data['avatar']
     db = mongo.db
     res = db.User.find_one({'id': usr_id})
     if res is not None:
-        res = usr_manager.setPre(usr_id,pre) and usr_manager.setSex(usr_id,sex)
+        res = usr_manager.setPre(usr_id,pre) and usr_manager.setSex(usr_id,sex) and usr_manager.setAvatar(usr_id,avatar)
     else:
-        res = usr_manager.addUsr(usr_id,sex,pre)
+        res = usr_manager.addUsr(usr_id,sex,pre,avatar)
     return json.dumps({'response_code':int(res)})
     # if usr_id in usr_manager.usrid2id:
     #     return str(room_manager.addUsr(room_id, usr_id))

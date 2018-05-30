@@ -34,14 +34,14 @@ class Usr_manager(object):
         print("error: usr id ", usrid, " does not exist!")
         return dumps({'response_code':0})
 
-    def addUsr(self, id, sex, pre):
+    def addUsr(self, id, sex, pre, avatar):
         # if id in self.usrid2id:
         #     print("error: usr id ", id, " already exists!")
         #     return False
         # self.usrs.append(Usr(id, password))
         user = self.db.User
 
-        self.usrid2id = user.insert_one({"id":id, "sex":sex, "pre":pre}).inserted_id
+        self.usrid2id = user.insert_one({"id":id, "sex":sex, "pre":pre, "avatar":avatar}).inserted_id
         # self.usrid2id[id] = self.next_id
         # self.next_id += 1
         # print(user.insert_one({"id":id, "password":password}).inserted_id)
@@ -108,6 +108,14 @@ class Usr_manager(object):
             print("error: usr", usrid, "does not exist!")
             return False
         self.db.User.update({'id': usrid}, {"$set": {'sex': sex}})
+        return True
+
+    def setAvatar(self, usrid, avatar):
+        res = self.db.User.find_one({'id': usrid})['avatar']
+        if res is None:
+            print("error: usr", usrid, "does not exist!")
+            return False
+        self.db.User.update({'id': usrid}, {"$set": {'avatar': sex}})
         return True
         if usrid in self.usrid2id:
             return self.usrs[self.usrid2id[usrid]].setPre(preferences)
