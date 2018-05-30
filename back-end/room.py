@@ -94,6 +94,13 @@ class Room_manager(object):
         if request.getDescription() != "":
             query['description'] = request.getDescription()
         res = room.find(query)
+
+        cur = [x for x in res]
+        for k,room in enumerate(cur):
+            cur[k]['owner'] = self.db.User.find({"id":room['owner']})
+            for i,usr in enumerate(room['users']):
+                room['users'][i] = self.db.User.find({"id":usr})
+
         # res = [x['_id'] for x in res]
         # for room in self.rooms:
         #     if request.name != "" and request.name != room.name:
@@ -103,7 +110,7 @@ class Room_manager(object):
         #     if request.room_owner_id != "" and request.room_owner_id != room.room_owner_id:
         #         continue
         #     res.append(room.getId())
-        return dumps([{"response_code": int(res.count() != 0)},[x for x in res]])
+        return dumps([{"response_code": int(res.count() != 0)},cur])
 
     def getName(self, room_id):
         res = self.db.Room.find_one({"room_id": room_id})
@@ -133,12 +140,25 @@ class Room_manager(object):
         cur = self.db.Room.find({"usr": {"$all": [usrid]}})
         if cur.count() == 0:
             return dumps({"response_code":0})
+
+        cur = list(cur)
+        for k,room in enumerate(cur):
+            cur[k]['owner'] = self.db.User.find({"id":room['owner']})
+            for i,usr in enumerate(room['users']):
+                room['users'][i] = self.db.User.find({"id":usr})
+
         return dumps([{"response_code":1},list(cur)])
 
     def getRoomBySection(self, sec):
         cur = self.db.Room.find({"area": sec})
         if cur.count() == 0:
             return dumps({"response_code":0})
+
+        cur = list(cur)
+        for k,room in enumerate(cur):
+            cur[k]['owner'] = self.db.User.find({"id":room['owner']})
+            for i,usr in enumerate(room['users']):
+                room['users'][i] = self.db.User.find({"id":usr})
         return dumps([{"response_code":1},list(cur)])
 
     def getDescription(self, room_id):
