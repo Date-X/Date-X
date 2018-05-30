@@ -6,10 +6,20 @@ var avatarurl = ''
 wx.getStorage({
   key: 'openid',
   success: function (res) {
-    console.log(res.data)
+    //console.log(res.data)
     openid = res.data
   }
 })
+
+try{
+  wx.getStorage({
+    key:'usrinfo',
+    success: function(res) {
+      //console.log(res.data)
+      avatarurl = res.data.avatarUrl
+    }
+  })
+}catch(e){}
 
 Page({
   data: {
@@ -41,40 +51,27 @@ Page({
       }
     ]
   },
-
-  onLoad: function () {
-    // 查看是否授权
-    wx.getSetting({
-      success: function (res) {
-        if (res.authSetting['scope.userInfo']) {
-          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
-          wx.getUserInfo({
-            success: function (res) {
-              console(res.userInfo)
-              avatarurl = res.userInfo.avatarUrl
-            }
-          })
-        }
-      }
-    })
-  },
   bindGetUserInfo: function (e) {
-    console.log(e.detail.userInfo)
+    //console.log(e.detail.userInfo)
+    wx.setStorage({
+      key: 'usrinfo',
+      data: e.detail.userInfo,
+    })
     avatarurl = e.detail.userInfo.avatarUrl
   },
    
   radioChange: function (e) {
-    console.log('radio发生change事件，携带value值为：', e.detail.value)
+    //console.log('radio发生change事件，携带value值为：', e.detail.value)
     sex = e.detail.value
   },
   checkboxChange: function (e) {
-    console.log('checkbox发生change事件，携带value值为：', e.detail.value)
+    //console.log('checkbox发生change事件，携带value值为：', e.detail.value)
     section = e.detail.value
   },
 
   formSubmit: function (e) {
-    console.log(sex)
-    console.log(section)
+    //console.log(sex)
+    //console.log(section)
     if (avatarurl == '') {
       wx.showToast({
         title: '请先授权',
@@ -123,7 +120,7 @@ Page({
 
   check:function(e) {
     console.log('check_function')
-    console.log(openid)
+    //console.log(openid)
     wx.request({
       url: 'http://www.eximple.me:5000/usr/info',
       data: {
@@ -134,7 +131,7 @@ Page({
         'content-type': 'application/json' // 默认值
       },
       success: function (res) {
-        console.log(openid)
+        //console.log(openid)
         console.log(res.data)
       }
     }
