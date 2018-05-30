@@ -104,10 +104,11 @@ Page({
     var that = this;
     timer = setTimeout(function () {
       console.log("----Countdown----");
+      console.log(that.data.room_id);
       wx.request({
         url: 'http://www.eximple.me:5000/search',
         data: {
-          key: that.data.room_id
+          room_id: parseInt(that.data.room_id)
         },
         method: 'POST',
         dataType: 'json',
@@ -119,12 +120,12 @@ Page({
           console.log(res.data);
           if(res.data.response_code != 0){
             that.setData({
-              room_id: res.data[1][0].room_id,
-              name: res.data[1][0].name,
-              section: res.data[1][0].area,
-              description: res.data[1][0].description,
-              room_owner_id: res.data[1][0].owner,
-              users_id: res.data[1][0].users,
+              room_id: res.data[1].room_id,
+              name: res.data[1].name,
+              section: res.data[1].area,
+              description: res.data[1].description,
+              room_owner_id: res.data[1].owner,
+              users_id: res.data[1].users,
             });
           }
           console.log('success')

@@ -1,4 +1,6 @@
 // pages/myroom/myroom.js
+ const app = getApp();
+
 Page({
 
   /**
@@ -9,6 +11,7 @@ Page({
     roomlist1:[],
     //我加入的
     roomlist2:[],
+    hidden:false,
   },
 
   /**
@@ -29,7 +32,18 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-  
+    var that = this;
+    var openid = ''
+    console.log(app.globalData.openid)
+    wx.getStorage({
+      key: 'openid',
+      success: function (res) {
+        console.log(res.data)
+        openid = res.data
+      }
+    });
+
+    this.fetchData();
   },
 
   /**
@@ -75,5 +89,66 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+
+  fetchData: function () {
+    var that = this;
+    wx.request({
+      url: 'http://www.eximple.me:5000/usr/roomlist1',
+      data: {
+        openid: app.globalData.openid
+      },
+      method: 'POST',
+      dataType: 'json',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        console.log('success')
+        console.log(res.data);
+        if (res.data.response_code != 0) {
+          that.setData({
+            roomlist: res.data[1]
+          });
+        }
+        setTimeout(function () {
+          that.setData({
+            hidden: true
+          })
+        }, 1000);
+      },
+      fail: function () {
+        console.log('fail');
+      }
+    })
+
+    wx.request({
+      url: 'http://www.eximple.me:5000/usr/roomlist2',
+      data: {
+        openid: app.globalData.openid
+      },
+      method: 'POST',
+      dataType: 'json',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        console.log('success')
+        console.log(res.data);
+        if (res.data.response_code != 0) {
+          that.setData({
+            roomlist: res.data[1]
+          });
+        }
+        setTimeout(function () {
+          that.setData({
+            hidden: true
+          })
+        }, 1000);
+      },
+      fail: function () {
+        console.log('fail');
+      }
+    })
   }
 })

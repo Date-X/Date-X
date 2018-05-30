@@ -98,7 +98,7 @@ Page({
   fetchData: function(){
     var that = this;
     wx.request({
-      url: 'http://www.eximple.me:5000/room/section',
+      url: 'http://www.eximple.me:5000/search',
       data: {
         section: that.data.section
         //name:'1'
