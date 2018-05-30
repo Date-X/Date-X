@@ -1,7 +1,16 @@
 // pages/add/add.js
 const app = getApp()
-Page({
+var openid = ''
+//get openid
+wx.getStorage({
+  key: 'openid',
+  success: function (res) {
+    //console.log(res.data)
+    openid = res.data
+  }
+})
 
+Page({
   /**
    * 页面的初始数据
    */
@@ -23,8 +32,8 @@ Page({
         section: e.detail.value["section"],
         room_number: e.detail.value["room_number"],
         description: e.detail.value["description"],
-        room_owner_id: 0
-        //room_owner_id: app.globalData.openid
+        //room_owner_id: 0
+        room_owner_id: openid
       },
       method:'POST',
       header: {
