@@ -23,10 +23,32 @@ App({
               'content-type': 'application/json' // 默认值
             },
             success: function (res) {
-              console.log(openid)
               console.log(res.data)
-              openid = res.data.openid
+              const app = getApp()
+              app.globalData.openid = res.data.openid
+              var openid = app.globalData.openid
               console.log(openid)
+              var exist = res.data.exist
+              console.log(exist)
+              if (exist != 1) {
+                wx.showModal({
+                  title: '提示',
+                  content: '您还没有加入Date-X 是否加入？',
+                  success: function (res) {
+                    if (res.confirm) {
+                      console.log('用户点击确定')
+                      wx.navigateTo({
+                        url: '../complete/complete',
+                      })
+                    } else if (res.cancel) {
+                      console.log('用户点击取消')
+                    }
+                  },
+                  cancelText: '告辞',
+                  confirmText: '加入'
+
+                })
+              }
             }
           })
         } else {

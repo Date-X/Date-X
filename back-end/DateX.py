@@ -25,7 +25,11 @@ def get_openid():
     data = request.data
 
     j_data = yaml.safe_load(data)
+<<<<<<< HEAD
+    
+=======
 
+>>>>>>> a73e40fc99e14a6d7bb32c8ac6af8945fbc256ff
     code = j_data['code']
     appid = 'wx88191e14844f68ad'
     secret = 'f8ad952cef6e1266f1f58d107c6eaed4'
