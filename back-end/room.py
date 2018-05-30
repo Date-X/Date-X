@@ -97,9 +97,9 @@ class Room_manager(object):
 
         cur = [x for x in res]
         for k,room in enumerate(cur):
-            cur[k]['owner'] = self.db.User.find({"id":room['owner']})
+            cur[k]['owner'] = self.db.User.find_one({"id":room['owner']})
             for i,usr in enumerate(room['users']):
-                room['users'][i] = self.db.User.find({"id":usr})
+                room['users'][i] = self.db.User.find_one({"id":usr})
 
         # res = [x['_id'] for x in res]
         # for room in self.rooms:
@@ -143,9 +143,9 @@ class Room_manager(object):
 
         cur = list(cur)
         for k,room in enumerate(cur):
-            cur[k]['owner'] = self.db.User.find({"id":room['owner']})
+            cur[k]['owner'] = self.db.User.find_one({"id":room['owner']})
             for i,usr in enumerate(room['users']):
-                room['users'][i] = self.db.User.find({"id":usr})
+                room['users'][i] = self.db.User.find_one({"id":usr})
 
         return dumps([{"response_code":1},list(cur)])
 
@@ -156,9 +156,9 @@ class Room_manager(object):
 
         cur = list(cur)
         for k,room in enumerate(cur):
-            cur[k]['owner'] = self.db.User.find({"id":room['owner']})
+            cur[k]['owner'] = self.db.User.find_one({"id":room['owner']})
             for i,usr in enumerate(room['users']):
-                room['users'][i] = self.db.User.find({"id":usr})
+                room['users'][i] = self.db.User.find_one({"id":usr})
         return dumps([{"response_code":1},list(cur)])
 
     def getDescription(self, room_id):
