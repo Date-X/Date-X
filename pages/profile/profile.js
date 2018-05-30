@@ -44,5 +44,10 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  click: function() {
+    wx.navigateTo({
+      url: '/pages/complete/complete',
+    })
   }
 })

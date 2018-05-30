@@ -10,7 +10,7 @@
       <view class="flex-item weui-label">个人信息</view>
     </view>
     <view class="weui-cell">
-      <view class="flex-item weui-label">设置</view>
+      <view class="flex-item weui-label" bindtap='click'>设置</view>
     </view>
   </view>
 </view>

@@ -12,6 +12,7 @@ wx.getStorage({
 
 Page({
   data: {
+    canIUse: wx.canIUse('button.open-type.getUserInfo'),
     sex: [
       { name: '0', value: '女', checked: 'true' },
       { name: '1', value: '男' }
@@ -39,6 +40,26 @@ Page({
       }
     ]
   },
+
+  onLoad: function () {
+    // 查看是否授权
+    wx.getSetting({
+      success: function (res) {
+        if (res.authSetting['scope.userInfo']) {
+          // 已经授权，可以直接调用 getUserInfo 获取头像昵称
+          wx.getUserInfo({
+            success: function (res) {
+              console(res.userInfo)
+            }
+          })
+        }
+      }
+    })
+  },
+  bindGetUserInfo: function (e) {
+    console.log(e.detail.userInfo)
+  },
+   
   radioChange: function (e) {
     console.log('radio发生change事件，携带value值为：', e.detail.value)
     sex = e.detail.value
