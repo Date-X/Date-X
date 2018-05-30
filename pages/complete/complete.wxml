@@ -22,6 +22,3 @@
 <view class="weui-btn-area">  
   <button class="weui-btn" type="primary" form-type="submit" bindtap='formSubmit'>提交</button>  
 </view> 
-<view class="weui-btn-area">  
-  <button class="weui-btn" type="primary" form-type="submit" bindtap='check'>查询</button>  
-</view> 
