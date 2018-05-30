@@ -1,12 +1,12 @@
 //app.js
 App({
+  globalData: {
+    userInfo: null,
+    openid: '123123123'
+  },
   onLaunch: function () {
-    // 展示本地存储能力
-    var logs = wx.getStorageSync('logs') || []
-    logs.unshift(Date.now())
-    wx.setStorageSync('logs', logs)
-
     // 登录
+    var that = this;
     wx.login({
       success: res => {
         // 发送 res.code 到后台换取 openId, sessionKey, unionId
@@ -22,11 +22,15 @@ App({
             header: {
               'content-type': 'application/json' // 默认值
             },
-            success: function (res) {
+            success: res=> {
               console.log(res.data)
-              const app = getApp()
-              app.globalData.openid = res.data.openid
-              var openid = app.globalData.openid
+              wx.setStorage({
+                key: 'openid',
+                data: res.data.openid,
+              })
+              that.globalData.openid = res.data.openid
+              console.log(this.globalData.openid)
+              var openid = that.globalData.openid
               console.log(openid)
               var exist = res.data.exist
               console.log(exist)
@@ -76,9 +80,5 @@ App({
         }
       }
     })
-  },
-  globalData: {
-    userInfo: null,
-    openid: null
   }
 })

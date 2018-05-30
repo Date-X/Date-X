@@ -1,7 +1,14 @@
 var sex = '0'
 var section = []
-const app = getApp()
-var openid = app.globalData.openid
+var openid = ''
+
+wx.getStorage({
+  key: 'openid',
+  success: function (res) {
+    console.log(res.data)
+    openid = res.data
+  }
+})
 
 Page({
   data: {
@@ -47,7 +54,7 @@ Page({
     wx.request({
       url: 'http://www.eximple.me:5000/usr/complete',
       data: {
-        open_id: openid,
+        open_id: null,
         sex : sex,
         preference: section,
       },
@@ -57,8 +64,44 @@ Page({
       },
       success: function (res) {
         console.log(res.data)
+        if (res.data.response_code == 1) {
+          wx.showToast({
+            title: '成功',
+            icon:'success',
+            duration: 2000,
+          });
+          setTimeout(wx.navigateBack({
+            delta: 1
+          }), 3000)
+        }
+        else {
+          wx.showToast({
+            title: '设置失败',
+            icon: 'none'
+          })
+        }
         }
       }
+    )
+  },
+
+  check:function(e) {
+    console.log('check_function')
+    console.log(openid)
+    wx.request({
+      url: 'http://www.eximple.me:5000/usr/info',
+      data: {
+        open_id: openid,
+      },
+      method: 'POST',
+      header: {
+        'content-type': 'application/json' // 默认值
+      },
+      success: function (res) {
+        console.log(openid)
+        console.log(res.data)
+      }
+    }
     )
   }
 })
