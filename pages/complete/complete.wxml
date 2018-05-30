@@ -1,0 +1,24 @@
+<!--pages/complete/complete.wxml-->
+<view class="title"><text>请完善您的信息</text></view>
+<view class="sex-container">
+  <text class="sex">性别：</text>
+  <radio-group class="radio-group" bindchange="radioChange">
+    <label class="radio" wx:for="{{sex}}">
+      <radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+    </label>
+  </radio-group>
+</view>
+<view class="pre-container">
+  <text class="pre">关注的分区：</text>
+  <checkbox-group bindchange="checkboxChange" class="checkbox-group">
+    <label class="checkbox" wx:for="{{sectionicons}}">
+      <view class="section">
+        <image src="{{item.icon}}" class="img"></image>
+        <checkbox value="{{item.value}}">{{item.text}}</checkbox>
+      </view>
+    </label>
+  </checkbox-group>
+</view>
+<view class="weui-btn-area">  
+  <button class="weui-btn" type="primary" form-type="submit" bindtap='formSubmit'>提交</button>  
+</view> 

@@ -1,0 +1,44 @@
+/* pages/complete/complete.wxss */
+.title {
+  width: 250px;
+  text-align: center;
+  font-size: 30px;
+  margin: 0 auto;
+  margin-bottom: 30px;
+}
+
+.sex-container {
+  height: 100px;
+}
+
+.pre-container {
+  height: 330px;
+}
+
+.sex,.pre {
+  margin-left: 60px
+}
+
+.radio-group, .checkbox-group {
+  width: 80%;
+  margin: 0 auto;
+}
+
+.radio {
+  margin-left: 70px;
+}
+
+.img {
+  height: 100px;
+  width: 110px;
+}
+
+.section {
+  margin-left: 20px;
+  width: 140px;
+  float: left
+}
+
+button {
+  width:150px;
+}

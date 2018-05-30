@@ -37,6 +37,9 @@ App({
                   success: function (res) {
                     if (res.confirm) {
                       console.log('用户点击确定')
+                      wx.navigateTo({
+                        url: '../complete/complete',
+                      })
                     } else if (res.cancel) {
                       console.log('用户点击取消')
                     }
@@ -76,6 +79,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    openid: 111
+    openid: null
   }
 })

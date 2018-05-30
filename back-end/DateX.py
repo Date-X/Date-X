@@ -23,9 +23,13 @@ def initial():
 @app.route('/login', methods=['POST'])
 def get_openid():
     data = request.data
-    
+
     j_data = yaml.safe_load(data)
+<<<<<<< HEAD
     
+=======
+
+>>>>>>> a73e40fc99e14a6d7bb32c8ac6af8945fbc256ff
     code = j_data['code']
     appid = 'wx88191e14844f68ad'
     secret = 'f8ad952cef6e1266f1f58d107c6eaed4'
@@ -46,7 +50,7 @@ def get_openid():
 def complete_user():
 
     data = request.data
-    
+
     j_data = yaml.safe_load(data)
 
     usr_id = data['open_id']
@@ -63,7 +67,7 @@ def complete_user():
 def user_info():
 
     data = request.data
-    
+
     j_data = yaml.safe_load(data)
 
     usr_id = j_data['open_id']
@@ -73,7 +77,7 @@ def user_info():
 def room_info1():
 
     data = request.data
-    
+
     j_data = yaml.safe_load(data)
 
     usr_id = j_data['open_id']
@@ -82,7 +86,7 @@ def room_info1():
 @app.route('/room/section',methods = ['POST'])
 def room_sec():
     data = request.data
-    
+
     j_data = yaml.safe_load(data)
 
     sec = j_data['section']
@@ -92,7 +96,7 @@ def room_sec():
 def room_add():
 
     data = request.data
-    
+
     j_data = yaml.safe_load(data)
 
     name = j_data['name']
@@ -111,7 +115,7 @@ def room_add():
 @app.route('/room/kick',methods = ['POST'])
 def room_kick():
     data = request.data
-    
+
     j_data = yaml.safe_load(data)
 
     room_id = j_data['room_id']
@@ -123,7 +127,7 @@ def room_kick():
 def room_delete():
 
     data = request.data
-    
+
     j_data = yaml.safe_load(data)
 
     room_id = j_data['room_id']
@@ -133,7 +137,7 @@ def room_delete():
 def room_get_message():
 
     data = request.data
-    
+
     j_data = yaml.safe_load(data)
 
     room_id = j_data['room_id']
@@ -143,7 +147,7 @@ def room_get_message():
 def room_send_message():
 
     data = request.data
-    
+
     j_data = yaml.safe_load(data)
 
     room_id = j_data['room_id']
@@ -155,7 +159,7 @@ def room_send_message():
 def room_search():
 
     data = request.data
-    
+
     j_data = yaml.safe_load(data)
 
     if 'room_id' in j_data:
@@ -258,7 +262,7 @@ def show_room_profile(room_id, profile):
             return str(room_manager.getUsrs(room_id))
         if profile == 'state':
             return str(room_manager.getState(room_id))
-            
+
     if request.method == 'POST':
         room_owner_id = request.form['usrid']
         name = request.form['name']     #room name
@@ -288,7 +292,7 @@ def myprint():
     usr_manager.printUsrs()
     room_manager.printRooms()
     return str(True)
-    
+
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0',debug=True)
