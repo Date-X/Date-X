@@ -60,9 +60,22 @@ App({
         }
       }
     })
+
+    wx.getSystemInfo({
+      success: function(res) {
+        console.log(res);
+        that.globalData.WindowHeight = res.windowHeight;
+        that.globalData.WindowWidth = res.windowWidth;
+      },
+      fail: function(){
+        console.log('get systemInfo failed');
+      }
+    })
   },
   globalData: {
     userInfo: null,
-    openid: "o9Qsr5De5nW3C2XK_tdoMZKsw-kc"
+    openid: "o9Qsr5De5nW3C2XK_tdoMZKsw-kc",
+    WindowHeight:-1,
+    WindowWidth:-1,
   }
 })

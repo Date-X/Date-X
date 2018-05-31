@@ -257,7 +257,7 @@ Page({
       dataType: 'json',
       method: 'POST',
       success: function (res) {
-        console.log('join success');
+        console.log('delete success');
         that.setData({
           'str': res.data
         })
@@ -316,6 +316,10 @@ Page({
         console.log(res.data);
         if (res.data.response_code != 0) {
           console.log(res.data.response_code);
+          wx.showToast({
+            title: '退出成功',
+            duration: 1500,
+          })
         }
         console.log('success')
       },
