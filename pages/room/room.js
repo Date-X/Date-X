@@ -1,4 +1,5 @@
 var timer;
+const app = getApp();
 
 Page({
 
@@ -12,7 +13,8 @@ Page({
     section: -1,
     description: '',
     room_owner_id: -1,
-    users_id: []
+    users_id: [],
+    msg:[],
   },
 
   /**
@@ -74,12 +76,15 @@ Page({
   onShareAppMessage: function () {
   },
 
+  //按钮测试
   tap_it: function(event){
     var that = this
     wx.request({
-      url: 'http://www.eximple.me:5000/search',
+      url: 'http://www.eximple.me:5000/room/send_message',
       data: {
-         key: that.data.room_id
+         room_id:2,
+         openid:app.globalData.openid,
+        message:'test',
       },
       dataType: 'form',
       method: 'POST',
@@ -96,47 +101,83 @@ Page({
     })
   },
 
+  //启动定时器
   f: function(){
     Countdown();
   },
 
+  //定时刷新
   Countdown: function() {
     var that = this;
     timer = setTimeout(function () {
       console.log("----Countdown----");
       console.log(that.data.room_id);
-      wx.request({
-        url: 'http://www.eximple.me:5000/search',
-        data: {
-          room_id: parseInt(that.data.room_id)
-        },
-        method: 'POST',
-        dataType: 'json',
-        header: {
-          'Content-Type': 'application/json'
-        },
-        success: function (res) {
-          console.log('success')
-          console.log(res.data);
-          if(res.data.response_code != 0){
-            that.setData({
-              room_id: res.data[1].room_id,
-              name: res.data[1].name,
-              section: res.data[1].area,
-              description: res.data[1].description,
-              room_owner_id: res.data[1].owner,
-              users_id: res.data[1].users,
-            });
-          }
-          console.log('success')
-        },
-        fail: function () {
-          console.log('fail');
-        }
-      });
+      that.fetchData();
       that.Countdown();
     }, 1000);
   },
 
+  //获取数据
+  fetchData: function(){
+    var that = this;
+    wx.request({
+      url: 'http://www.eximple.me:5000/search',
+      data: {
+        room_id: parseInt(that.data.room_id)
+      },
+      method: 'POST',
+      dataType: 'json',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        console.log('success')
+        console.log(res.data);
+        if (res.data.response_code != 0) {
+          that.setData({
+            room_id: res.data[1].room_id,
+            name: res.data[1].name,
+            section: res.data[1].area,
+            description: res.data[1].description,
+            room_owner_id: res.data[1].owner,
+            users_id: res.data[1].users,
+            msg: res.data[1].messages,
+          });
+        }
+        console.log('success')
+      },
+      fail: function () {
+        console.log('fail');
+      }
+    });
+  },
+
+  //踢人
+  kick: function(openid){
+    var that = this;
+    wx.request({
+      url: 'http://www.eximple.me:5000/room/kick',
+      data: {
+        room_id: that.data.room_id,
+        'openid': openid
+      },
+      method: 'POST',
+      dataType: 'json',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        console.log('success')
+        console.log(res.data);
+        if (res.data.response_code != 0) {
+          console.log(res.data.response_code);
+        }
+        console.log('success')
+      },
+      fail: function () {
+        console.log('fail');
+      }
+    });
+  }
 })
 

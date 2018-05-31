@@ -35,6 +35,6 @@ App({
   },
   globalData: {
     userInfo: null,
-    openid: "o9Qsr5Mi6qCLvOEZA3-GFgfLmRRo"
+    openid: "o9Qsr5De5nW3C2XK_tdoMZKsw-kc"
   }
 })

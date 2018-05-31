@@ -18,7 +18,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-  
+    
   },
 
   /**
@@ -35,13 +35,16 @@ Page({
     var that = this;
     var openid = ''
     console.log(app.globalData.openid)
-    wx.getStorage({
-      key: 'openid',
-      success: function (res) {
-        console.log(res.data)
-        openid = res.data
-      }
-    });
+    // wx.getStorage({
+    //   key: 'openid',
+    //   success: function (res) {
+    //     console.log(res.data)
+    //     openid = res.data
+    //   },
+    //   fail: function(){
+    //     console.log('Storage fail!');
+    //   }
+    // });
 
     this.fetchData();
   },
@@ -96,7 +99,7 @@ Page({
     wx.request({
       url: 'http://www.eximple.me:5000/usr/roomlist1',
       data: {
-        openid: app.globalData.openid
+        open_id: app.globalData.openid
       },
       method: 'POST',
       dataType: 'json',
@@ -125,7 +128,7 @@ Page({
     wx.request({
       url: 'http://www.eximple.me:5000/usr/roomlist2',
       data: {
-        openid: app.globalData.openid
+        open_id: app.globalData.openid
       },
       method: 'POST',
       dataType: 'json',
