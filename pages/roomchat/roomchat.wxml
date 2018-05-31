@@ -1,9 +1,14 @@
 <!--pages/roomchat/roomchat.wxml-->
+<!--
 <text>pages/roomchat/roomchat.wxml</text>
 <text>这是聊天界面，现用作功能测试</text>
-<button bindtap='tap_it'>
-  send!发送msg
-</button>
+<view class="weui-cells">
+  <view class="weui-search-bar">
+    <input type="text" maxlength="50" bindinput="input_message"></input>
+    <button class="search-btn" bindtap="send_msg" wx:if="{{showbutton}}">发送</button>
+  </view>     
+</view>
+
 <button bindtap='fetchData'>
   update!刷新
 </button>
@@ -20,11 +25,83 @@
   enter!进入room页面
 </button>
 <text>{{str}}</text>
-<view wx:for="{{msg}}">
-  <view wx:if="{{item.user == openid}}" style="text-align:right">
-    1{{item.content}}
+-->
+<view class='body' style=" background-image: url('../../images/bg1.jpg'); padding:0; margin: 0;">
+  <view class='outer'>
+    <view class='avatar'>
+      <view wx:for='{{users}}' style='width:80rpx height:80rpx'>
+      <image src='{{item.avatar}}' mode="{{aspectFit}}" style="width:80rpx height:80rpx" > </image> 
+      </view>  
+    </view>
+    <button class='enter' bindtap='enter_room'><text>进入</text></button>
   </view>
-  <view wx:else style='text-align:left'>
-    2{{item.content}}
+  <view class='news'>  
+  <view class='xiahuaxian1 xiahuaxia'></view>  
+  <view class='new_top_txt'>--{{name}}--</view> 
+  </view>
+  <view>
+    <view wx:for="{{msg}}" class="msg">
+      <view class="myword" wx:if="{{item.user == open_id}}" style="text-align:right">
+        {{item.content}}<image src='./../../images/KoG.jpg'></image>
+      </view>
+      <view class="others" wx:else style="text-align:left">
+        <image src='./../../images/LOL.jpg'></image>{{item.content}}
+      </view>
+    </view>
+  </view>
+  <view style="height:200rpx;">
   </view>
 </view>
+
+<view wx:if='{{in_room}}' class='chat'>
+  <view class="weui-search-bar">
+    <input type="text" maxlength="50" placeholder="请输入发送内容" bindinput="input_message" value='{{input_msg}}'></input>
+    <button class="search-btn" bindtap="send_msg">发送</button>
+  </view>     
+</view>
+<view wx:else>
+  <button bindtap='join' class='bottom'>
+  加入房间
+  </button>
+</view>
+
+<!-- 
+  <view class="historycon">  
+    <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" class="history" wx:for="{{centendata}}" wx:key=''>  
+      <view>  
+        <text class='time'>{{item.time}}</text>  
+      </view>  
+      <block wx:if="{{item.is_show_right ==1}}">  
+        <view class='my_right'>  
+          <view class='page_row'>  
+            <text wx:if='{{!item.is_img}}' class='new_txt'>{{item.content}}</text>  
+            <image wx:if='{{item.is_img}}' src='http://sz800800.cn/Uploads/{{item.content}}' class='new_imgtent'></image>  
+            <view wx:if='{{!item.is_img}}' class='sanjiao my'></view>  
+            <image class='new_img' wx:if='{{item.show_rignt == "是自己的内容，显示在右边，右边渲染 nickname_owner，head_owner"}}' src='{{item.head_owner}}'></image>  
+             <image class='new_img' wx:if='{{item.show_rignt == "是自己的内容，显示在右边，右边渲染 nickname_open，head_open"}}' src='{{item.head_open}}'></image>  
+          </view>  
+        </view>  
+      </block>  
+      <block wx:else>  
+        <view class='you_left'>  
+          <view class='page_row'>  
+            <image class='new_img' wx:if='{{item.show_rignt == "不是自己的内容，显示在左边，左边渲染 nickname_owner，head_owner"}}' src='{{item.head_owner}}'></image>  
+             <image class='new_img' wx:if='{{item.show_rignt == "不是自己的内容，显示在左边，左边渲染 nickname_open，head_open"}}' src='{{item.head_open}}'></image>  
+            <view wx:if='{{!item.is_img}}' class='sanjiao you'></view>  
+            <text wx:if='{{!item.is_img}}' class='new_txt'>{{item.content}}</text>  
+            <image wx:if='{{item.is_img}}' src='http://sz800800.cn/Uploads/{{item.content}}' class='new_imgtent'></image>  
+          </view>  
+        </view>  
+      </block>  
+    </scroll-view>  
+  </view>   
+</view> 
+<view class="sendmessage">  
+  <input type="emoji" bindinput="bindChange" confirm-type="done" value='{{news_input_val}}' placeholder="" />  
+  <button catchtap="add">发送</button>  
+  <input style='display:none' type="" bindinput="bindChange" confirm-type="done" placeholder="" />  
+  <image bindtap="upimg1" class='jia_img' src='../../../images/jia_img.png'></image>  
+</view>  
+  -->
+
+

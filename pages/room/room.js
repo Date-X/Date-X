@@ -17,6 +17,7 @@ Page({
     msg:[],
     open_id:'',
     section_name:'',
+    in_room: false,
   },
 
   /**
@@ -196,32 +197,6 @@ Page({
     })
   },
 
-  tap_it: function (event) {
-    var that = this
-    wx.request({
-      url: 'http://www.eximple.me:5000/room/send_message',
-      data: {
-        room_id: parseInt(that.data.room_id),
-        open_id: app.globalData.openid,
-        message: 'test',
-      },
-      dataType: 'json',
-      method: 'POST',
-      success: function (res) {
-        console.log("send successfully");
-        console.log(res.data)
-        that.setData({
-          'str': res.data
-        })
-      },
-      fail: function () {
-        that.setData({
-          'str': 'fail'
-        })
-      }
-    })
-  },
-
   clear_message: function (event) {
     var that = this
     wx.request({
@@ -257,7 +232,7 @@ Page({
       dataType: 'json',
       method: 'POST',
       success: function (res) {
-        console.log('join success');
+        console.log('delete success');
         that.setData({
           'str': res.data
         })
@@ -316,6 +291,10 @@ Page({
         console.log(res.data);
         if (res.data.response_code != 0) {
           console.log(res.data.response_code);
+          wx.showToast({
+            title: '退出成功',
+            duration: 1500,
+          })
         }
         console.log('success')
       },
@@ -342,7 +321,7 @@ Page({
         console.log('success')
         console.log(res.data);
         if (res.data.response_code != 0) {
-          var section_name;
+          var section_name = '';
           if (res.data[1].area == '1')
             section_name = '王者荣耀';
           else if (res.data[1].area == '2')
@@ -353,6 +332,40 @@ Page({
             section_name = '狼人杀';
           else
             section_name = '谁知道是什么玩意';
+          var users = res.data[1].users;
+          var in_room = false;
+          for (var i = 0; i < users.length; i++) {
+            if (users[i] && that.data.open_id == users[i].id) {
+              in_room = true;
+              break;
+            }
+          }
+          that.setData({
+            room_id: res.data[1].room_id,
+            name: res.data[1].name,
+            section: res.data[1].area,
+            section_name: section_name,
+            description: res.data[1].description,
+            room_owner: res.data[1].owner,
+            users: res.data[1].users,
+            msg: res.data[1].messages,
+            in_room: in_room,
+          });
+        }
+        console.log('success')
+      },
+      success: function (res) {
+        console.log('success')
+        console.log(res.data);
+        if (res.data.response_code != 0) {
+          var users = res.data[1].users;
+          var in_room = false;
+          for (var i = 0; i < users.length; i++) {
+            if (that.data.openid == users[i].id) {
+              in_room = true;
+              break;
+            }
+          }
           that.setData({
             room_id: res.data[1].room_id,
             name: res.data[1].name,
@@ -361,10 +374,10 @@ Page({
             room_owner: res.data[1].owner,
             users: res.data[1].users,
             msg: res.data[1].messages,
-            section_name: section_name
+            in_room: in_room,
           });
         }
-        console.log('success')
+        console.log('---------')
       },
       fail: function () {
         console.log('fail');
