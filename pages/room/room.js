@@ -16,6 +16,7 @@ Page({
     users: [],
     msg:[],
     open_id:'',
+    section_name:'',
   },
 
   /**
@@ -341,6 +342,17 @@ Page({
         console.log('success')
         console.log(res.data);
         if (res.data.response_code != 0) {
+          var section_name;
+          if (res.data[1].area == '1')
+            section_name = '王者荣耀';
+          else if (res.data[1].area == '2')
+            section_name = '绝地求生';
+          else if (res.data[1].area == '3')
+            section_name = '英雄联盟';
+          else if (res.data[1].area == '4')
+            section_name = '狼人杀';
+          else
+            section_name = '谁知道是什么玩意';
           that.setData({
             room_id: res.data[1].room_id,
             name: res.data[1].name,
@@ -349,6 +361,7 @@ Page({
             room_owner: res.data[1].owner,
             users: res.data[1].users,
             msg: res.data[1].messages,
+            section_name: section_name
           });
         }
         console.log('success')
