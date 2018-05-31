@@ -2,6 +2,7 @@ var sex = '0'
 var section = []
 var openid = ''
 var avatarurl = ''
+var name = ''
 
 wx.getStorage({
   key: 'openid',
@@ -17,6 +18,7 @@ try{
     success: function(res) {
       //console.log(res.data)
       avatarurl = res.data.avatarUrl
+      name = res.data.nickName
     }
   })
 }catch(e){}
@@ -52,7 +54,7 @@ Page({
     ]
   },
   bindGetUserInfo: function (e) {
-    //console.log(e.detail.userInfo)
+    console.log(e.detail.userInfo)
     wx.setStorage({
       key: 'usrinfo',
       data: e.detail.userInfo,
@@ -87,6 +89,7 @@ Page({
           sex: sex,
           preference: section,
           avatar: avatarurl,
+          name: name,
         },
         method: 'POST',
         header: {
