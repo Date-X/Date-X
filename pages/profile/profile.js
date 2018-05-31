@@ -3,7 +3,9 @@ const app = getApp()
 
 Page({
   data: {
-    userInfo:{}
+    userInfo:{},
+    user:{},
+    open_id:'',
   },
   onLoad: function () {
     var that=this
@@ -28,5 +30,10 @@ Page({
     wx.navigateTo({
       url: '/pages/complete/complete',
     })
-  }
+  },
+
+  fetchData: function(){
+    var that = this;
+    
+  },
 })
