@@ -125,7 +125,8 @@ Page({
           'str': 'fail'
         })
       }
-    })
+    });
+    that.data.input_msg=''
   },
 
   clear_message: function (event) {
@@ -188,6 +189,10 @@ Page({
     if(that.data.input_msg.length == 0)
     {
       console.log('empty input');
+      wx.showToast({
+        title: '输入不能为空',
+        duration: 500,
+      })
       return;
     }
     wx.request({
@@ -203,7 +208,8 @@ Page({
         console.log("send successfully");
         console.log(res.data)
         that.setData({
-          'str': res.data
+          'str': res.data,
+          input_msg: ''
         })
       },
       fail: function () {
