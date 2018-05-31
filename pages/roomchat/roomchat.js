@@ -42,6 +42,7 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
+    this.fetchData();
     this.Countdown();
   },
 
@@ -82,7 +83,6 @@ Page({
 
   enter_room: function () {
     var that = this;
-    console.log(event);
     wx.navigateTo({
       url: '../room/room?room_id=' + that.data.room_id,
     });

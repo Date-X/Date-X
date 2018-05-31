@@ -11,14 +11,16 @@ Page({
     roomlist1:[],
     //我加入的
     roomlist2:[],
-    hidden:false,
+    hidden1:false,
+    hidden2:false
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-    
+  onLoad: function () {
+    console.log(app.globalData.openid);
+    var that = this;
   },
 
   /**
@@ -32,20 +34,10 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    var that = this;
-    var openid = ''
-    console.log(app.globalData.openid)
-    // wx.getStorage({
-    //   key: 'openid',
-    //   success: function (res) {
-    //     console.log(res.data)
-    //     openid = res.data
-    //   },
-    //   fail: function(){
-    //     console.log('Storage fail!');
-    //   }
-    // });
-
+    this.setData({
+      hidden1: false,
+      hidden2: false,
+    })
     this.fetchData();
   },
 
@@ -67,7 +59,11 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    this.setData({
+      hidden1: false,
+      hidden2: false,
+    })
+    this.fetchData();
   },
 
   /**
@@ -77,21 +73,21 @@ Page({
   
   },
 
-  enter_room: function (event) {
-    console.log(event);
-    console.log(event.currentTarget.dataset.room_id)
-
-    wx.navigateTo({
-      url: '../room/room?room_id=' + event.currentTarget.dataset.room_id,
-    });
-  },
-
   
   /**
    * 用户点击右上角分享
    */
   onShareAppMessage: function () {
   
+  },
+
+  enter_room: function (event) {
+    console.log(event);
+    console.log(event.currentTarget.dataset.room_id)
+
+    wx.navigateTo({
+      url: '../roomchat/roomchat?room_id=' + event.currentTarget.dataset.room_id,
+    });
   },
 
   fetchData: function () {
@@ -111,12 +107,12 @@ Page({
         console.log(res.data);
         if (res.data.response_code != 0) {
           that.setData({
-            roomlist: res.data[1]
+            roomlist1: res.data[1]
           });
         }
         setTimeout(function () {
           that.setData({
-            hidden: true
+            hidden1: true
           })
         }, 1000);
       },
@@ -140,12 +136,12 @@ Page({
         console.log(res.data);
         if (res.data.response_code != 0) {
           that.setData({
-            roomlist: res.data[1]
+            roomlist2: res.data[1]
           });
         }
         setTimeout(function () {
           that.setData({
-            hidden: true
+            hidden2: true
           })
         }, 1000);
       },
@@ -153,5 +149,5 @@ Page({
         console.log('fail');
       }
     })
-  }
+  },
 })

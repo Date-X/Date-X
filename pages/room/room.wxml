@@ -19,7 +19,7 @@
       <image src="{{item.avatar}}" mode="{{aspectFit}}"></image> <view>{{item.id}}</view> <button wx:if="{{openid==room_owner.id}}" class='remove' data-uid='{{item.id}}' bindtap='kick'><text>踢人</text></button>
     </view>
   </view>
-  <button class='enter' bindtap='加入房间'>
+  <button class='enter' bindtap='join'>
   加入房间
   </button>
 </view>

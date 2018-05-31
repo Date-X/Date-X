@@ -6,10 +6,18 @@
   </view>     
 </view>
 <view>
-  <button wx:for="{{roomlist}}">
-    <image src="../../images/true.png" style="width: 100%; height: 100px;" />
-  </button>
-  <loading hidden="{{hidden}}">
-  waiting...
+  <view wx:for="{{roomlist}}">
+    <button class = 'true' bindtap='enter_room' data-room_id="{{item.room_id}}" style=" background-image: url('../../images/bg1.jpg')">
+      <text style='height:20rpx'>{{item.name}}</text>
+      <view class='description' style=" background-image: url('../../images/bg1.jpg')">{{item.description}}</view>
+      <view class='numbers'>人数：{{item.users.length}}</view>
+    </button>
+  </view>
+  <view wx:for="{{imgUrls}}">
+    <button bindtap='enter_room' data-room_id='{{index}}'>
+      <image src="{{item}}" style="width: 100%; height: 100px;" />
+    </button>
+  </view>
+  <loading hidden='{{hidden}}'>
   </loading>
 </view>
