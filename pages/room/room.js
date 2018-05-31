@@ -81,31 +81,6 @@ Page({
   onShareAppMessage: function () {
   },
 
-  //按钮测试
-  tap_it: function(event){
-    var that = this
-    wx.request({
-      url: 'http://www.eximple.me:5000/room/send_message',
-      data: {
-        room_id:2,
-        open_id:app.globalData.openid,
-        message:'test',
-      },
-      dataType: 'form',
-      method: 'POST',
-      success: function(res){
-        that.setData({
-          'str': res.data
-        })
-      },
-      fail: function(){
-        that.setData({
-          'str':'fail'
-        })
-      }
-    })
-  },
-
   //启动定时器
   f: function(){
     Countdown();
@@ -185,30 +160,6 @@ Page({
       method: 'POST',
       success: function (res) {
         console.log('join success');
-        that.setData({
-          'str': res.data
-        })
-      },
-      fail: function () {
-        that.setData({
-          'str': 'fail'
-        })
-      }
-    })
-  },
-
-  clear_message: function (event) {
-    var that = this
-    wx.request({
-      url: 'http://www.eximple.me:5000/room/clear_message',
-      data: {
-        room_id: parseInt(that.data.room_id),
-      },
-      dataType: 'json',
-      method: 'POST',
-      success: function (res) {
-        console.log("clear successfully");
-        console.log(res.data)
         that.setData({
           'str': res.data
         })
@@ -354,35 +305,18 @@ Page({
         }
         console.log('success')
       },
-      success: function (res) {
-        console.log('success')
-        console.log(res.data);
-        if (res.data.response_code != 0) {
-          var users = res.data[1].users;
-          var in_room = false;
-          for (var i = 0; i < users.length; i++) {
-            if (that.data.openid == users[i].id) {
-              in_room = true;
-              break;
-            }
-          }
-          that.setData({
-            room_id: res.data[1].room_id,
-            name: res.data[1].name,
-            section: res.data[1].area,
-            description: res.data[1].description,
-            room_owner: res.data[1].owner,
-            users: res.data[1].users,
-            msg: res.data[1].messages,
-            in_room: in_room,
-          });
-        }
-        console.log('---------')
-      },
       fail: function () {
         console.log('fail');
       }
     });
   },
+
+  checkinfo: function(event){
+    var that = this;
+    console.log('../usrinfo/usrinfo?open_id=' + event.currentTarget.dataset.id)
+    wx.navigateTo({
+      url: '../usrinfo/usrinfo?open_id=' + event.currentTarget.dataset.id,
+    })
+  }
 })
 

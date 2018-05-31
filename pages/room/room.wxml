@@ -12,11 +12,11 @@
   <view class='person'>
     <text>房主：</text>
     <view class='person-owner'>
-      <image src='{{room_owner.avatar}}' mode="{{aspectFit}}"></image> <view>{{room_owner.id}}</view> 
+      <image src='{{room_owner.avatar}}' mode="{{aspectFit}}" bindtap='checkinfo' data-id='{{room_owner.id}}'></image> <view>{{room_owner.id}}</view> 
     </view>
     <text>成员：</text>
     <view class='person-users' wx:for='{{users}}'>
-      <image src="{{item.avatar}}" mode="{{aspectFit}}"></image> <view>{{item.id}}</view> <button wx:if="{{openid==room_owner.id}}" class='remove' data-uid='{{item.id}}' bindtap='kick'><text>踢人</text></button>
+      <image src="{{item.avatar}}" mode="{{aspectFit}}" bindtap='checkinfo' data-id='{{item.id}}'></image> <view>{{item.id}}</view> <button wx:if="{{openid==room_owner.id}}" class='remove' data-uid='{{item.id}}' bindtap='kick'><text>踢人</text></button>
     </view>
   </view>
   <button wx:if='{{in_room}}' class='enter' bindtap='quit'>

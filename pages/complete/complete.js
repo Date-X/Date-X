@@ -17,8 +17,8 @@ try{
     key:'usrinfo',
     success: function(res) {
       //console.log(res.data)
-      avatarurl = res.data.avatarUrl;
-      name = res.data.nickName;
+      avatarurl = res.data.avatarUrl
+      name = res.data.nickName
     }
   })
 }catch(e){}
@@ -89,7 +89,7 @@ Page({
           sex: sex,
           preference: section,
           avatar: avatarurl,
-          name: name,
+          name: name
         },
         method: 'POST',
         header: {
