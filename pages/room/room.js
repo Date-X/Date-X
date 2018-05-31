@@ -7,6 +7,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    in_room:true,
     str: '123',
     room_id: -1,
     name: '',

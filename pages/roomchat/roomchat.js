@@ -8,6 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
+    in_room:true,
     openid:'',
     str: '123',
     room_id: -1,
@@ -323,8 +324,8 @@ Page({
             name: res.data[1].name,
             section: res.data[1].area,
             description: res.data[1].description,
-            room_owner_id: res.data[1].owner,
-            users_id: res.data[1].users,
+            room_owner: res.data[1].owner,
+            users: res.data[1].users,
             msg: res.data[1].messages,
           });
         }
