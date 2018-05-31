@@ -1,0 +1,20 @@
+<!--pages/roomchat/roomchat.wxml-->
+<text>pages/roomchat/roomchat.wxml</text>
+<button bindtap='tap_it'>
+  send!
+</button>
+<button bindtap='fetchData'>
+  update!
+</button>
+<button bindtap='join'>
+  join!
+</button>
+<text>str</text>
+<view wx:for="{{msg}}">
+  <view wx:if="{{item.user == openid}}" style="text-align:right">
+    1{{item.content}}
+  </view>
+  <view wx:else style='text-align:left'>
+    2{{item.content}}
+  </view>
+</view>

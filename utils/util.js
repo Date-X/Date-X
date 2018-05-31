@@ -66,11 +66,20 @@ function clearError(that) {
   })
 }
 
+function json2Form(json) {
+  var str = [];
+  for (var p in json) {
+    str.push(encodeURIComponent(p) + "=" + encodeURIComponent(json[p]));
+  }
+  return str.join("&");
+}
+
 module.exports = {
   formatTime: formatTime,
   req: req,
   trim: trim,
   isError: isError,
   clearError: clearError,
+  json2Form: json2Form,
   getReq: getReq
 }
