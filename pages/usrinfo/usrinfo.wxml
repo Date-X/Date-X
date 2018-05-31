@@ -1,0 +1,25 @@
+<view class="container">
+  <view class="userinfo">
+    <block>
+      <image class="userinfo-avatar" src="{{user.avatar}}" background-size="cover"></image>
+      <text class="userinfo-nickname">{{user.name}}</text>
+    </block>
+  </view>
+  <view class="flex-wrp" style="flex-direction:column;">
+    <view class="weui-cell">
+      <view class="flex-item weui-label" bindtap='fetchData'>
+        个人偏好：
+        <view class="preference" wx:for="{{user.pre}}">
+          <image wx:if="{{item == '1'}}" src='./../../images/KoG.jpg'/>
+          <text wx:if="{{item == '1'}}">王者荣耀<br/></text>
+          <image wx:if="{{item == '2'}}" src='./../../images/PUBG.jpg'/>
+          <text wx:if="{{item == '2'}}">绝地求生<br/></text>
+          <image wx:if="{{item == '3'}}" src='./../../images/LOL.jpg'/>
+          <text wx:if="{{item == '3'}}">英雄联盟<br/></text>
+          <image wx:if="{{item == '4'}}" src='./../../images/wolf.jpg'/>
+          <text wx:if="{{item == '4'}}">狼人杀<br/></text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
