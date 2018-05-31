@@ -15,9 +15,14 @@ Page({
           that.setData({
             userInfo:res.data
           })
-        }
+        },
+        fail: function(){
+          console.log('fail')
+        },
       })
-    } catch (e) { }
+    } catch (e) {
+      console.log('exception.');
+     }
   },
   click: function() {
     wx.navigateTo({

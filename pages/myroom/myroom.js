@@ -1,6 +1,5 @@
-// pages/rooms/rooms.js
-var app = getApp();
-var Util = require('../../utils/util.js');
+// pages/myroom/myroom.js
+ const app = getApp();
 
 Page({
 
@@ -8,27 +7,18 @@ Page({
    * 页面的初始数据
    */
   data: {
-    imgUrls: [
-      '../../images/roomlist.png',
-      '../../images/roomlist.png',
-      '../../images/roomlist.png',
-      '../../images/roomlist.png',
-      '../../images/roomlist.png',
-      '../../images/roomlist.png',
-      '../../images/roomlist.png'
-    ],
-    roomlist: [],
-    section: -1,
-    hidden:true
+    //我创建的
+    roomlist1:[],
+    //我加入的
+    roomlist2:[],
+    hidden:false,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.id)
-    var that = this;
-    this.data.section = options.id;
+    
   },
 
   /**
@@ -42,9 +32,20 @@ Page({
    * 生命周期函数--监听页面显示
    */
   onShow: function () {
-    this.setData({
-      hidden: false,
-    })
+    var that = this;
+    var openid = ''
+    console.log(app.globalData.openid)
+    // wx.getStorage({
+    //   key: 'openid',
+    //   success: function (res) {
+    //     console.log(res.data)
+    //     openid = res.data
+    //   },
+    //   fail: function(){
+    //     console.log('Storage fail!');
+    //   }
+    // });
+
     this.fetchData();
   },
 
@@ -66,10 +67,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-    this.setData({
-      hidden:false,
-    })
-    this.fetchData();
+  
   },
 
   /**
@@ -79,29 +77,29 @@ Page({
   
   },
 
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
-  },
-
   enter_room: function (event) {
     console.log(event);
     console.log(event.currentTarget.dataset.room_id)
 
     wx.navigateTo({
-      url: '../roomchat/roomchat?room_id=' + event.currentTarget.dataset.room_id,
+      url: '../room/room?room_id=' + event.currentTarget.dataset.room_id,
     });
   },
 
-  fetchData: function(){
+  
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+  
+  },
+
+  fetchData: function () {
     var that = this;
     wx.request({
-      url: 'http://www.eximple.me:5000/search',
+      url: 'http://www.eximple.me:5000/usr/roomlist1',
       data: {
-        section: that.data.section
-        //name:'1'
+        open_id: app.globalData.openid
       },
       method: 'POST',
       dataType: 'json',
@@ -111,8 +109,7 @@ Page({
       success: function (res) {
         console.log('success')
         console.log(res.data);
-        if(res.data.response_code != 0)
-        {
+        if (res.data.response_code != 0) {
           that.setData({
             roomlist: res.data[1]
           });
@@ -122,7 +119,35 @@ Page({
             hidden: true
           })
         }, 1000);
+      },
+      fail: function () {
+        console.log('fail');
+      }
+    })
+
+    wx.request({
+      url: 'http://www.eximple.me:5000/usr/roomlist2',
+      data: {
+        open_id: app.globalData.openid
+      },
+      method: 'POST',
+      dataType: 'json',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
         console.log('success')
+        console.log(res.data);
+        if (res.data.response_code != 0) {
+          that.setData({
+            roomlist: res.data[1]
+          });
+        }
+        setTimeout(function () {
+          that.setData({
+            hidden: true
+          })
+        }, 1000);
       },
       fail: function () {
         console.log('fail');

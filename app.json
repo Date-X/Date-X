@@ -7,7 +7,9 @@
     "pages/add/add",
     "pages/room/room",
     "pages/roomlist/roomlist",
-    "pages/complete/complete"
+    "pages/complete/complete",
+    "pages/myroom/myroom",
+    "pages/roomchat/roomchat"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -43,6 +45,7 @@
       },
       {
         "pagePath": "pages/profile/profile",
+        "pagePath": "pages/myroom/myroom",
         "text": "profile",
         "iconPath": "images/profile.png",
         "selectedIconPath": "images/profile_selected.png"
