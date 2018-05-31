@@ -45,6 +45,14 @@ class Room_manager(object):
 
         return dumps([{"response_code": 1}, res])
 
+    def joinRoom(self, usr_id, room_id):
+        res = self.db.Room.find_one({"room_id":room_id})
+        if res is None:
+            print("error: room ", room_id, " does not exist!")
+            return dumps({"response_code":0})
+        self.db.Room.update_one({"room_id":room_id},{"$addToSet":{"users":usr_id}})
+        return dumps({"response_code":1})
+
     def getRoom_id2id(self):
         return self.room_id2id
 

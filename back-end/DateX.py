@@ -94,6 +94,16 @@ def room_info2():
     usr_id = j_data['open_id']
     return room_manager.getRoomByUsrID(usr_id)
 
+@app.route('/usr/join',methods = ['POST'])
+def room_join():
+    data = request.data
+
+    j_data = yaml.safe_load(data)
+
+    usr_id = j_data['open_id']
+    room_id = j_data['room_id']
+    return room_manager.joinRoom(usr_id,room_id)
+
 @app.route('/room/section',methods = ['POST'])
 def room_sec():
     data = request.data
@@ -130,7 +140,7 @@ def room_kick():
     j_data = yaml.safe_load(data)
 
     room_id = j_data['room_id']
-    openid = j_data['openid']
+    openid = j_data['open_id']
 
     return room_manager.deleteByID(room_id,openid)
 
@@ -162,7 +172,7 @@ def room_send_message():
     j_data = yaml.safe_load(data)
 
     room_id = j_data['room_id']
-    openid = j_data['openid']
+    openid = j_data['open_id']
     message = j_data['message']
     return room_manager.addMessage(room_id,openid,message)
 
