@@ -38,6 +38,11 @@ class Room_manager(object):
         res = self.db.Room.find_one({"room_id": room_id})
         if res is None:
             return dumps({"response_code": 0})
+
+        res['owner'] = self.db.User.find_one({"id":res['owner']})
+        for i,usr in enumerate(res['users']):
+            res['users'][i] = self.db.User.find_one({"id":usr})
+
         return dumps([{"response_code": 1}, res])
 
     def getRoom_id2id(self):
@@ -136,8 +141,21 @@ class Room_manager(object):
         return False
 
 
-    def getRoomByID(self, usrid):
-        cur = self.db.Room.find({"usr": {"$all": [usrid]}})
+    def getRoomByOwnID(self, usrid):
+        cur = self.db.Room.find({"owner": usrid})
+        if cur.count() == 0:
+            return dumps({"response_code":0})
+
+        cur = list(cur)
+        for k,room in enumerate(cur):
+            cur[k]['owner'] = self.db.User.find_one({"id":room['owner']})
+            for i,usr in enumerate(room['users']):
+                room['users'][i] = self.db.User.find_one({"id":usr})
+
+        return dumps([{"response_code":1},list(cur)])
+
+    def getRoomByUsrID(self, usrid):
+        cur = self.db.Room.find({"users": usrid})
         if cur.count() == 0:
             return dumps({"response_code":0})
 

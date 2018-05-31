@@ -82,7 +82,17 @@ def room_info1():
     j_data = yaml.safe_load(data)
 
     usr_id = j_data['open_id']
-    return room_manager.getRoomByID(usr_id)
+    return room_manager.getRoomByOwnID(usr_id)
+
+@app.route('/usr/roomlist2',methods = ['POST'])
+def room_info2():
+
+    data = request.data
+
+    j_data = yaml.safe_load(data)
+
+    usr_id = j_data['open_id']
+    return room_manager.getRoomByUsrID(usr_id)
 
 @app.route('/room/section',methods = ['POST'])
 def room_sec():
