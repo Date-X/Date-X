@@ -12,9 +12,10 @@ Page({
     name: '',
     section: -1,
     description: '',
-    room_owner_id: -1,
-    users_id: [],
+    room_owner: {},
+    users: [],
     msg:[],
+    open_id:'',
   },
 
   /**
@@ -23,7 +24,8 @@ Page({
   onLoad: function (options) {
     console.log(options.room_id);
     this.setData({
-      room_id:options.room_id
+      room_id:options.room_id,
+      openid:app.globalData.openid,
     })
     //this.Countdown();
   },
@@ -82,8 +84,8 @@ Page({
     wx.request({
       url: 'http://www.eximple.me:5000/room/send_message',
       data: {
-         room_id:2,
-         openid:app.globalData.openid,
+        room_id:2,
+        open_id:app.globalData.openid,
         message:'test',
       },
       dataType: 'form',
@@ -117,6 +119,210 @@ Page({
     }, 1000);
   },
 
+  //测试发送信息
+  tap_it: function (event) {
+    var that = this
+    wx.request({
+      url: 'http://www.eximple.me:5000/room/send_message',
+      data: {
+        room_id: parseInt(that.data.room_id),
+        open_id: app.globalData.openid,
+        message: 'test',
+      },
+      dataType: 'json',
+      method: 'POST',
+      success: function (res) {
+        console.log("send successfully");
+        console.log(res.data)
+        that.setData({
+          'str': res.data
+        })
+      },
+      fail: function () {
+        that.setData({
+          'str': 'fail'
+        })
+      }
+    })
+  },
+
+  clear_message: function (event) {
+    var that = this
+    wx.request({
+      url: 'http://www.eximple.me:5000/room/clear_message',
+      data: {
+        room_id: parseInt(that.data.room_id),
+      },
+      dataType: 'json',
+      method: 'POST',
+      success: function (res) {
+        console.log("clear successfully");
+        console.log(res.data)
+        that.setData({
+          'str': res.data
+        })
+      },
+      fail: function () {
+        that.setData({
+          'str': 'fail'
+        })
+      }
+    })
+  },
+
+  join: function () {
+    var that = this
+    wx.request({
+      url: 'http://www.eximple.me:5000/usr/join',
+      data: {
+        room_id: parseInt(that.data.room_id),
+        open_id: app.globalData.openid,
+      },
+      dataType: 'json',
+      method: 'POST',
+      success: function (res) {
+        console.log('join success');
+        that.setData({
+          'str': res.data
+        })
+      },
+      fail: function () {
+        that.setData({
+          'str': 'fail'
+        })
+      }
+    })
+  },
+
+  tap_it: function (event) {
+    var that = this
+    wx.request({
+      url: 'http://www.eximple.me:5000/room/send_message',
+      data: {
+        room_id: parseInt(that.data.room_id),
+        open_id: app.globalData.openid,
+        message: 'test',
+      },
+      dataType: 'json',
+      method: 'POST',
+      success: function (res) {
+        console.log("send successfully");
+        console.log(res.data)
+        that.setData({
+          'str': res.data
+        })
+      },
+      fail: function () {
+        that.setData({
+          'str': 'fail'
+        })
+      }
+    })
+  },
+
+  clear_message: function (event) {
+    var that = this
+    wx.request({
+      url: 'http://www.eximple.me:5000/room/clear_message',
+      data: {
+        room_id: parseInt(that.data.room_id),
+      },
+      dataType: 'json',
+      method: 'POST',
+      success: function (res) {
+        console.log("clear successfully");
+        console.log(res.data)
+        that.setData({
+          'str': res.data
+        })
+      },
+      fail: function () {
+        that.setData({
+          'str': 'fail'
+        })
+      }
+    })
+  },
+
+  delete_room: function () {
+    var that = this
+    wx.request({
+      url: 'http://www.eximple.me:5000/usr/join',
+      data: {
+        room_id: parseInt(that.data.room_id),
+        open_id: app.globalData.openid,
+      },
+      dataType: 'json',
+      method: 'POST',
+      success: function (res) {
+        console.log('join success');
+        that.setData({
+          'str': res.data
+        })
+      },
+      fail: function () {
+        that.setData({
+          'str': 'fail'
+        })
+      }
+    })
+  },
+
+  kick: function (event) {
+    var that = this;
+    var openid = event.currentTarget.dataset.uid
+    wx.request({
+      url: 'http://www.eximple.me:5000/room/kick',
+      data: {
+        room_id: parseInt(that.data.room_id),
+        open_id: openid
+      },
+      method: 'POST',
+      dataType: 'json',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        console.log('success')
+        console.log(res.data);
+        if (res.data.response_code != 0) {
+          console.log(res.data.response_code);
+        }
+        console.log('success')
+      },
+      fail: function () {
+        console.log('fail');
+      }
+    });
+  },
+
+  quit: function () {
+    var that = this;
+    wx.request({
+      url: 'http://www.eximple.me:5000/room/kick',
+      data: {
+        room_id: parseInt(that.data.room_id),
+        open_id: app.globalData.openid,
+      },
+      method: 'POST',
+      dataType: 'json',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        console.log('quit success')
+        console.log(res.data);
+        if (res.data.response_code != 0) {
+          console.log(res.data.response_code);
+        }
+        console.log('success')
+      },
+      fail: function () {
+        console.log('fail');
+      }
+    });
+  },
+
   //获取数据
   fetchData: function(){
     var that = this;
@@ -139,8 +345,8 @@ Page({
             name: res.data[1].name,
             section: res.data[1].area,
             description: res.data[1].description,
-            room_owner_id: res.data[1].owner,
-            users_id: res.data[1].users,
+            room_owner: res.data[1].owner,
+            users: res.data[1].users,
             msg: res.data[1].messages,
           });
         }
@@ -151,33 +357,5 @@ Page({
       }
     });
   },
-
-  //踢人
-  kick: function(openid){
-    var that = this;
-    wx.request({
-      url: 'http://www.eximple.me:5000/room/kick',
-      data: {
-        room_id: that.data.room_id,
-        'openid': openid
-      },
-      method: 'POST',
-      dataType: 'json',
-      header: {
-        'Content-Type': 'application/json'
-      },
-      success: function (res) {
-        console.log('success')
-        console.log(res.data);
-        if (res.data.response_code != 0) {
-          console.log(res.data.response_code);
-        }
-        console.log('success')
-      },
-      fail: function () {
-        console.log('fail');
-      }
-    });
-  }
 })
 

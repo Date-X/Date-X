@@ -9,7 +9,16 @@
 <button bindtap='join'>
   join!
 </button>
-<text>str</text>
+<button bindtap='clear_message'>
+  clear!
+</button>
+<button bindtap='quit'>
+  quit!
+</button>
+<button bindtap='enter_room'>
+  enter!
+</button>
+<text>{{str}}</text>
 <view wx:for="{{msg}}">
   <view wx:if="{{item.user == openid}}" style="text-align:right">
     1{{item.content}}

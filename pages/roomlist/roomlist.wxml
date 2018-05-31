@@ -1,9 +1,10 @@
 <!--pages/rooms/rooms.wxml-->
-<text>pages/rooms/rooms.wxml</text>
 <view>
   <view wx:for="{{roomlist}}">
-    <button bindtap='enter_room' data-room_id="{{item.room_id}}">
-      <image src="../../images/true.png" style="width: 100%; height: 100px;" />
+    <button class = 'true' bindtap='enter_room' data-room_id="{{item.room_id}}" style=" background-image: url('../../images/bg1.jpg')">
+      <text style='height:20rpx'>{{item.name}}</text>
+      <view class='description' style=" background-image: url('../../images/bg1.jpg')">{{item.description}}</view>
+      <view class='numbers'>人数：{{item.users.length}}</view>
     </button>
   </view>
   <view wx:for="{{imgUrls}}">

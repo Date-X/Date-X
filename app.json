@@ -38,14 +38,13 @@
         "selectedIconPath": "images/add_selected.png"
       },
       {
-        "pagePath":"pages/room/room",
+        "pagePath":"pages/myroom/myroom",
         "text":"room",
           "iconPath": "images/section.png",
           "selectedIconPath": "images/section_selected.png"
       },
       {
         "pagePath": "pages/profile/profile",
-        "pagePath": "pages/myroom/myroom",
         "text": "profile",
         "iconPath": "images/profile.png",
         "selectedIconPath": "images/profile_selected.png"
