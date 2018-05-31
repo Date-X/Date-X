@@ -4,7 +4,7 @@
 <view class="weui-cells">
   <view class="weui-search-bar">
     <input type="text" maxlength="50" bindinput="input_message"></input>
-    <button class="search-btn" bindtap="send_msg" wx:if="{{showbutton}}">搜索</button>
+    <button class="search-btn" bindtap="send_msg" wx:if="{{showbutton}}">发送</button>
   </view>     
 </view>
 
@@ -24,25 +24,29 @@
   enter!进入room页面
 </button>
 <text>{{str}}</text>
-<view wx:for="{{msg}}">
-  <view wx:if="{{item.user == open_id}}" style="text-align:right">
-    1{{item.content}}
-  </view>
-  <view wx:else style="text-align:left">
-    2{{item.content}}
-  </view>
-</view>
+
 <view class='body' style=" background-image: url('../../images/bg1.jpg')">
-<view class='outer'>
-  <view class='avatar'>
+  <view class='outer'>
+    <view class='avatar'>
       <view wx:for='{{users}}' style='width:80rpx height:80rpx'>
       <image src='{{item.avatar}}' mode="{{aspectFit}}" style="width:80rpx height:80rpx" > </image> 
       </view>  
     </view>
     <button class='enter' bindtap='enter_room'><text>进入</text></button>
-<view class='news'>  
+  </view>
+  <view class='news'>  
   <view class='xiahuaxian1 xiahuaxia'></view>  
-  <view class='new_top_txt'>--{{name}}--</view>  
+  <view class='new_top_txt'>--{{name}}--</view> 
+  </view>
+    <view wx:for="{{msg}}">
+    <view class="myword" wx:if="{{item.user == open_id}}" style="text-align:right">
+      {{item.content}}
+    </view>
+    <view class="others" wx:else style="text-align:left">
+      {{item.content}}
+    </view>
+  </view>
+  <!-- 
   <view class="historycon">  
     <scroll-view scroll-y="true" scroll-top="{{scrollTop}}" class="history" wx:for="{{centendata}}" wx:key=''>  
       <view>  
@@ -71,44 +75,25 @@
         </view>  
       </block>  
     </scroll-view>  
-  </view>  
-</view>  
-<view class='hei' id="hei"></view>  
+  </view>   
+</view> 
 <view class="sendmessage">  
   <input type="emoji" bindinput="bindChange" confirm-type="done" value='{{news_input_val}}' placeholder="" />  
   <button catchtap="add">发送</button>  
   <input style='display:none' type="" bindinput="bindChange" confirm-type="done" placeholder="" />  
   <image bindtap="upimg1" class='jia_img' src='../../../images/jia_img.png'></image>  
 </view>  
+  -->
+</view>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  <button wx:if='{{in_room}}' class='chat'>
-      <view class="weui-search-bar">
-        <input type="text" maxlength="12" placeholder="请输入发送内容" bindinput="inputSearch"></input>
-        <button class="search-btn" bindtap="submitSearch">发送</button>
-      </view>     
-  </button>
-  <button wx:else bindtap='join' class='bottom'>
+<view wx:if='{{in_room}}' class='chat'>
+    <view class="weui-search-bar">
+      <input type="text" maxlength="50" placeholder="请输入发送内容" bindinput="input_message"></input>
+      <button class="search-btn" bindtap="send_msg">发送</button>
+    </view>     
+</view>
+<view wx:else>
+  <button bindtap='join' class='bottom'>
   加入房间
   </button>
 </view>

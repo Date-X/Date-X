@@ -209,3 +209,13 @@
   line-height: 40px;  
   word-break: break-all;  
 }  
+
+.myword{
+  display: flex;
+  flex-direction: row;
+}
+
+.others{
+  display: flex;
+  flex-direction: row;
+}

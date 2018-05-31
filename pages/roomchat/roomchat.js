@@ -185,6 +185,11 @@ Page({
 
   send_msg: function (event) {
     var that = this
+    if(that.data.input_msg.length == 0)
+    {
+      console.log('empty input');
+      return;
+    }
     wx.request({
       url: 'http://www.eximple.me:5000/room/send_message',
       data: {
