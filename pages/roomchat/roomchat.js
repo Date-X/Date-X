@@ -8,7 +8,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    openid:'',
+    open_id:'',
     str: '123',
     room_id: -1,
     name: '',
@@ -17,6 +17,9 @@ Page({
     room_owner: {},
     users: [],
     msg: [],
+    in_room: false,
+    input_msg: '',
+    showbutton: false,
   },
 
   /**
@@ -27,7 +30,7 @@ Page({
 
     this.setData({
       room_id: parseInt(options.room_id),
-      openid: app.globalData.openid,
+      open_id: app.globalData.openid,
     });
   },
 
@@ -173,43 +176,26 @@ Page({
     })
   },
 
-  tap_it: function (event) {
+  input_message: function (e) {  //输入搜索文字
+    this.setData({
+      showbutton: e.detail.cursor > 0,
+      input_msg: e.detail.value
+    })
+  },
+
+  send_msg: function (event) {
     var that = this
     wx.request({
       url: 'http://www.eximple.me:5000/room/send_message',
       data: {
         room_id: parseInt(that.data.room_id),
-        open_id: app.globalData.openid,
-        message: 'test',
+        open_id: that.data.open_id,
+        message: that.data.input_msg,
       },
       dataType: 'json',
       method: 'POST',
       success: function (res) {
         console.log("send successfully");
-        console.log(res.data)
-        that.setData({
-          'str': res.data
-        })
-      },
-      fail: function () {
-        that.setData({
-          'str': 'fail'
-        })
-      }
-    })
-  },
-
-  clear_message: function (event) {
-    var that = this
-    wx.request({
-      url: 'http://www.eximple.me:5000/room/clear_message',
-      data: {
-        room_id: parseInt(that.data.room_id),
-      },
-      dataType: 'json',
-      method: 'POST',
-      success: function (res) {
-        console.log("clear successfully");
         console.log(res.data)
         that.setData({
           'str': res.data
@@ -318,15 +304,39 @@ Page({
         console.log('success')
         console.log(res.data);
         if (res.data.response_code != 0) {
+          var users = res.data[1].users;
+          var in_room = false;
+          for(var i = 0; i < users.length; i++)
+          {
+            if(users[i] && that.data.open_id == users[i].id)
+            {
+              in_room = true;
+              break;
+            }
+          }
           that.setData({
             room_id: res.data[1].room_id,
             name: res.data[1].name,
             section: res.data[1].area,
             description: res.data[1].description,
-            room_owner_id: res.data[1].owner,
-            users_id: res.data[1].users,
+            room_owner: res.data[1].owner,
+            users: res.data[1].users,
             msg: res.data[1].messages,
+            in_room: in_room,
           });
+        }
+        else{
+          wx.showModal({
+            title: '',
+            content: '该房间已被销毁',
+            success:function(res){
+              if(res.confirm){
+                wx.switchTab({
+                  url: '../index/index',
+                })
+              }
+            }
+          })
         }
         console.log('---------')
       },
