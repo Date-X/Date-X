@@ -4,7 +4,7 @@
   <view wx:for="{{roomlist1}}">
     <button class = 'true' bindtap='enter_room' data-room_id="{{item.room_id}}" style=" background-image: url('../../images/bg1.jpg')">
       <text style='height:20rpx'>{{item.name}}</text>
-      <view class='description' style=" background-image: url('../../images/bg1.jpg')">{{item.description}}</view>
+      <view class='description' style=" background-image: url('../../images/bg1.jpg')"><text>{{item.description}}</text></view>
       <view class='numbers'>人数：{{item.users.length}}</view>
     </button>
   </view>
@@ -12,7 +12,7 @@
   <view wx:for="{{roomlist2}}">
     <button class = 'true' bindtap='enter_room' data-room_id="{{item.room_id}}" style=" background-image: url('../../images/bg1.jpg')">
       <text style='height:20rpx'>{{item.name}}</text>
-      <view class='description' style=" background-image: url('../../images/bg1.jpg')">{{item.description}}</view>
+      <view class='description' style=" background-image: url('../../images/bg1.jpg')"><text>{{item.description}}</text></view>
       <view class='numbers'>人数：{{item.users.length}}</view>
     </button>
   </view>

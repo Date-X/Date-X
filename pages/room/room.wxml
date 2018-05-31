@@ -4,7 +4,7 @@
   <view class='idType'>
     <text class='idType-id'>ID:{{room_id}}</text> <text class='idType-type'>类别：{{section_name}}</text>
   </view>
-  <scroll-view class='description'>
+  <scroll-view class='description' scroll-y='true' scroll-top='true'>
     <button class='modify' wx:if="{{openid==room_owner.id}}"><text>修改</text></button>
     <text style='font-size:0.8em'>房间描述:\n</text>
     <text style="font-size:0.7em">{{description}}</text>
