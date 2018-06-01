@@ -27,7 +27,7 @@ Page({
     console.log(options.room_id);
     this.setData({
       room_id:options.room_id,
-      openid:app.globalData.openid,
+      open_id:app.globalData.openid,
     })
     //this.Countdown();
   },
@@ -90,8 +90,8 @@ Page({
   Countdown: function() {
     var that = this;
     timer = setTimeout(function () {
-      console.log("----Countdown----");
-      console.log(that.data.room_id);
+      //console.log("----Countdown----");
+      //console.log(that.data.room_id);
       that.fetchData();
       that.Countdown();
     }, 1000);
@@ -291,6 +291,7 @@ Page({
               break;
             }
           }
+          //console.log(in_room);
           that.setData({
             room_id: res.data[1].room_id,
             name: res.data[1].name,
