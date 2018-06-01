@@ -64,6 +64,7 @@ Page({
       hidden2: false,
     })
     this.fetchData();
+    wx.stopPullDownRefresh();
   },
 
   /**
