@@ -1,1 +1,22 @@
-/* pages/search/search.wxss */
+/* pages/rooms/rooms.wxss */
+.true{
+  background-color: white;
+  font-size: 0.7em;
+  font-weight: 700;
+  height: 220rpx;
+  margin:5rpx;
+}
+.description{
+  width:100%;
+  height:100rpx;
+  border-style: double double double double;
+  border-radius:5px;
+  font-weight: 500;
+  font-size: 0.9em;
+  text-align: left;
+}
+.numbers{
+  text-align: left;
+  color: gainsboro;
+  font-size: 0.7em;
+}

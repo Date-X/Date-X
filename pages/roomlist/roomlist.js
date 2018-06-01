@@ -27,6 +27,7 @@ Page({
    */
   onLoad: function (options) {
     console.log(options.id)
+    console.log(app.globalData.openid);
     var that = this;
     this.data.section = options.id;
   },
@@ -101,7 +102,6 @@ Page({
       url: 'http://www.eximple.me:5000/search',
       data: {
         section: that.data.section
-        //name:'1'
       },
       method: 'POST',
       dataType: 'json',

@@ -16,14 +16,14 @@ Page({
           'url': '../roomlist/roomlist?id=1'
         },
         {
-          'icon': './../../images/LOL.jpg',
-          'text': '英雄联盟',
-          'url': '../roomlist/roomlist?id=3'
-        },
-        {
           'icon': './../../images/PUBG.jpg',
           'text': '绝地求生',
           'url': '../roomlist/roomlist?id=2'
+        },
+        {
+          'icon': './../../images/LOL.jpg',
+          'text': '英雄联盟',
+          'url': '../roomlist/roomlist?id=3'
         },
         {
           'icon': './../../images/wolf.jpg',

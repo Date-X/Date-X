@@ -48,8 +48,8 @@ Page({
         console.log(res.data)
         var room_url='../room/room?room_id='+res.data['room_id']
         console.log(room_url)
-        wx.redirectTo({
-          url: room_url
+        wx.switchTab({
+          url: '../myroom/myroom'
         })
         //跳转到房间内页面
       },

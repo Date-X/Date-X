@@ -1,1 +1,120 @@
 /* pages/room/room.wxss */
+.body{
+  background-color: oldlace;
+  background-position: center center;
+  padding: 20rpx;
+  margin: 0px;
+  background-size: cover;
+  background-repeat: repeat-y;
+  height: 1175rpx;
+}
+.name{
+  font-size:1.2em;
+  text-align:center;
+  font-weight: 700;
+}
+.idType{
+    display:-webkit-box;
+    display:-webkit-flex;
+    display:-ms-flexbox;
+    display:flex;
+    -webkit-box-pack:justify;
+    -webkit-justify-content:space-between;
+    -ms-flex-pack:justify;
+    justify-content:space-between;
+    font-size: 0.7em;
+}
+.idType-id{
+
+}
+.idType-type{
+
+}
+
+.description{
+  border-style: double double double double;
+  height:250rpx;
+  
+}
+.person{
+  font-size: 0.8em;
+}
+.person-owner{
+  display: flex;
+  flex-direction: raw;
+  padding-top: 0rpx;
+  padding-left: 40rpx;
+  text-align:left;
+  width:100%;
+  height:100rpx;
+
+}
+.person-users{
+  display: flex;
+  flex-direction: raw;
+  padding-top: 0rpx;
+  padding-left:40rpx;
+  text-align:left;
+  width:100%;
+  height:100rpx;
+
+}
+.person-owner image{
+  border-radius: 50%;
+  width:80rpx;
+  height:80rpx;
+
+}
+.person-owner view{
+  width:500rpx;
+  height:40rpx;
+  margin-top: 10rpx;
+  margin-left: 20rpx;
+  
+}
+
+.person-users image{
+  border-radius: 50%;
+  width:80rpx;
+  height:80rpx;
+}
+.person-users view{
+  width:500rpx;
+  height:40rpx;
+  margin-top: 10rpx;
+  margin-left: 20rpx;
+}
+
+.modify{
+  padding: 0px;
+  padding-left: 0px;
+  padding-right:0px;
+  float:right;
+  font-size: 0.5em;
+  width:60rpx;
+  height:50rpx;
+  opacity:0.4;
+}
+
+.remove{
+  padding: 0px;
+  padding-top: 6rpx;
+  margin-top: 20rpx;
+  margin-right: 20rpx;
+  margin-left: 0rpx;
+  padding-left: 0px;
+  padding-right:0px;
+  float:right;
+  font-size: 0.5em;
+  width:60rpx;
+  height:50rpx;
+  opacity:0.4;
+}
+
+.enter{
+  opacity:0.7;
+  position: fixed;
+  bottom:0%;
+  width: 95%;
+}
+

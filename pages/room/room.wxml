@@ -1,8 +1,29 @@
 <!--pages/room/room.wxml-->
-<text>这是房间内页面</text>
-<button bindtap='tap_it'>
-  tap it!
-</button>
-<view>
-  {{str}}
+<view class='body' style=" background-image: url('../../images/bg.jpg')">
+  <view class='name'>{{name}}</view>
+  <view class='idType'>
+    <text class='idType-id'>ID:{{room_id}}</text> <text class='idType-type'>类别：{{section_name}}</text>
+  </view>
+  <scroll-view class='description' scroll-y='true' scroll-top='true'>
+    <button class='modify' wx:if="{{openid==room_owner.id}}"><text>修改</text></button>
+    <text style='font-size:0.8em'>房间描述:\n</text>
+    <text style="font-size:0.7em">{{description}}</text>
+  </scroll-view>
+  <view class='person'>
+    <text>房主：</text>
+    <view class='person-owner'>
+      <image src='{{room_owner.avatar}}' mode="{{aspectFit}}" bindtap='checkinfo' data-id='{{room_owner.id}}'></image> <view>{{room_owner.id}}</view> 
+    </view>
+    <text>成员：</text>
+    <view class='person-users' wx:for='{{users}}'>
+      <image src="{{item.avatar}}" mode="{{aspectFit}}" bindtap='checkinfo' data-id='{{item.id}}'></image> <view>{{item.id}}</view> <button wx:if="{{openid==room_owner.id}}" class='remove' data-uid='{{item.id}}' bindtap='kick'><text>踢人</text></button>
+    </view>
+  </view>
+  <button wx:if='{{in_room}}' class='enter' bindtap='quit'>
+  离开房间
+  </button>
+  <button wx:else class='enter' bindtap='join'>
+  加入房间
+  </button>
 </view>
+

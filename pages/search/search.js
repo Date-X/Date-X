@@ -116,7 +116,7 @@ Page({
     console.log(event.currentTarget.dataset.room_id)
 
     wx.navigateTo({
-      url: '../room/room?room_id=' + event.currentTarget.dataset.room_id,
+      url: '../roomchat/roomchat?room_id=' + event.currentTarget.dataset.room_id,
     });
   },
 })

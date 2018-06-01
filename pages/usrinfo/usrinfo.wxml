@@ -21,8 +21,5 @@
         </view>
       </view>
     </view>
-    <view class="weui-cell">
-      <button class="flex-item weui-label" bindtap='click'>修改</button>
-    </view>
   </view>
 </view>

@@ -9,7 +9,8 @@
     "pages/roomlist/roomlist",
     "pages/complete/complete",
     "pages/myroom/myroom",
-    "pages/roomchat/roomchat"
+    "pages/roomchat/roomchat",
+    "pages/usrinfo/usrinfo"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -38,14 +39,13 @@
         "selectedIconPath": "images/add_selected.png"
       },
       {
-        "pagePath":"pages/room/room",
+        "pagePath":"pages/myroom/myroom",
         "text":"room",
           "iconPath": "images/section.png",
           "selectedIconPath": "images/section_selected.png"
       },
       {
         "pagePath": "pages/profile/profile",
-        "pagePath": "pages/myroom/myroom",
         "text": "profile",
         "iconPath": "images/profile.png",
         "selectedIconPath": "images/profile_selected.png"

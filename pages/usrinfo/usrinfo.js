@@ -22,7 +22,7 @@ Page({
     }    
   },
 
-  onShow(){
+  onShow() {
     this.fetchData();
   },
 
@@ -34,22 +34,6 @@ Page({
 
   fetchData: function(){
     var that = this;
-    try {
-      wx.getStorage({
-        key: 'usrinfo',
-        success: function (res) {
-          //console.log(res.data)
-          that.setData({
-            userInfo: res.data
-          })
-        },
-        fail: function () {
-          console.log('fail')
-        },
-      })
-    } catch (e) {
-      console.log('exception.');
-    }
     wx.request({
       url: 'http://www.eximple.me:5000/usr/info',
       data: {
