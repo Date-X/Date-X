@@ -52,12 +52,13 @@ def complete_user():
     sex = j_data['sex']
     pre = j_data['preference']
     avatar = j_data['avatar']
+    name = j_data['name']
     db = mongo.db
     res = db.User.find_one({'id': usr_id})
     if res is not None:
-        res = usr_manager.setPre(usr_id,pre) and usr_manager.setSex(usr_id,sex) and usr_manager.setAvatar(usr_id,avatar)
+        res = usr_manager.setPre(usr_id,pre) and usr_manager.setSex(usr_id,sex) and usr_manager.setAvatar(usr_id,avatar) and usr_manager.setName(usr_id,name)
     else:
-        res = usr_manager.addUsr(usr_id,sex,pre,avatar)
+        res = usr_manager.addUsr(usr_id,sex,pre,avatar,name)
     return json.dumps({'response_code':int(res)})
     # if usr_id in usr_manager.usrid2id:
     #     return str(room_manager.addUsr(room_id, usr_id))
@@ -176,13 +177,41 @@ def room_send_message():
     message = j_data['message']
     return room_manager.addMessage(room_id,openid,message)
 
-@app.route('/search',methods = ['POST'])
-def room_search():
+@app.route('/room/clear_message',methods = ['POST'])
+def room_clear_message():
 
     data = request.data
 
     j_data = yaml.safe_load(data)
 
+    room_id = j_data['room_id']
+    return room_manager.clearMessage(room_id)
+
+@app.route('/room/complete',methods = ['POST'])
+def room_complete():
+
+    data = request.data
+    j_data = yaml.safe_load(data)
+    room_id = j_data['room_id']
+
+    if 'name' in j_data:
+        room_manager.setName(room_id,j_data['name'])
+    if 'section' in j_data:
+        room_manager.setSubarea(room_id,j_data['section'])
+    if 'description' in j_data:
+        room_manager.setDescription(room_id,j_data['description'])
+    if 'owner' in j_data:
+        room_manager.setRoomOwner(room_id,j_data['owner'])
+    if 'users' in j_data:
+        room_manager.setRoomUsers(room_id,j_data['users'])
+
+    return json.dumps({"response_code":1})
+
+@app.route('/search',methods = ['POST'])
+def room_search():
+
+    data = request.data
+    j_data = yaml.safe_load(data)
     if 'room_id' in j_data:
         room_id = j_data['room_id']
         return room_manager.getRoombyroomid(room_id)
@@ -215,4 +244,4 @@ def myprint():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',debug=True)
+    app.run(host='0.0.0.0',port=80,debug=True)
