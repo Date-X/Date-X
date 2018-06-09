@@ -41,11 +41,11 @@
   </view>
   <view>
     <view wx:for="{{msg}}" class="msg">
-      <view class="myword" wx:if="{{item.user == open_id}}" style="text-align:right">
-        {{item.content}}<image src='./../../images/KoG.jpg'></image>
+      <view class="myword" wx:if="{{item.user.id == open_id}}" style="text-align:right">
+        {{item.content}}<image src='{{item.user.avatar}}'></image>
       </view>
       <view class="others" wx:else style="text-align:left">
-        <image src='./../../images/LOL.jpg'></image>{{item.content}}
+        <image src='{{item.user.avatar}}'></image>{{item.content}}
       </view>
     </view>
   </view>
