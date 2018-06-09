@@ -41,9 +41,17 @@
 .outer{
   display: flex;
   flex-direction: row;
+  position: fixed;
+  top: 0%;
+  width:100%;
+  padding-left: 0rpx;
+  padding-right: 0rpx;
 }
 
-
+page{
+  margin: 0;
+  padding: 0;
+}
 
 .tab {  
   padding: 20rpx 20rpx 40rpx 50rpx;  
@@ -212,10 +220,20 @@
 
 .myword{
   display: flex;
+  align-items: center;
   flex-direction: row;
+  justify-content: flex-end;
 }
 
 .others{
   display: flex;
+  align-items: center;
   flex-direction: row;
+  justify-content: flex-start;
+}
+
+.msg image{
+  width: 50rpx;
+  height: 50rpx;
+  border-radius: 50%;
 }

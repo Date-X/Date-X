@@ -1,7 +1,6 @@
 {
   "pages":[
     "pages/index/index",
-    "pages/register/register",
     "pages/profile/profile",
     "pages/search/search",
     "pages/add/add",
@@ -9,7 +8,8 @@
     "pages/roomlist/roomlist",
     "pages/complete/complete",
     "pages/myroom/myroom",
-    "pages/roomchat/roomchat"
+    "pages/roomchat/roomchat",
+    "pages/usrinfo/usrinfo"
   ],
   "window": {
     "backgroundTextStyle": "light",

@@ -105,7 +105,7 @@ Page({
   tap_it: function (event) {
     var that = this
     wx.request({
-      url: 'http://www.eximple.me:5000/room/send_message',
+      url: app.globalData.serverurl+'/room/send_message',
       data: {
         room_id: parseInt(that.data.room_id),
         open_id: app.globalData.openid,
@@ -125,13 +125,14 @@ Page({
           'str': 'fail'
         })
       }
-    })
+    });
+    that.data.input_msg=''
   },
 
   clear_message: function (event) {
     var that = this
     wx.request({
-      url: 'http://www.eximple.me:5000/room/clear_message',
+      url: app.globalData.serverurl+'/room/clear_message',
       data: {
         room_id: parseInt(that.data.room_id),
       },
@@ -155,7 +156,7 @@ Page({
   join: function(){
     var that = this
     wx.request({
-      url: 'http://www.eximple.me:5000/usr/join',
+      url: app.globalData.serverurl+'/usr/join',
       data: {
         room_id: parseInt(that.data.room_id),
         open_id: app.globalData.openid,
@@ -188,10 +189,14 @@ Page({
     if(that.data.input_msg.length == 0)
     {
       console.log('empty input');
+      wx.showToast({
+        title: '输入不能为空',
+        duration: 500,
+      })
       return;
     }
     wx.request({
-      url: 'http://www.eximple.me:5000/room/send_message',
+      url: app.globalData.serverurl+'/room/send_message',
       data: {
         room_id: parseInt(that.data.room_id),
         open_id: that.data.open_id,
@@ -203,7 +208,8 @@ Page({
         console.log("send successfully");
         console.log(res.data)
         that.setData({
-          'str': res.data
+          'str': res.data,
+          input_msg: ''
         })
       },
       fail: function () {
@@ -217,7 +223,7 @@ Page({
   delete_room: function () {
     var that = this
     wx.request({
-      url: 'http://www.eximple.me:5000/usr/join',
+      url: app.globalData.serverurl+'/usr/join',
       data: {
         room_id: parseInt(that.data.room_id),
         open_id: app.globalData.openid,
@@ -242,7 +248,7 @@ Page({
     var that = this;
     var openid = event.currentTarget.dataset.uid
     wx.request({
-      url: 'http://www.eximple.me:5000/room/kick',
+      url: app.globalData.serverurl+'/room/kick',
       data: {
         room_id: parseInt(that.data.room_id),
         open_id: openid
@@ -269,7 +275,7 @@ Page({
   quit: function () {
     var that = this;
     wx.request({
-      url: 'http://www.eximple.me:5000/room/kick',
+      url: app.globalData.serverurl+'/room/kick',
       data: {
         room_id: parseInt(that.data.room_id),
         open_id: app.globalData.openid,
@@ -296,7 +302,7 @@ Page({
   fetchData: function () {
     var that = this;
     wx.request({
-      url: 'http://www.eximple.me:5000/search',
+      url: app.globalData.serverurl+'/search',
       data: {
         room_id: parseInt(that.data.room_id)
       },

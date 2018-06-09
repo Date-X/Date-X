@@ -1,5 +1,5 @@
 //获取应用实例
-const app = getApp();
+const app = getApp()
 
 Page({
   data: {
@@ -19,11 +19,10 @@ Page({
       that.setData({
         open_id: app.globalData.openid,
       })
-    }
-    that.auth();
+    }    
   },
 
-  onShow(){
+  onShow() {
     this.fetchData();
   },
 
@@ -35,23 +34,6 @@ Page({
 
   fetchData: function(){
     var that = this;
-    try {
-      wx.getStorage({
-        key: 'usrinfo',
-        success: function (res) {
-          console.log(res.data)
-          that.setData({
-            userInfo: res.data
-          })
-        },
-        fail: function () {
-          console.log('fail')
-        },
-      })
-    } 
-    catch (e) {
-      console.log('exception.');
-    }
     wx.request({
       url: app.globalData.serverurl+'/usr/info',
       data: {
@@ -75,26 +57,6 @@ Page({
       fail: function () {
         console.log('fail');
       }
-    })
-  },
-
-  auth: function(){
-    var that = this;
-    wx.request({
-      url: "https://iaaa.pku.edu.cn/iaaa/oauthlogin.do",
-      data: {
-        appid:'portal',
-        userName:'1500012846',
-        password: 'sbn980110',
-        redirUrl: 'portal.pku.edu.cn/portal2013/login.jsp/../ssoLogin.do'
-      },
-      method: 'POST',
-      dataType: 'json',
-      success: function (res) {
-        console.log('success')
-        console.log(res.data);
-
-      },
     })
   },
 })

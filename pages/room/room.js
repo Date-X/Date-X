@@ -27,7 +27,7 @@ Page({
     console.log(options.room_id);
     this.setData({
       room_id:options.room_id,
-      openid:app.globalData.openid,
+      open_id:app.globalData.openid,
     })
     //this.Countdown();
   },
@@ -81,31 +81,6 @@ Page({
   onShareAppMessage: function () {
   },
 
-  //按钮测试
-  tap_it: function(event){
-    var that = this
-    wx.request({
-      url: 'http://www.eximple.me:5000/room/send_message',
-      data: {
-        room_id:2,
-        open_id:app.globalData.openid,
-        message:'test',
-      },
-      dataType: 'form',
-      method: 'POST',
-      success: function(res){
-        that.setData({
-          'str': res.data
-        })
-      },
-      fail: function(){
-        that.setData({
-          'str':'fail'
-        })
-      }
-    })
-  },
-
   //启动定时器
   f: function(){
     Countdown();
@@ -115,8 +90,8 @@ Page({
   Countdown: function() {
     var that = this;
     timer = setTimeout(function () {
-      console.log("----Countdown----");
-      console.log(that.data.room_id);
+      //console.log("----Countdown----");
+      //console.log(that.data.room_id);
       that.fetchData();
       that.Countdown();
     }, 1000);
@@ -126,7 +101,7 @@ Page({
   tap_it: function (event) {
     var that = this
     wx.request({
-      url: 'http://www.eximple.me:5000/room/send_message',
+      url: app.globalData.serverurl+'/room/send_message',
       data: {
         room_id: parseInt(that.data.room_id),
         open_id: app.globalData.openid,
@@ -152,7 +127,7 @@ Page({
   clear_message: function (event) {
     var that = this
     wx.request({
-      url: 'http://www.eximple.me:5000/room/clear_message',
+      url: app.globalData.serverurl+'/room/clear_message',
       data: {
         room_id: parseInt(that.data.room_id),
       },
@@ -176,7 +151,7 @@ Page({
   join: function () {
     var that = this
     wx.request({
-      url: 'http://www.eximple.me:5000/usr/join',
+      url: app.globalData.serverurl+'/usr/join',
       data: {
         room_id: parseInt(that.data.room_id),
         open_id: app.globalData.openid,
@@ -197,34 +172,11 @@ Page({
     })
   },
 
-  clear_message: function (event) {
-    var that = this
-    wx.request({
-      url: 'http://www.eximple.me:5000/room/clear_message',
-      data: {
-        room_id: parseInt(that.data.room_id),
-      },
-      dataType: 'json',
-      method: 'POST',
-      success: function (res) {
-        console.log("clear successfully");
-        console.log(res.data)
-        that.setData({
-          'str': res.data
-        })
-      },
-      fail: function () {
-        that.setData({
-          'str': 'fail'
-        })
-      }
-    })
-  },
 
   delete_room: function () {
     var that = this
     wx.request({
-      url: 'http://www.eximple.me:5000/usr/join',
+      url: app.globalData.serverurl+'/usr/join',
       data: {
         room_id: parseInt(that.data.room_id),
         open_id: app.globalData.openid,
@@ -249,7 +201,7 @@ Page({
     var that = this;
     var openid = event.currentTarget.dataset.uid
     wx.request({
-      url: 'http://www.eximple.me:5000/room/kick',
+      url: app.globalData.serverurl+'/room/kick',
       data: {
         room_id: parseInt(that.data.room_id),
         open_id: openid
@@ -276,7 +228,7 @@ Page({
   quit: function () {
     var that = this;
     wx.request({
-      url: 'http://www.eximple.me:5000/room/kick',
+      url: app.globalData.serverurl+'/room/kick',
       data: {
         room_id: parseInt(that.data.room_id),
         open_id: app.globalData.openid,
@@ -308,7 +260,7 @@ Page({
   fetchData: function(){
     var that = this;
     wx.request({
-      url: 'http://www.eximple.me:5000/search',
+      url: app.globalData.serverurl+'/search',
       data: {
         room_id: parseInt(that.data.room_id)
       },
@@ -340,6 +292,7 @@ Page({
               break;
             }
           }
+          //console.log(in_room);
           that.setData({
             room_id: res.data[1].room_id,
             name: res.data[1].name,
@@ -354,35 +307,18 @@ Page({
         }
         console.log('success')
       },
-      success: function (res) {
-        console.log('success')
-        console.log(res.data);
-        if (res.data.response_code != 0) {
-          var users = res.data[1].users;
-          var in_room = false;
-          for (var i = 0; i < users.length; i++) {
-            if (that.data.openid == users[i].id) {
-              in_room = true;
-              break;
-            }
-          }
-          that.setData({
-            room_id: res.data[1].room_id,
-            name: res.data[1].name,
-            section: res.data[1].area,
-            description: res.data[1].description,
-            room_owner: res.data[1].owner,
-            users: res.data[1].users,
-            msg: res.data[1].messages,
-            in_room: in_room,
-          });
-        }
-        console.log('---------')
-      },
       fail: function () {
         console.log('fail');
       }
     });
   },
+
+  checkinfo: function(event){
+    var that = this;
+    console.log('../usrinfo/usrinfo?open_id=' + event.currentTarget.dataset.id)
+    wx.navigateTo({
+      url: '../usrinfo/usrinfo?open_id=' + event.currentTarget.dataset.id,
+    })
+  }
 })
 

@@ -29,6 +29,6 @@
 <button wx:if="{{canIUse}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">请为我授权</button>
 <view wx:else>请升级微信版本</view>
 
-<view class="weui-btn-area">  
+<!--<view class="weui-btn-area">  
   <button class="weui-btn" type="primary" form-type="submit" bindtap='check'>检查</button>  
-</view>
+</view>-->

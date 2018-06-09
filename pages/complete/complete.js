@@ -2,7 +2,9 @@ var sex = '0'
 var section = []
 var openid = ''
 var avatarurl = ''
-var name=''
+var name = ''
+
+const app = getApp()
 
 wx.getStorage({
   key: 'openid',
@@ -17,8 +19,8 @@ try{
     key:'usrinfo',
     success: function(res) {
       //console.log(res.data)
-      avatarurl = res.data.avatarUrl;
-      name = res.data.nickName;
+      avatarurl = res.data.avatarUrl
+      name = res.data.nickName
     }
   })
 }catch(e){}
@@ -54,7 +56,7 @@ Page({
     ]
   },
   bindGetUserInfo: function (e) {
-    //console.log(e.detail.userInfo)
+    console.log(e.detail.userInfo)
     wx.setStorage({
       key: 'usrinfo',
       data: e.detail.userInfo,
@@ -83,13 +85,13 @@ Page({
     }
     else {
       wx.request({
-        url: 'http://www.eximple.me:5000/usr/complete',
+        url: app.globalData.serverurl + '/usr/complete',
         data: {
           open_id: openid,
           sex: sex,
           preference: section,
           avatar: avatarurl,
-          name: name,
+          name: name
         },
         method: 'POST',
         header: {
@@ -125,7 +127,7 @@ Page({
     console.log('check_function')
     //console.log(openid)
     wx.request({
-      url: 'http://www.eximple.me:5000/usr/info',
+      url: app.globalData.serverurl+'/usr/info',
       data: {
         open_id: openid,
       },
