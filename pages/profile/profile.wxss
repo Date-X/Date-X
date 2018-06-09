@@ -19,3 +19,15 @@
 
 .flex-wrp {display: flex;}
 .weui-label{width:105px;word-wrap:break-word;word-break:break-all}
+.preference{
+  display: flex;
+  justify-content: center; /* 水平居中 */
+  align-items: center; /*垂直居中*/
+  font-size: 30rpx;
+}
+
+.preference image{
+  width: 40rpx;
+  height: 40rpx;
+  padding: 5rpx;
+}
