@@ -84,7 +84,7 @@ Page({
       hidden:false
     });
     wx.request({
-      url: 'http://www.eximple.me:5000/search',
+      url: app.globalData.serverurl+'/search',
       data: {
         description: that.data.searchtext
       },

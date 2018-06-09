@@ -99,7 +99,7 @@ Page({
   fetchData: function(){
     var that = this;
     wx.request({
-      url: 'http://www.eximple.me:5000/search',
+      url: app.globalData.serverurl+'/search',
       data: {
         section: that.data.section
       },

@@ -1,9 +1,5 @@
 //app.js
 App({
-  globalData: {
-    userInfo: null,
-    openid: '123123123'
-  },
   onLaunch: function () {
     // 登录
     var that = this;
@@ -14,7 +10,7 @@ App({
           //console.log(res.code)
           //发起网络请求
           wx.request({
-            url: 'http://www.eximple.me:5000/login',
+            url: that.globalData.serverurl + '/login',
             data: {
               code: res.code
             },
@@ -63,6 +59,7 @@ App({
   },
   globalData: {
     userInfo: null,
-    openid: "o9Qsr5De5nW3C2XK_tdoMZKsw-kc"
+    openid: "o9Qsr5De5nW3C2XK_tdoMZKsw-kc",
+    serverurl: 'http://www.eximple.me'
   }
 })

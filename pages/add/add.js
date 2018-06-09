@@ -25,7 +25,7 @@ Page({
   },
   formSubmit: function (e) {
     wx.request({
-      url: 'http://www.eximple.me:5000/room/add', //仅为示例，并非真实的接口地址
+      url: app.globalData.serverurl +'/room/add', //仅为示例，并非真实的接口地址
       
       data: {
         name: e.detail.value["name"],
