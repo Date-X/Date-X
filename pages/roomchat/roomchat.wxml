@@ -108,7 +108,7 @@
 </view>  
 -->
 
-</view>
+
 
 <view wx:if='{{in_room}}' class='chat'>
     <view class="weui-search-bar">
