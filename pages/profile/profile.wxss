@@ -1,6 +1,7 @@
 @import "../../style/weui.wxss";
 
 .userinfo {
+  margin-top:20%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -21,7 +22,7 @@
 .weui-label{width:105px;word-wrap:break-word;word-break:break-all}
 .preference{
   display: flex;
-  justify-content: center; /* 水平居中 */
+  justify-content: baseline; 
   align-items: center; /*垂直居中*/
   font-size: 30rpx;
 }
