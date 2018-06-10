@@ -13,7 +13,7 @@
   ],
   "window": {
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#fff",
+    "navigationBarBackgroundColor": "#8968CD",
     "navigationBarTitleText": "Date-X",
     "navigationBarTextStyle": "black"
   },
@@ -49,6 +49,8 @@
         "iconPath": "images/profile.png",
         "selectedIconPath": "images/profile_selected.png"
       }
-    ]
+    ],
+    "backgroundColor": "#f6f6f6",
+    "selectedColor": "lightgreen"
   }
 }

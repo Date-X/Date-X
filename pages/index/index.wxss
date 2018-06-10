@@ -34,6 +34,7 @@
 .index-menu-item image{
 	width: 110rpx;
 	height: 110rpx;
+  border-radius: 50%;
 }
 .index-menu-item text{
 	display: block;

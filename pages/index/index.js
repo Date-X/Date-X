@@ -32,9 +32,10 @@ Page({
         }
       ],
       imgUrls:[
-        '../../images/swiper_pic1.png',
-        '../../images/swiper_pic1.png',
-        '../../images/swiper_pic1.png',
+        
+        'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+        '../../images/banner.jpg',
+        '../../images/banner2.jpg',
         '../../images/swiper_pic1.png'
       ]
     })
