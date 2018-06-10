@@ -20,3 +20,29 @@
   color: gainsboro;
   font-size: 0.7em;
 }
+
+.search-bar{
+  margin-top: 1%;
+  width:99%;
+  height: 80rpx;
+	border-radius:80rpx;
+	border:2px solid #324B4E;
+	background:#F9F0DA;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.search-input{
+  margin-left: 20rpx;
+}
+
+image{
+  width: 70rpx;
+  height: 70rpx;
+}
+
+.search-btn{
+  margin-right: 30rpx;
+}

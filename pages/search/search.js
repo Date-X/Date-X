@@ -1,4 +1,5 @@
 // pages/search/search.js
+var app=getApp()
 Page({
 
   /**
