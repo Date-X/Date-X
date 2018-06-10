@@ -1,4 +1,5 @@
 // pages/search/search.js
+const app = getApp()
 Page({
 
   /**
