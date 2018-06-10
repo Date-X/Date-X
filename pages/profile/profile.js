@@ -19,7 +19,8 @@ Page({
       that.setData({
         open_id: app.globalData.openid,
       })
-    }    
+    }
+    that.auth();
   },
 
   onShow(){
@@ -51,7 +52,7 @@ Page({
       console.log('exception.');
     }
     wx.request({
-      url: 'http://www.eximple.me:5000/usr/info',
+      url: app.globalData.serverurl+'/usr/info',
       data: {
         open_id: that.data.open_id,
       },
@@ -73,6 +74,26 @@ Page({
       fail: function () {
         console.log('fail');
       }
+    })
+  },
+
+  auth: function(){
+    var that = this;
+    wx.request({
+      url: "https://iaaa.pku.edu.cn/iaaa/oauthlogin.do",
+      data: {
+        appid:'portal',
+        userName:'1500012846',
+        password: 'sbn980110',
+        redirUrl: 'portal.pku.edu.cn/portal2013/login.jsp/../ssoLogin.do'
+      },
+      method: 'POST',
+      dataType: 'json',
+      success: function (res) {
+        console.log('success')
+        console.log(res.data);
+
+      },
     })
   },
 })

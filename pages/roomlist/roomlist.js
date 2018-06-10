@@ -99,7 +99,7 @@ Page({
   fetchData: function(){
     var that = this;
     wx.request({
-      url: 'http://www.eximple.me:5000/search',
+      url: app.globalData.serverurl+'/search',
       data: {
         section: that.data.section
       },
@@ -109,8 +109,8 @@ Page({
         'Content-Type': 'application/json'
       },
       success: function (res) {
-        console.log('success')
-        console.log(res.data);
+        //console.log('success')
+        //console.log(res.data);
         if(res.data.response_code != 0)
         {
           that.setData({
@@ -122,7 +122,8 @@ Page({
             hidden: true
           })
         }, 1000);
-        console.log('success')
+        //console.log('success')
+        wx.stopPullDownRefresh();
       },
       fail: function () {
         console.log('fail');

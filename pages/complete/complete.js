@@ -4,6 +4,8 @@ var openid = ''
 var avatarurl = ''
 var name = ''
 
+const app = getApp()
+
 wx.getStorage({
   key: 'openid',
   success: function (res) {
@@ -83,7 +85,7 @@ Page({
     }
     else {
       wx.request({
-        url: 'http://www.eximple.me:5000/usr/complete',
+        url: app.globalData.serverurl + '/usr/complete',
         data: {
           open_id: openid,
           sex: sex,
@@ -125,7 +127,7 @@ Page({
     console.log('check_function')
     //console.log(openid)
     wx.request({
-      url: 'http://www.eximple.me:5000/usr/info',
+      url: app.globalData.serverurl+'/usr/info',
       data: {
         open_id: openid,
       },

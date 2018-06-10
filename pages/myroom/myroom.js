@@ -64,6 +64,7 @@ Page({
       hidden2: false,
     })
     this.fetchData();
+    wx.stopPullDownRefresh();
   },
 
   /**
@@ -93,7 +94,7 @@ Page({
   fetchData: function () {
     var that = this;
     wx.request({
-      url: 'http://www.eximple.me:5000/usr/roomlist1',
+      url: app.globalData.serverurl+'/usr/roomlist1',
       data: {
         open_id: app.globalData.openid
       },
@@ -122,7 +123,7 @@ Page({
     })
 
     wx.request({
-      url: 'http://www.eximple.me:5000/usr/roomlist2',
+      url: app.globalData.serverurl+'/usr/roomlist2',
       data: {
         open_id: app.globalData.openid
       },

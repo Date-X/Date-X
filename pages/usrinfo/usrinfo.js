@@ -35,7 +35,7 @@ Page({
   fetchData: function(){
     var that = this;
     wx.request({
-      url: 'http://www.eximple.me:5000/usr/info',
+      url: app.globalData.serverurl+'/usr/info',
       data: {
         open_id: that.data.open_id,
       },
