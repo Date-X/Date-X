@@ -5,6 +5,7 @@
   <radio-group class="radio-group" bindchange="radioChange">
     <label class="radio" wx:for="{{sex}}">
       <radio value="{{item.name}}" checked="{{item.checked}}"/>{{item.value}}
+      <image src="{{item.imgurl}}" class="gender-img"></image>
     </label>
   </radio-group>
 </view>

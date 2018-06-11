@@ -43,6 +43,7 @@ Page({
           that.setData({
             userInfo: res.data
           })
+          //console.log(that.data.userInfo)
         },
         fail: function () {
           console.log('fail')
