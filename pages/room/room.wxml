@@ -25,5 +25,6 @@
   <button wx:else class='enter' bindtap='join'>
   加入房间
   </button>
+  <button wx:if='{{open_id==room_owner.id}}' bindtap='delete_room' type="warn" class="delete-btn">删除房间</button>
 </view>
 
