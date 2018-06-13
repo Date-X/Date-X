@@ -1,5 +1,5 @@
 {
-  "pages":[
+  "pages": [
     "pages/index/index",
     "pages/profile/profile",
     "pages/search/search",
@@ -9,7 +9,8 @@
     "pages/complete/complete",
     "pages/myroom/myroom",
     "pages/roomchat/roomchat",
-    "pages/usrinfo/usrinfo"
+    "pages/usrinfo/usrinfo",
+    "pages/roommodify/roommodify"
   ],
   "window": {
     "backgroundTextStyle": "light",
@@ -20,10 +21,10 @@
   "tabBar": {
     "list": [
       {
-        "pagePath":"pages/index/index",
-        "text":"homepage",
-        "iconPath":"images/home.png",
-        "selectedIconPath":"images/home_selected.png"
+        "pagePath": "pages/index/index",
+        "text": "homepage",
+        "iconPath": "images/home.png",
+        "selectedIconPath": "images/home_selected.png"
       },
       {
         "pagePath": "pages/search/search",
@@ -38,10 +39,10 @@
         "selectedIconPath": "images/add_selected.png"
       },
       {
-        "pagePath":"pages/myroom/myroom",
-        "text":"room",
-          "iconPath": "images/section.png",
-          "selectedIconPath": "images/section_selected.png"
+        "pagePath": "pages/myroom/myroom",
+        "text": "room",
+        "iconPath": "images/section.png",
+        "selectedIconPath": "images/section_selected.png"
       },
       {
         "pagePath": "pages/profile/profile",

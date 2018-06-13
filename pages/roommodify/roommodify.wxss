@@ -1,0 +1,58 @@
+/* pages/add/add.wxss */
+.group{
+	display: block;
+	width: 100%;
+  margin-bottom: 30rpx; 
+}
+.group-header{
+	line-height: 70rpx;
+	display: flex;
+	padding: 0 20rpx;
+	background: #f9f9f9;
+  text-align: center;
+}
+.group-body{
+	background: #fff;
+	border-top: 1rpx solid #ddd;
+	border-bottom: 1rpx solid #ddd;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.input-row{
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  border-bottom: 1rpx solid #ddd;
+  height:90rpx;
+}
+
+.input-label{
+  text-align: center;
+  font-size:40rpx;
+  width:160rpx;
+  margin-left: 30rpx;
+  margin-right: 30rpx;
+  color: gray;
+}
+
+.input-block{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.input-textarea{
+  align-self: center;
+}
+
+textarea{
+  border: 1rpx solid #ddd;
+  margin-bottom: 10rpx; 
+}
+
+button{
+  width: 80%;
+}

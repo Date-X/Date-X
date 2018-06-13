@@ -318,6 +318,12 @@ Page({
     wx.navigateTo({
       url: '../usrinfo/usrinfo?open_id=' + event.currentTarget.dataset.id,
     })
+  },
+
+  modify: function(){
+    wx.navigateTo({
+      url: '../roommodify/roommodify?room_id=' + this.data.room_id,
+    })
   }
 })
 

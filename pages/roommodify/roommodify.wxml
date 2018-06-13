@@ -1,0 +1,37 @@
+<!--pages/add/add.wxml-->
+<form bindsubmit="formSubmit">
+  <view class="group">
+    <view class="group-header">房间信息</view>
+    <view class="group-body"> 	
+      <view class="input-row">
+        <view class="input-label">房间名称</view>
+        <view>
+          <input name="name" type="text" placeholder="{{name}}"></input>
+        </view>
+      </view>
+      <view class="input-row">
+        <view class="input-label">房间分区</view>
+        <picker name="section" bindchange="bindPickerChange" value="{{section_index}}" range="{{section_array}}">
+        <view class="picker">
+          {{section_array[section_index]}}
+        </view>
+        </picker>
+      </view>
+      <view class="input-row">
+        <view class="input-label">房间人数</view>
+        <view>
+          <input name="room_number" type="number" placeholder="{{room_number}}"></input>
+        </view>
+      </view>  
+      <view class="input-block">
+        <view class="input-label">房间描述</view>
+        <view class="input-textarea">
+          <textarea name="description" placeholder="{{description}}" maxlength="300"></textarea>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="btn-submit">
+		<button type="primary" formType="submit">确认</button>
+	</view>
+</form>
