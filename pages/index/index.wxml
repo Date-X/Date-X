@@ -15,4 +15,14 @@
     <text>{{item.text}}</text>
     </navigator>
   </view>
+  <view class="rec-box">
+    <view class="label">为你推荐</view>
+    <view wx:for="{{roomlist}}" wx:key="{{item.room_id}}" class="room-item">
+      <button class = 'room' bindtap='enter_room' data-room_id="{{item.room_id}}" style=" background-image: url('../../images/bg1.jpg')">
+      <text style='height:20rpx'>{{item.name}}</text>
+      <view class='description' style=" background-image: url('../../images/bg1.jpg')"><text>{{item.description}}</text></view>
+      <view class='numbers'>人数：{{item.users.length}}</view>
+      </button>
+    </view>
+  </view>
 </view>
