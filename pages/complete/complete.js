@@ -29,8 +29,8 @@ Page({
   data: {
     canIUse: wx.canIUse('button.open-type.getUserInfo'),
     sex: [
-      { name: '0', value: '女', checked: 'true' },
-      { name: '1', value: '男' }
+      { name: '0', value: '女', imgurl:'../../images/female.png', checked: 'true' },
+      { name: '1', value: '男', imgurl: '../../images/male.png' }
     ],
     sectionicons: [
       {

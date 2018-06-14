@@ -1,44 +1,77 @@
 /* pages/complete/complete.wxss */
+page{
+  background-color: #EAEAEA;
+}
 .title {
   width: 250px;
   text-align: center;
   font-size: 30px;
   margin: 0 auto;
-  margin-bottom: 30px;
+  margin-bottom: 30rpx;
+  border-bottom: solid 1rpx;
 }
 
 .sex-container {
   height: 100px;
 }
 
+.gender-img{
+  height: 35rpx;
+  width: 35rpx;
+  margin-left: 2rpx;
+}
+
 .pre-container {
-  height: 330px;
+  display: flex;
+  flex-direction: column;
 }
 
 .sex,.pre {
   margin-left: 60px
 }
 
-.radio-group, .checkbox-group {
-  width: 80%;
+.radio-group  {
+  width: 60%;
   margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .radio {
-  margin-left: 70px;
+  width: 180rpx;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
 
-.img {
-  height: 100px;
-  width: 110px;
+
+.checkbox-group{
+  width: 80%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-around;
 }
 
 .section {
-  margin-left: 20px;
-  width: 140px;
-  float: left
+  height: 250rpx;
+  width: 250rpx;
+  flex: auto;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10rpx;
+}
+
+.img{
+  height: 200rpx;
+  width: 200rpx;
+  border-radius: 50%;
 }
 
 button {
-  width:150px;
+  width:250rpx;
+  margin-top:35rpx;
 }

@@ -2,7 +2,6 @@ var timer;
 const app = getApp();
 
 Page({
-
   /**
    * 页面的初始数据
    */
@@ -175,24 +174,42 @@ Page({
 
   delete_room: function () {
     var that = this
-    wx.request({
-      url: app.globalData.serverurl+'/usr/join',
-      data: {
-        room_id: parseInt(that.data.room_id),
-        open_id: app.globalData.openid,
-      },
-      dataType: 'json',
-      method: 'POST',
+    wx.showModal({
+      title: '确认删除？',
+      content: '您确定要删除这个房间吗？',
       success: function (res) {
-        console.log('delete success');
-        that.setData({
-          'str': res.data
-        })
-      },
-      fail: function () {
-        that.setData({
-          'str': 'fail'
-        })
+        if (res.confirm) {
+          wx.request({
+            url: app.globalData.serverurl + '/room/delete',
+            data: {
+              room_id: parseInt(that.data.room_id)
+            },
+            dataType: 'json',
+            method: 'POST',
+            success: function (res) {
+              console.log('delete success');
+              that.setData({
+                'str': res.data
+              })
+              wx.showToast({
+                title: '删除成功',
+                icon: 'success',
+                duration:2000
+              })
+              wx.switchTab({
+                url: '../myroom/myroom',
+              })
+            },
+            fail: function () {
+              that.setData({
+                'str': 'fail'
+              })
+            }
+          })
+        } 
+        else if (res.cancel) {
+          //console.log('用户点击取消')
+        }
       }
     })
   },
@@ -318,6 +335,12 @@ Page({
     console.log('../usrinfo/usrinfo?open_id=' + event.currentTarget.dataset.id)
     wx.navigateTo({
       url: '../usrinfo/usrinfo?open_id=' + event.currentTarget.dataset.id,
+    })
+  },
+
+  modify: function(){
+    wx.navigateTo({
+      url: '../roommodify/roommodify?room_id=' + this.data.room_id,
     })
   }
 })

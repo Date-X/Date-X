@@ -6,7 +6,7 @@
       <view class="input-row">
         <view class="input-label">房间名称</view>
         <view>
-          <input name="name" type="text" placeholder="请输入房间名称"></input>
+          <input name="name" type="text" placeholder="{{name}}"></input>
         </view>
       </view>
       <view class="input-row">
@@ -20,18 +20,18 @@
       <view class="input-row">
         <view class="input-label">房间人数</view>
         <view>
-          <input name="room_number" type="number" placeholder="请输入房间人数"></input>
+          <input name="room_number" type="number" placeholder="{{room_number}}"></input>
         </view>
       </view>  
       <view class="input-block">
         <view class="input-label">房间描述</view>
         <view class="input-textarea">
-          <textarea name="description" placeholder="你开房要干什么！" maxlength="300"></textarea>
+          <textarea name="description" placeholder="{{description}}" maxlength="300"></textarea>
         </view>
       </view>
     </view>
   </view>
   <view class="btn-submit">
-		<button type="primary" formType="submit">创建房间</button>
+		<button type="primary" formType="submit">确认</button>
 	</view>
 </form>
