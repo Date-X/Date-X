@@ -26,7 +26,7 @@
 </button>
 <text>{{str}}</text>
 -->
-<view class='body' style=" background-image: url('../../images/bg1.jpg'); padding:0; margin: 0;">
+<scroll-view class='body' scroll-y='true' scroll-top='true' style=" background-image: url('../../images/yellow1.jpg'); padding:0; margin: 0;">
   <view class='outer'>
     <view class='avatar'>
       <view wx:for='{{users}}' style='width:80rpx height:80rpx'>
@@ -51,13 +51,12 @@
   </view>
   <view style="height:200rpx;">
   </view>
-</view>
+</scroll-view>
 
 <view wx:if='{{in_room}}' class='chat'>
-  <view class="weui-search-bar">
-    <input type="text" maxlength="50" placeholder="请输入发送内容" bindinput="input_message" value='{{input_msg}}'></input>
-    <button class="search-btn" bindtap="send_msg">发送</button>
-  </view>     
+  <input type="text" maxlength="50" placeholder="请输入发送内容" bindinput="input_message" class="chat_input" value="{{input_msg}}"></input>
+    <!--button class="search-btn" bindtap="submitSearch" wx:if="{{showsearch}}">搜索</button-->
+    <image src="../../images/send.png" class="chat_btn" bindtap="send_msg" wx:if="{{showbutton}}"></image>     
 </view>
 <view wx:else>
   <button bindtap='join' class='bottom'>
@@ -103,5 +102,3 @@
   <image bindtap="upimg1" class='jia_img' src='../../../images/jia_img.png'></image>  
 </view>  
   -->
-
-

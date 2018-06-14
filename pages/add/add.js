@@ -1,12 +1,12 @@
 // pages/add/add.js
 const app = getApp()
-var openid = ''
+var open_id = ''
 //get openid
 wx.getStorage({
   key: 'openid',
   success: function (res) {
     //console.log(res.data)
-    openid = res.data
+    open_id = res.data
   }
 })
 
@@ -33,7 +33,7 @@ Page({
         room_number: e.detail.value["room_number"],
         description: e.detail.value["description"],
         //room_owner_id: 0
-        room_owner_id: openid
+        room_owner_id: open_id
       },
       method:'POST',
       header: {

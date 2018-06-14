@@ -3,6 +3,8 @@
     <block>
       <image class="userinfo-avatar" src="{{user.avatar}}" background-size="cover"></image>
       <text class="userinfo-nickname">{{user.name}}</text>
+      <image wx:if="{{userInfo.gender}}" src="../../images/male.png" class="userinfo-gender"></image>
+      <image wx:else src="../../images/female.png" class="userinfo-gender"></image>
     </block>
   </view>
   <view class="flex-wrp" style="flex-direction:column;">
@@ -22,7 +24,7 @@
       </view>
     </view>
     <view class="weui-cell">
-      <button class="flex-item weui-label" bindtap='click'>修改</button>
+      <button class="flex-item weui-label" type='primary' bindtap='click'>修改</button>
     </view>
   </view>
 </view>

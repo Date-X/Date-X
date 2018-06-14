@@ -6,7 +6,7 @@
   margin: 0px;
   background-size: cover;
   background-repeat: repeat-y;
-  height: 1175rpx;
+  height: 1165rpx;
 }
 .name{
   font-size:1.2em;
@@ -114,7 +114,18 @@
 .enter{
   opacity:0.7;
   position: fixed;
-  bottom:0%;
+  bottom:10%;
   width: 95%;
+}
+
+.delete-btn{
+  opacity:0.7;
+  position: fixed;
+  bottom:1%;
+  width: 95%;
+}
+
+.participant{
+  height:300rpx;
 }
 

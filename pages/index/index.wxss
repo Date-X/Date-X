@@ -4,6 +4,7 @@
 }
 .index-banner .slide-image{
 	width: 100%;
+  height: 520rpx;
 }
 .wx-swiper-dot text{
 	background: #f00;
@@ -34,10 +35,57 @@
 .index-menu-item image{
 	width: 110rpx;
 	height: 110rpx;
+  border-radius: 50%;
 }
 .index-menu-item text{
 	display: block;
 	font-size: 30rpx;
 	line-height: 1.4;
 	white-space: nowrap;
+}
+
+.rec-box{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 2rpx solid lightgray;
+  border-radius: 10rpx;
+  width: 95%;
+}
+
+.room-item{
+  width: 95%;
+}
+
+.room{
+  background-color: white;
+  font-size: 0.7em;
+  font-weight: 700;
+  height: 220rpx;
+  margin:5rpx;
+}
+
+.description{
+  width:100%;
+  height:100rpx;
+  border-style: double double double double;
+  border-radius:5px;
+  font-weight: 500;
+  font-size: 0.9em;
+  text-align: left;
+}
+.description text{
+  display: -webkit-box;
+  font-size:0.9em;
+  line-height: 30rpx;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp:3;
+  overflow: hidden;
+  text-overflow:ellipsis;
+}
+.numbers{
+  text-align: left;
+  color: gainsboro;
+  font-size: 0.7em;
 }

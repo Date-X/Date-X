@@ -1,5 +1,5 @@
 //获取应用实例
-const app = getApp()
+const app = getApp();
 
 Page({
   data: {
@@ -39,16 +39,18 @@ Page({
       wx.getStorage({
         key: 'usrinfo',
         success: function (res) {
-          //console.log(res.data)
+          console.log(res.data)
           that.setData({
             userInfo: res.data
           })
+          //console.log(that.data.userInfo)
         },
         fail: function () {
           console.log('fail')
         },
       })
-    } catch (e) {
+    } 
+    catch (e) {
       console.log('exception.');
     }
     wx.request({

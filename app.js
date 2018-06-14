@@ -56,6 +56,17 @@ App({
         }
       }
     })
+
+    wx.getSystemInfo({
+      success: function(res) {
+        console.log(res);
+        that.globalData.WindowHeight = res.windowHeight;
+        that.globalData.WindowWidth = res.windowWidth;
+      },
+      fail: function(){
+        console.log('get systemInfo failed');
+      }
+    })
   },
   globalData: {
     userInfo: null,

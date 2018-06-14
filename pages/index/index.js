@@ -4,7 +4,8 @@ const app = getApp()
 Page({
   data: {
     indexmenu:[],
-    imgUrls:[]
+    imgUrls:[],
+    roomlist:[]
   },
   onLoad: function () {
     //生命周期函数--监听页面加载
@@ -32,12 +33,14 @@ Page({
         }
       ],
       imgUrls:[
-        '../../images/swiper_pic1.png',
-        '../../images/swiper_pic1.png',
-        '../../images/swiper_pic1.png',
+        
+        'http://img06.tooopen.com/images/20160818/tooopen_sy_175866434296.jpg',
+        '../../images/banner.jpg',
+        '../../images/banner2.jpg',
         '../../images/swiper_pic1.png'
       ]
     })
+    this.fetchData()
   },
     changeRoute:function(url){
     wx.navigateTo({
@@ -67,5 +70,39 @@ Page({
   onReachBottom:function(){
     //页面上拉触底事件的处理函数
     // console.log('onReachBottom');
+  },
+  enter_room: function (event) {
+    console.log(event);
+    console.log(event.currentTarget.dataset.room_id)
+
+    wx.navigateTo({
+      url: '../roomchat/roomchat?room_id=' + event.currentTarget.dataset.room_id,
+    });
+  },
+  fetchData: function () {
+    var that = this;
+    wx.request({
+      url: app.globalData.serverurl + '/recommend',
+      data: {
+        open_id: app.globalData.openid
+      },
+      method: 'POST',
+      dataType: 'json',
+      header: {
+        'Content-Type': 'application/json'
+      },
+      success: function (res) {
+        console.log('success')
+        console.log(res.data);
+        if (res.data.response_code != 0) {
+          that.setData({
+            roomlist: res.data[1]
+          });
+        }
+      },
+      fail: function () {
+        console.log('fail');
+      }
+    })
   }
 })

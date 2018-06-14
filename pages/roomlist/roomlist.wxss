@@ -32,3 +32,12 @@
   color: gainsboro;
   font-size: 0.7em;
 }
+
+.label{
+  text-align: center;
+  border: 2rpx solid lightgray;
+  border-radius: 10rpx;
+  width: 98%;
+  margin: 0 auto;
+  background-color: ivory;
+}

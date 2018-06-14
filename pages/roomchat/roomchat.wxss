@@ -26,9 +26,20 @@
 .chat{
   position: fixed;
   bottom: 0%;
-  width:100%;
+
   padding-left: 0rpx;
   padding-right: 0rpx;
+
+
+  width:99%;
+  height: 80rpx;
+	border-radius:80rpx;
+	border:2px solid #324B4E;
+	background: ivory;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 }
 .enter{
   margin: 0rpx;
@@ -236,4 +247,12 @@ page{
   width: 50rpx;
   height: 50rpx;
   border-radius: 50%;
+}
+.chat_input{
+  margin-left: 20rpx;
+}
+.chat_btn{
+  margin-right: 30rpx;
+  height: 50rpx;
+  width:50rpx;
 }
