@@ -1,5 +1,5 @@
 <!--index.wxml-->
-<view class="container">
+<view class="container" style='background-color: lightyellow'>
   <swiper class="index-banner" indicator-dots="{{true}}"
     autoplay="{{true}}" interval="{{4000}}" duration="{{1000}}">
     <block wx:for="{{imgUrls}}" wx:key="*this">
@@ -9,13 +9,13 @@
       </swiper-item>
     </block>
   </swiper>
-  <view class="index-menu">
+  <view class="index-menu" style='background-color: lightyellow'>
     <navigator class="index-menu-item" wx:for="{{indexmenu}}" wx:key="{{item.url}}" url="{{item.url}}">
     <image src="{{item.icon}}"></image>
     <text>{{item.text}}</text>
     </navigator>
   </view>
-  <view class="rec-box">
+  <view class="rec-box" style='background-color:ivory'>
     <view class="label">为你推荐</view>
     <view wx:for="{{roomlist}}" wx:key="{{item.room_id}}" class="room-item">
       <button class = 'room' bindtap='enter_room' data-room_id="{{item.room_id}}" style=" background-image: url('../../images/bg1.jpg')">
