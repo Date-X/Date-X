@@ -34,3 +34,6 @@
   text-align: center;
   width: 100%;
 }
+page{
+  background-color: ivory;
+}

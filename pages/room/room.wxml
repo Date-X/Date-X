@@ -1,5 +1,5 @@
 <!--pages/room/room.wxml-->
-<view class='body' style=" background-image: url('../../images/yellow4.jpg')">
+<view class='body' style=" background-image: url('https://wx4.sinaimg.cn/orj360/3d2b0bcdly1fsb5rl294vj20u01hcn4p.jpg')">
   <view class='name'>{{name}}</view>
   <view class='idType'>
     <text class='idType-id'>ID:{{room_id}}</text> <text class='idType-type'>类别：{{section_name}}</text>
