@@ -80,19 +80,16 @@ Page({
   auth: function(){
     var that = this;
     wx.request({
-      url: "https://iaaa.pku.edu.cn/iaaa/oauthlogin.do",
+      url: app.globalData.serverurl + '/auth',
       data: {
-        appid:'portal',
-        userName:'1500012846',
-        password: 'sbn980110',
-        redirUrl: 'portal.pku.edu.cn/portal2013/login.jsp/../ssoLogin.do'
+        student_id:'1500012846',
+        password: '12345678',
       },
       method: 'POST',
       dataType: 'json',
       success: function (res) {
         console.log('success')
         console.log(res.data);
-
       },
     })
   },

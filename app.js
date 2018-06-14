@@ -60,6 +60,6 @@ App({
   globalData: {
     userInfo: null,
     openid: "o9Qsr5De5nW3C2XK_tdoMZKsw-kc",
-    serverurl: 'http://www.eximple.me'
+    serverurl: 'https://www.eximple.me'
   }
 })
