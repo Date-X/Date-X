@@ -1,7 +1,7 @@
 // pages/rooms/rooms.js
 var app = getApp();
 var Util = require('../../utils/util.js');
-
+var section_array = ['其他', '王者荣耀', '吃鸡', '英雄联盟', '狼人杀', '其他'];
 Page({
 
   /**
@@ -19,6 +19,7 @@ Page({
     ],
     roomlist: [],
     section: -1,
+    section_name: '',
     hidden:true
   },
 
@@ -29,7 +30,12 @@ Page({
     console.log(options.id)
     console.log(app.globalData.openid);
     var that = this;
-    this.data.section = options.id;
+    this.setData({
+      section: options.id,
+      section_name: section_array[parseInt(options.id)]
+    })
+    //this.data.section = options.id;
+    //this.data.section_name = section_array[parseInt(this.data.section)];
   },
 
   /**
