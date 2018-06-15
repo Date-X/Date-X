@@ -55,4 +55,8 @@ textarea{
 
 button{
   width: 80%;
+  bottom:0%;
+}
+page{
+  background-color: ivory;
 }

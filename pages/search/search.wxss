@@ -14,6 +14,7 @@
   font-weight: 500;
   font-size: 0.9em;
   text-align: left;
+  overflow: hidden;
 }
 .numbers{
   text-align: left;
@@ -27,7 +28,7 @@
   height: 80rpx;
 	border-radius:80rpx;
 	border:2px solid #324B4E;
-	background: ivory;
+	background: beige;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -45,4 +46,7 @@ image{
 
 .search-btn{
   margin-right: 30rpx;
+}
+page{
+  background-color: ivory;
 }
