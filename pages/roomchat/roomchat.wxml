@@ -53,8 +53,8 @@
   </view>
 </scroll-view>
 
-<view wx:if='{{in_room}}' class='chat'>
-  <input type="text" maxlength="50" placeholder="请输入发送内容" bindinput="input_message" class="chat_input" value="{{input_msg}}"></input>
+<view wx:if='{{in_room}}' class='chat' style='bottom:{{inputHeight}}px'>
+  <input type="text" maxlength="50" placeholder="请输入发送内容" bindinput="input_message" class="chat_input" value="{{input_msg}}" adjust-position="true" bindfocus='handlefocus' bindblur='handleblur' ></input>
     <!--button class="search-btn" bindtap="submitSearch" wx:if="{{showsearch}}">搜索</button-->
     <image src="../../images/send.png" class="chat_btn" bindtap="send_msg" wx:if="{{showbutton}}"></image>     
 </view>

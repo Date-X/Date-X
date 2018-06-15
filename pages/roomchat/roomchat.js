@@ -20,6 +20,7 @@ Page({
     in_room: false,
     input_msg: '',
     showbutton: false,
+    inputHeight:0
   },
 
   /**
@@ -356,4 +357,14 @@ Page({
       }
     });
   },
+  handlefocus: function(event){
+    this.setData({
+      inputHeight: event.detail.height + 42
+    })
+  },
+  handleblur: function(){
+    this.setData({
+      inputHeight: 0 
+    })
+  }
 })
