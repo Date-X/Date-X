@@ -26,7 +26,8 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(options.room_id);
+    console.log(options);
+    console.log(app.globalData);
 
     this.setData({
       room_id: parseInt(options.room_id),
@@ -80,8 +81,28 @@ Page({
   /**
    * 用户点击右上角分享
    */
-  onShareAppMessage: function () {
-  
+  onShareAppMessage: function (res) {
+    if (res.from === 'button') {
+      // 来自页面内转发按钮
+      console.log(res.target)
+    }
+    var that = this;
+    var path = '/pages/roomchat/roomchat?room_id=' + that.data.room_id;
+    var imgurl = '';
+    if (that.data.section == '1')
+      imgurl = '../../images/KoG.jpg';
+    if (that.data.section == '2')
+      imgurl = '../../images/PUBG.jpg';
+    if (that.data.section == '3')
+      imgurl = '../../images/LOL.jpg';
+    if (that.data.section == '4')
+      imgurl = '../../images/wolf.jpg';
+
+    return {
+      title: '快来和我一起玩吧！',
+      path: path,
+      imageUrl: imgurl
+    }
   },
 
   enter_room: function () {
