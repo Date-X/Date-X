@@ -3,7 +3,7 @@
     <block>
       <image class="userinfo-avatar" src="{{user.avatar}}" background-size="cover"></image>
       <text class="userinfo-nickname">{{user.name}}</text>
-      <image wx:if="{{userInfo.gender}}" src="../../images/male.png" class="userinfo-gender"></image>
+      <image wx:if="{{user.sex == '1'}}" src="../../images/male.png" class="userinfo-gender"></image>
       <image wx:else src="../../images/female.png" class="userinfo-gender"></image>
     </block>
   </view>

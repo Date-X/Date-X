@@ -55,6 +55,22 @@ Page({
       }
     ]
   },
+
+  onShow: function(){
+    sex = '0'
+    section = []
+    try {
+      wx.getStorage({
+        key: 'usrinfo',
+        success: function (res) {
+          //console.log(res.data)
+          avatarurl = res.data.avatarUrl
+          name = res.data.nickName
+        }
+      })
+    } catch (e) { }
+  },
+
   bindGetUserInfo: function (e) {
     console.log(e.detail.userInfo)
     wx.setStorage({

@@ -1,16 +1,16 @@
 <!--pages/add/add.wxml-->
 <form bindsubmit="formSubmit">
   <view class="group">
-    <view class="group-header">房间信息</view>
+    <view class="group-header">信息</view>
     <view class="group-body"> 	
       <view class="input-row">
-        <view class="input-label">房间名称</view>
+        <view class="input-label">名称</view>
         <view>
           <input name="name" type="text" placeholder="请输入房间名称"></input>
         </view>
       </view>
       <view class="input-row">
-        <view class="input-label">房间分区</view>
+        <view class="input-label">分区</view>
         <picker name="section" bindchange="bindPickerChange" value="{{section_index}}" range="{{section_array}}">
         <view class="picker">
           {{section_array[section_index]}}
@@ -18,13 +18,13 @@
         </picker>
       </view>
       <view class="input-row">
-        <view class="input-label">房间人数</view>
+        <view class="input-label">人数</view>
         <view>
           <input name="room_number" type="number" placeholder="请输入房间人数"></input>
         </view>
       </view>  
       <view class="input-block">
-        <view class="input-label">房间描述</view>
+        <view class="input-label">描述</view>
         <view class="input-textarea">
           <textarea name="description" placeholder="你开房要干什么！" maxlength="300"></textarea>
         </view>

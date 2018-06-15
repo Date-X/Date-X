@@ -12,12 +12,12 @@
   <view class='person'>
     <text>房主：</text>
     <view class='person-owner'>
-      <image src='{{room_owner.avatar}}' mode="{{aspectFit}}" bindtap='checkinfo' data-id='{{room_owner.id}}'></image> <view>{{room_owner.id}}</view> 
+      <image src='{{room_owner.avatar}}' mode="{{aspectFit}}" bindtap='checkinfo' data-id='{{room_owner.id}}'></image> <view>{{room_owner.name}}</view> 
     </view>
     <text>成员：</text>
     <scroll-view class="participant" scroll-y='true' scroll-top='true'>
     <view class='person-users' scroll-y='true' scroll-top='true' wx:for='{{users}}'>
-      <image src="{{item.avatar}}" mode="{{aspectFit}}" bindtap='checkinfo' data-id='{{item.id}}'></image> <view>{{item.id}}</view> <button wx:if="{{open_id==room_owner.id}}" class='remove' data-uid='{{item.id}}' bindtap='kick'><text>踢人</text></button>
+      <image src="{{item.avatar}}" mode="{{aspectFit}}" bindtap='checkinfo' data-id='{{item.id}}'></image> <view>{{item.name}}</view> <button wx:if="{{open_id==room_owner.id}}" class='remove' data-uid='{{item.id}}' bindtap='kick'><text>踢人</text></button>
     </view>
     </scroll-view>
   </view>
