@@ -41,6 +41,7 @@ class Room_manager(object):
 
         for i,usr in enumerate(res['users']):
             res['users'][i] = self.db.User.find_one({"id":usr})
+        res['owner'] = self.db.User.find_one({"id":res['owner']})
         for i in range(len(res['messages'])):
             res['messages'][i]['user'] = self.db.User.find_one({"id":res['messages'][i]['user']})
 
@@ -150,7 +151,7 @@ class Room_manager(object):
     def getRoomByOwnID(self, usrid):
         cur = self.db.Room.find({"owner": usrid})
         if cur.count() == 0:
-            return dumps({"response_code":0})
+            return dumps({"response_code":1})
 
         cur = list(cur)
         for k,room in enumerate(cur):
@@ -163,7 +164,7 @@ class Room_manager(object):
     def getRoomByUsrID(self, usrid):
         cur = self.db.Room.find({"users": usrid})
         if cur.count() == 0:
-            return dumps({"response_code":0})
+            return dumps({"response_code":1})
 
         cur = list(cur)
         for k,room in enumerate(cur):
@@ -237,7 +238,7 @@ class Room_manager(object):
         return True
 
     def setSubarea(self, room_id, subarea):
-        res = self.db.Room.update_one({"room_id": room_id}, {"$set":{"subarea": subarea}})
+        res = self.db.Room.update_one({"room_id": room_id}, {"$set":{"area": subarea}})
         if res.matched_count is 0:
             print("error: room ", room_id, " does not exist!")
             return False
@@ -254,7 +255,7 @@ class Room_manager(object):
         return False
 
     def setDescription(self, room_id, description):
-        res = self.db.Room.update_one({"room_id": room_id}, {"$set":{"descriptioin": description}})
+        res = self.db.Room.update_one({"room_id": room_id}, {"$set":{"description": description}})
         if res.matched_count is 0:
             print("error: room ", room_id, " does not exist!")
             return False

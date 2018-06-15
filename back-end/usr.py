@@ -31,7 +31,7 @@ class Usr_manager(object):
         res = self.db.User.find_one({'id': usrid})
         if res is not None:
             return dumps([{'response_code':1},res])
-        print("error: usr id ", usrid, " does not exist!")
+        # print("error: usr id ", usrid, " does not exist!")
         return dumps({'response_code':0})
 
     def addUsr(self, id, sex, pre, avatar, name):

@@ -231,6 +231,48 @@ def room_search():
         room_request.setDescription(description)
     return room_manager.searchRoom(room_request)
 
+@app.route('/recommend',methods = ['POST'])
+def room_recommend():
+
+    data = request.data
+    j_data = yaml.safe_load(data)
+
+    open_id = j_data['open_id']
+
+    user = mongo.db.User.find_one({'id': open_id})
+    return room_manager.getRoomBySection(user['pre'][0])
+
+@app.route('/auth',methods = ['POST'])
+def auth():
+
+    data = request.data
+    j_data = yaml.safe_load(data)
+
+    student_id = j_data['student_id']
+    password = j_data['password']
+
+    # url = "https://iaaa.pku.edu.cn/iaaa/oauthlogin.do"
+    #
+    # data = {
+    #  "appid": "blackboard",
+    #  "userName": student_id,
+    #  "password": password,
+    #  "randCode": "",
+    #  "smsCode":"",
+    #  "otpCode":"",
+    #  "redirUrl":"http://course.pku.edu.cn/webapps/bb-sso-bb_bb60/execute/authValidate/campusLogin"
+    # }
+    # result = session_requests.post(url, data = data, headers = dict(referer = url))
+
+    headers = {"User-Agent": "PKURunner/1.1 (iPhone; iOS 10.3.3; Scale/3.00)"}
+    payload = {'appid':'portal','password':password,'userName':student_id,'redirUrl':'portal.pku.edu.cn/portal2013/login.jsp/../ssoLogin.do'}
+    s = requests.post("https://iaaa.pku.edu.cn/iaaa/oauthlogin.do",headers=headers,data=payload)
+    raw_data = json.loads(s.text)
+    #print result.text
+    # json_res = result.json()
+    print(raw_data)
+    return json.dumps(raw_data)
+
 # 不存在的用户会返回False，用于检测用户是否存在
 @app.route('/usr/<usrid>')
 def check_usr_exists(usrid):
@@ -244,4 +286,4 @@ def myprint():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',port=80,debug=True)
+    app.run(host='0.0.0.0',port=443,debug=True,ssl_context=('/etc/letsencrypt/live/eximple.me/fullchain.pem','/etc/letsencrypt/live/eximple.me/privkey.pem'))
