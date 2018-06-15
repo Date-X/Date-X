@@ -41,3 +41,7 @@
   margin: 0 auto;
   background-color: ivory;
 }
+
+page{
+  background-color: ivory;
+}

@@ -26,7 +26,7 @@
 </button>
 <text>{{str}}</text>
 -->
-<scroll-view class='body' scroll-y='true' scroll-top='true' style=" background-image: url('../../images/yellow1.jpg'); padding:0; margin: 0;">
+<scroll-view class='body' scroll-y='true' scroll-top='true' style=" background-image: url('https://wx4.sinaimg.cn/orj360/3d2b0bcdly1fsb5rl294vj20u01hcn4p.jpg'); padding:0; margin: 0;">
   <view class='outer'>
     <view class='avatar'>
       <view wx:for='{{users}}' style='width:80rpx height:80rpx'>
@@ -53,8 +53,8 @@
   </view>
 </scroll-view>
 
-<view wx:if='{{in_room}}' class='chat'>
-  <input type="text" maxlength="50" placeholder="请输入发送内容" bindinput="input_message" class="chat_input" value="{{input_msg}}"></input>
+<view wx:if='{{in_room}}' class='chat' style='bottom:{{inputHeight}}px'>
+  <input type="text" maxlength="50" placeholder="请输入发送内容" bindinput="input_message" class="chat_input" value="{{input_msg}}" adjust-position="true" bindfocus='handlefocus' bindblur='handleblur' ></input>
     <!--button class="search-btn" bindtap="submitSearch" wx:if="{{showsearch}}">搜索</button-->
     <image src="../../images/send.png" class="chat_btn" bindtap="send_msg" wx:if="{{showbutton}}"></image>     
 </view>

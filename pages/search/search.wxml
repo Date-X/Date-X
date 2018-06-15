@@ -7,9 +7,9 @@
 
 <view>
   <view wx:for="{{roomlist}}">
-    <button class = 'true' bindtap='enter_room' data-room_id="{{item.room_id}}" style=" background-image: url('../../images/bg1.jpg')">
+    <button class = 'true' bindtap='enter_room' data-room_id="{{item.room_id}}" style=" background-image: url('https://wx4.sinaimg.cn/orj360/3d2b0bcdly1fsb75y15nuj20u01hc777.jpg')">
       <text style='height:20rpx'>{{item.name}}</text>
-      <view class='description' style=" background-image: url('../../images/bg1.jpg')">{{item.description}}</view>
+      <view class='description' style=" background-image: url('https://wx4.sinaimg.cn/orj360/3d2b0bcdly1fsb75y15nuj20u01hc777.jpg')">{{item.description}}</view>
       <view class='numbers'>人数：{{item.users.length}}</view>
     </button>
   </view>
