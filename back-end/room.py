@@ -38,10 +38,22 @@ class Room_manager(object):
         res = self.db.Room.find_one({"room_id": room_id})
         if res is None:
             return dumps({"response_code": 0})
+
+        for i,usr in enumerate(res['users']):
+            res['users'][i] = self.db.User.find_one({"id":usr})
+        res['owner'] = self.db.User.find_one({"id":res['owner']})
+        for i in range(len(res['messages'])):
+            res['messages'][i]['user'] = self.db.User.find_one({"id":res['messages'][i]['user']})
+
         return dumps([{"response_code": 1}, res])
 
-    def getRoom_id2id(self):
-        return self.room_id2id
+    def joinRoom(self, usr_id, room_id):
+        res = self.db.Room.find_one({"room_id":room_id})
+        if res is None:
+            print("error: room ", room_id, " does not exist!")
+            return dumps({"response_code":0})
+        self.db.Room.update_one({"room_id":room_id},{"$addToSet":{"users":usr_id}})
+        return dumps({"response_code":1})
 
     def deleteRoom(self, room_id):
         res = self.db.Room.find_one({"room_id":room_id})
@@ -87,13 +99,20 @@ class Room_manager(object):
 
         room = self.db.Room
         query = {}
-        # if request.getName() != "":
-        #     query['name'] = request.getName()
+        if request.getName() != "":
+            query['name'] = request.getName()
         if request.getSubarea() != "":
             query['area'] = request.getSubarea()
         if request.getDescription() != "":
-            query['description'] = request.getDescription()
+            query['description'] = {"$regex": ".*" + request.getDescription() + ".*"}
         res = room.find(query)
+
+        cur = [x for x in res]
+        for k,room in enumerate(cur):
+            cur[k]['owner'] = self.db.User.find_one({"id":room['owner']})
+            for i,usr in enumerate(room['users']):
+                room['users'][i] = self.db.User.find_one({"id":usr})
+
         # res = [x['_id'] for x in res]
         # for room in self.rooms:
         #     if request.name != "" and request.name != room.name:
@@ -103,7 +122,7 @@ class Room_manager(object):
         #     if request.room_owner_id != "" and request.room_owner_id != room.room_owner_id:
         #         continue
         #     res.append(room.getId())
-        return dumps([{"response_code": int(res.count() != 0)},[x for x in res]])
+        return dumps([{"response_code": int(res.count() != 0)},cur])
 
     def getName(self, room_id):
         res = self.db.Room.find_one({"room_id": room_id})
@@ -129,16 +148,42 @@ class Room_manager(object):
         return False
 
 
-    def getRoomByID(self, usrid):
-        cur = self.db.Room.find({"usr": {"$all": [usrid]}})
+    def getRoomByOwnID(self, usrid):
+        cur = self.db.Room.find({"owner": usrid})
         if cur.count() == 0:
-            return dumps({"response_code":0})
+            return dumps({"response_code":1})
+
+        cur = list(cur)
+        for k,room in enumerate(cur):
+            cur[k]['owner'] = self.db.User.find_one({"id":room['owner']})
+            for i,usr in enumerate(room['users']):
+                room['users'][i] = self.db.User.find_one({"id":usr})
+
+        return dumps([{"response_code":1},list(cur)])
+
+    def getRoomByUsrID(self, usrid):
+        cur = self.db.Room.find({"users": usrid})
+        if cur.count() == 0:
+            return dumps({"response_code":1})
+
+        cur = list(cur)
+        for k,room in enumerate(cur):
+            cur[k]['owner'] = self.db.User.find_one({"id":room['owner']})
+            for i,usr in enumerate(room['users']):
+                room['users'][i] = self.db.User.find_one({"id":usr})
+
         return dumps([{"response_code":1},list(cur)])
 
     def getRoomBySection(self, sec):
         cur = self.db.Room.find({"area": sec})
         if cur.count() == 0:
             return dumps({"response_code":0})
+
+        cur = list(cur)
+        for k,room in enumerate(cur):
+            cur[k]['owner'] = self.db.User.find_one({"id":room['owner']})
+            for i,usr in enumerate(room['users']):
+                room['users'][i] = self.db.User.find_one({"id":usr})
         return dumps([{"response_code":1},list(cur)])
 
     def getDescription(self, room_id):
@@ -186,14 +231,14 @@ class Room_manager(object):
         return False
 
     def setName(self, room_id, name):
-        res = self.db.Room.update_one({"room_id": room_id},{"name":name})
+        res = self.db.Room.update_one({"room_id": room_id},{"$set":{"name":name}})
         if res.matched_count is 0:
             print("error: room ", room_id, " does not exist!")
             return False
         return True
 
     def setSubarea(self, room_id, subarea):
-        res = self.db.Room.update_one({"room_id": room_id}, {"subarea": subarea})
+        res = self.db.Room.update_one({"room_id": room_id}, {"$set":{"area": subarea}})
         if res.matched_count is 0:
             print("error: room ", room_id, " does not exist!")
             return False
@@ -210,7 +255,7 @@ class Room_manager(object):
         return False
 
     def setDescription(self, room_id, description):
-        res = self.db.Room.update_one({"room_id": room_id}, {"descriptioin": description})
+        res = self.db.Room.update_one({"room_id": room_id}, {"$set":{"description": description}})
         if res.matched_count is 0:
             print("error: room ", room_id, " does not exist!")
             return False
@@ -232,17 +277,21 @@ class Room_manager(object):
         print("error: room ", room_id, " does not exist!")
         return False
 
-    def setRoom_owner(self, room_id, usrid):
-        old_usr = self.db.Room.find_one({"room_id": room_id})['owner']
-        res = self.db.Room.update_one({"room_id": room_id}, {"owner": usrid})
+    def setRoomOwner(self, room_id, usrid):
+        # old_usr = self.db.Room.find_one({"room_id": room_id})['owner']
+        res = self.db.Room.update_one({"room_id": room_id}, {"$set":{"owner": usrid}})
         if res.matched_count is 0:
             print("error: room ", room_id, " does not exist!")
             return False
         return True
-        if room_id in self.room_id2id:
-            return self.rooms[room_id].setRoom_owner(usrid)
-        print("error: room ", room_id, " does not exist!")
-        return False
+
+    def setRoomUsers(self, room_id, usrs):
+        # old_usr = self.db.Room.find_one({"room_id": room_id})['owner']
+        res = self.db.Room.update_one({"room_id": room_id}, {"$set":{"users": usrs}})
+        if res.matched_count is 0:
+            print("error: room ", room_id, " does not exist!")
+            return False
+        return True
 
     def active(self, room_id):
         res = self.db.Room.update_one({"room_id": room_id}, {"active": 1})
@@ -271,3 +320,13 @@ class Room_manager(object):
         if len(res['messages']) == 0:
             return dumps({"response_code": 0})
         return dumps([{"response_code": 1},res['messages']])
+
+    def clearMessage(self,room_id):
+        res = self.db.Room.find_one({"room_id": room_id})
+        if res is None:
+            print("error: room ", room_id, " does not exist!")
+            return dumps({"response_code":0})
+        if len(res['messages']) == 0:
+            return dumps({"response_code": 0})
+        res = self.db.Room.update_one({"room_id": room_id}, {"$set":{"messages":[]}})
+        return dumps({"response_code": 1})

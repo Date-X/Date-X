@@ -25,11 +25,6 @@ def get_openid():
     data = request.data
 
     j_data = yaml.safe_load(data)
-<<<<<<< HEAD
-    
-=======
-
->>>>>>> a73e40fc99e14a6d7bb32c8ac6af8945fbc256ff
     code = j_data['code']
     appid = 'wx88191e14844f68ad'
     secret = 'f8ad952cef6e1266f1f58d107c6eaed4'
@@ -53,10 +48,17 @@ def complete_user():
 
     j_data = yaml.safe_load(data)
 
-    usr_id = data['open_id']
-    sex = data['sex']
-    pre = data['preference']
-    res = usr_manager.setPre(usr_id,pre) and usr_manager.setSex(usr_id,sex)
+    usr_id = j_data['open_id']
+    sex = j_data['sex']
+    pre = j_data['preference']
+    avatar = j_data['avatar']
+    name = j_data['name']
+    db = mongo.db
+    res = db.User.find_one({'id': usr_id})
+    if res is not None:
+        res = usr_manager.setPre(usr_id,pre) and usr_manager.setSex(usr_id,sex) and usr_manager.setAvatar(usr_id,avatar) and usr_manager.setName(usr_id,name)
+    else:
+        res = usr_manager.addUsr(usr_id,sex,pre,avatar,name)
     return json.dumps({'response_code':int(res)})
     # if usr_id in usr_manager.usrid2id:
     #     return str(room_manager.addUsr(room_id, usr_id))
@@ -81,7 +83,27 @@ def room_info1():
     j_data = yaml.safe_load(data)
 
     usr_id = j_data['open_id']
-    return room_manager.getRoomByID(usr_id)
+    return room_manager.getRoomByOwnID(usr_id)
+
+@app.route('/usr/roomlist2',methods = ['POST'])
+def room_info2():
+
+    data = request.data
+
+    j_data = yaml.safe_load(data)
+
+    usr_id = j_data['open_id']
+    return room_manager.getRoomByUsrID(usr_id)
+
+@app.route('/usr/join',methods = ['POST'])
+def room_join():
+    data = request.data
+
+    j_data = yaml.safe_load(data)
+
+    usr_id = j_data['open_id']
+    room_id = j_data['room_id']
+    return room_manager.joinRoom(usr_id,room_id)
 
 @app.route('/room/section',methods = ['POST'])
 def room_sec():
@@ -119,7 +141,7 @@ def room_kick():
     j_data = yaml.safe_load(data)
 
     room_id = j_data['room_id']
-    openid = j_data['openid']
+    openid = j_data['open_id']
 
     return room_manager.deleteByID(room_id,openid)
 
@@ -151,17 +173,45 @@ def room_send_message():
     j_data = yaml.safe_load(data)
 
     room_id = j_data['room_id']
-    openid = j_data['openid']
+    openid = j_data['open_id']
     message = j_data['message']
     return room_manager.addMessage(room_id,openid,message)
 
-@app.route('/search',methods = ['POST'])
-def room_search():
+@app.route('/room/clear_message',methods = ['POST'])
+def room_clear_message():
 
     data = request.data
 
     j_data = yaml.safe_load(data)
 
+    room_id = j_data['room_id']
+    return room_manager.clearMessage(room_id)
+
+@app.route('/room/complete',methods = ['POST'])
+def room_complete():
+
+    data = request.data
+    j_data = yaml.safe_load(data)
+    room_id = j_data['room_id']
+
+    if 'name' in j_data:
+        room_manager.setName(room_id,j_data['name'])
+    if 'section' in j_data:
+        room_manager.setSubarea(room_id,j_data['section'])
+    if 'description' in j_data:
+        room_manager.setDescription(room_id,j_data['description'])
+    if 'owner' in j_data:
+        room_manager.setRoomOwner(room_id,j_data['owner'])
+    if 'users' in j_data:
+        room_manager.setRoomUsers(room_id,j_data['users'])
+
+    return json.dumps({"response_code":1})
+
+@app.route('/search',methods = ['POST'])
+def room_search():
+
+    data = request.data
+    j_data = yaml.safe_load(data)
     if 'room_id' in j_data:
         room_id = j_data['room_id']
         return room_manager.getRoombyroomid(room_id)
@@ -181,111 +231,52 @@ def room_search():
         room_request.setDescription(description)
     return room_manager.searchRoom(room_request)
 
+@app.route('/recommend',methods = ['POST'])
+def room_recommend():
+
+    data = request.data
+    j_data = yaml.safe_load(data)
+
+    open_id = j_data['open_id']
+
+    user = mongo.db.User.find_one({'id': open_id})
+    return room_manager.getRoomBySection(user['pre'][0])
+
+@app.route('/auth',methods = ['POST'])
+def auth():
+
+    data = request.data
+    j_data = yaml.safe_load(data)
+
+    student_id = j_data['student_id']
+    password = j_data['password']
+
+    # url = "https://iaaa.pku.edu.cn/iaaa/oauthlogin.do"
+    #
+    # data = {
+    #  "appid": "blackboard",
+    #  "userName": student_id,
+    #  "password": password,
+    #  "randCode": "",
+    #  "smsCode":"",
+    #  "otpCode":"",
+    #  "redirUrl":"http://course.pku.edu.cn/webapps/bb-sso-bb_bb60/execute/authValidate/campusLogin"
+    # }
+    # result = session_requests.post(url, data = data, headers = dict(referer = url))
+
+    headers = {"User-Agent": "PKURunner/1.1 (iPhone; iOS 10.3.3; Scale/3.00)"}
+    payload = {'appid':'portal','password':password,'userName':student_id,'redirUrl':'portal.pku.edu.cn/portal2013/login.jsp/../ssoLogin.do'}
+    s = requests.post("https://iaaa.pku.edu.cn/iaaa/oauthlogin.do",headers=headers,data=payload)
+    raw_data = json.loads(s.text)
+    #print result.text
+    # json_res = result.json()
+    print(raw_data)
+    return json.dumps(raw_data)
+
 # 不存在的用户会返回False，用于检测用户是否存在
 @app.route('/usr/<usrid>')
 def check_usr_exists(usrid):
     return str(usrid in usr_manager.usrid2id)
-
-
-# 注册成功返回True，错误返回False
-@app.route('/signup', methods=['POST'])
-def sgin_up():
-
-    db = mongo.db
-    if request.method == 'POST':
-        usrid = request.form['usrid']
-        password = request.form['password']
-        return str(usr_manager.addUsr(usrid, password))
-
-
-# 登陆成功返回True，错误返回False
-@app.route('/login', methods=['POST'])
-def login():
-    if request.method == 'POST':
-        usrid = request.form['usrid']
-        password = request.form['password']
-        return str(usr_manager.checkPassword(usrid, password))
-
-
-# GET:不存在的用户返回false，存在返回用户偏好
-# POST:修改用户偏好，成功返回True，失败返回False
-@app.route('/usr/<usrid>/preference', methods=['GET', 'POST'])
-def show_usr_preference(usrid):
-    if request.method == 'GET':
-        return str(usr_manager.getPre(usrid))
-    if request.method == 'POST':
-        pre = request.form['preference']
-        return str(usr_manager.setPre(usrid, pre))
-
-
-# 成功返回房间id，失败返回False
-@app.route('/create', methods = ['POST'])
-def create_room():
-    db = mongo.db
-    if request.method == 'POST':
-        room_owner_id = request.form['usrid']
-        name = request.form['name']     #room name
-        subarea = request.form['subarea']
-        description = request.form['description']
-
-        if room_owner_id in usr_manager.usrid2id:
-            room_request = Room_request()
-            room_request.setRoomowner(room_owner_id)
-            room_request.setName(name)
-            room_request.setSubarea(subarea)
-            room_request.setDescription(description)
-
-            return str(room_manager.addRoombyreq(room_request,db))
-
-
-# 不存在的房间会返回False，用于检测房间是否存在
-@app.route('/room/<room_id>')
-def check_room_exist(room_id):
-    return str(room_id in room_manager.room_id2id)
-
-# GET:返回对应房间号的对应属性，房间号不存在返回False
-# POST:修改对应房间号的对应属性（包括房间名、分区、描述、房间主人）
-@app.route('/room/<room_id>/<profile>', methods=['GET', 'POST'])
-def show_room_profile(room_id, profile):
-    if request.method == 'GET':
-        # if profile == 'id':
-        #     return str(room_manager.getId(room_id))
-        if profile == 'name':
-            return str(room_manager.getName(room_id))
-        if profile == 'subarea':
-            return str(room_manager.getSubarea(room_id))
-        if profile == 'description':
-            return str(room_manager.getDescription(room_id))
-        if profile == 'room_owner_id':
-            return str(room_manager.getRoom_owner(room_id))
-        if profile == 'usrs_id':
-            return str(room_manager.getUsrs(room_id))
-        if profile == 'state':
-            return str(room_manager.getState(room_id))
-
-    if request.method == 'POST':
-        room_owner_id = request.form['usrid']
-        name = request.form['name']     #room name
-        subarea = request.form['subarea']
-        description = request.form['description']
-
-        if name:
-            return str(room_manager.setName(room_id,name))
-        if subarea:
-            return str(room_manager.setSubarea(room_id,subarea))
-        if description:
-            return str(room_manager.setDescription(room_id, description))
-        if room_owner_id:
-            return str(room_manager.setRoom_owner(room_id, room_owner_id))
-
-
-# 向对应房间添加用户
-@app.route('/room/<room_id>/add',methods = ['POST'])
-def add_usr_to_room(room_id):
-    usr_id = request.form['usrid']
-    if usr_id in usr_manager.usrid2id:
-        return str(room_manager.addUsr(room_id, usr_id))
-    return str(False)
 
 @app.route('/print', methods = ['GET'])
 def myprint():
@@ -295,4 +286,4 @@ def myprint():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0',debug=True)
+    app.run(host='0.0.0.0',port=443,debug=True,ssl_context=('/etc/letsencrypt/live/eximple.me/fullchain.pem','/etc/letsencrypt/live/eximple.me/privkey.pem'))

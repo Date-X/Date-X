@@ -2,6 +2,7 @@
 
 from preference import available_pre
 import json
+from bson.json_util import dumps
 '''
 ver 1.1
 连接MongoDB 完成
@@ -29,34 +30,22 @@ class Usr_manager(object):
     def getUsrbyusrid(self, usrid):
         res = self.db.User.find_one({'id': usrid})
         if res is not None:
-            return json.dumps([{'response_code':1},res])
-        print("error: usr id ", usrid, " does not exist!")
-        return json.dumps({'response_code':0})
+            return dumps([{'response_code':1},res])
+        # print("error: usr id ", usrid, " does not exist!")
+        return dumps({'response_code':0})
 
-    def addUsr(self, id, password):
+    def addUsr(self, id, sex, pre, avatar, name):
         # if id in self.usrid2id:
         #     print("error: usr id ", id, " already exists!")
         #     return False
         # self.usrs.append(Usr(id, password))
         user = self.db.User
 
-        self.usrid2id = user.insert_one({"id":id, "password":password, "pre":[]}).inserted_id
+        user.insert_one({"id":id, "sex":sex, "pre":pre, "avatar":avatar, "name": name})
         # self.usrid2id[id] = self.next_id
         # self.next_id += 1
         # print(user.insert_one({"id":id, "password":password}).inserted_id)
         return True
-
-    def printUsrs(self):
-        count = 0
-        cursor = self.db.User.find({})
-        for usr in cursor:
-            # usr = Usr(usr_item['id'], usr_item['password'])
-            # for usr in self.usrs:
-            print("===================Usr ", usr["_id"], "===================")
-            print("id:", usr['id'])
-            print("password:", usr['password'])
-            print("preference:", usr['pre'])
-            # count += 1
 
     #下面这些函数是对usr对应函数的封装，使得所有操作都在usr manager中进行
     def getId(self, usrid):
@@ -67,9 +56,9 @@ class Usr_manager(object):
         return False
 
     def getPre(self, usrid):
-        res = self.db.User.find_one({'id': usrid})['pre']
+        res = self.db.User.find_one({'id': usrid})
         if res is not None:
-            return res
+            return res['pre']
         print("error: usr", usrid, "does not exist!")
         return False
         if usrid in self.usrid2id:
@@ -102,7 +91,7 @@ class Usr_manager(object):
         return False
 
     def setPre(self, usrid, preferences):
-        res = self.db.User.find_one({'id': usrid})['pre']
+        res = self.db.User.find_one({'id': usrid})
         if res is None:
             print("error: usr", usrid, "does not exist!")
             return False
@@ -114,11 +103,31 @@ class Usr_manager(object):
         return False
 
     def setSex(self, usrid, sex):
-        res = self.db.User.find_one({'id': usrid})['sex']
+        res = self.db.User.find_one({'id': usrid})
         if res is None:
             print("error: usr", usrid, "does not exist!")
             return False
         self.db.User.update({'id': usrid}, {"$set": {'sex': sex}})
+        return True
+
+    def setAvatar(self, usrid, avatar):
+        res = self.db.User.find_one({'id': usrid})
+        if res is None:
+            print("error: usr", usrid, "does not exist!")
+            return False
+        self.db.User.update({'id': usrid}, {"$set": {'avatar': avatar}})
+        return True
+        if usrid in self.usrid2id:
+            return self.usrs[self.usrid2id[usrid]].setPre(preferences)
+        print("error: usr", usrid, "does not exist!")
+        return False
+
+    def setName(self, usrid, name):
+        res = self.db.User.find_one({'id': usrid})
+        if res is None:
+            print("error: usr", usrid, "does not exist!")
+            return False
+        self.db.User.update({'id': usrid}, {"$set": {'name': name}})
         return True
         if usrid in self.usrid2id:
             return self.usrs[self.usrid2id[usrid]].setPre(preferences)
